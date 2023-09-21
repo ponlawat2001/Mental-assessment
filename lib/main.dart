@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constant/theme.dart';
-import 'package:mentalassessment/view/home.dart';
+import 'package:mentalassessment/view/welcome.dart';
 
 void main() {
   runApp(const MyApp());

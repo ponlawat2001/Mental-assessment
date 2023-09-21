@@ -6,6 +6,7 @@ class ColorTheme {
   static Color main20 = const Color(0xFF9DC08B);
   static Color main10 = const Color(0xFF609966);
   static Color main5 = const Color(0xFF40513B);
+
   //Spacific
   static Color stroke = const Color(0xFFBABABA);
   static Color fieldHint = const Color(0xFF9C9C9C);
@@ -15,6 +16,7 @@ class ColorTheme {
   static Color badScore = const Color(0xffFF9264);
   static Color disableField = const Color(0xffD0D0D0);
   static Color greenConfirm = const Color(0xff609966);
+
   //General
   static Color white = Colors.white;
   static Color lightGray = const Color(0xff636363);
