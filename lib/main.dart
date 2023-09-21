@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constant/theme.dart';
-import 'package:mentalassessment/view/welcome.dart';
+import 'package:mentalassessment/view/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +14,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Mental Assessment',
         theme: theme(),
-        home: const HomeScreen());
+        home: const LoginScreen());
   }
 }

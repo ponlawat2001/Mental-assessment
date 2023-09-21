@@ -53,6 +53,7 @@ ThemeData theme() {
       backgroundColor: Colors.white,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      suffixIconColor: ColorTheme.main5,
       filled: true,
       isDense: true,
       border: OutlineInputBorder(
@@ -67,8 +68,8 @@ ThemeData theme() {
       errorStyle: const TextStyle(color: Colors.red),
       hintStyle: TextStyle(
           color: ColorTheme.fieldHint,
-          fontSize: 14,
-          fontWeight: FontWeight.w400),
+          fontSize: 12,
+          fontWeight: FontWeight.w300),
       errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(width: 1, color: Colors.red)),
