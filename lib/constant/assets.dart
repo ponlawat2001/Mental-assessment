@@ -7,4 +7,6 @@ class Assets {
   //icons
   static const iconDir = 'assets/icons';
   static const iconLogo = '$iconDir/logo.png';
+  static const iconGoogleLogo = '$iconDir/google_logo.svg';
+  static const iconFacebookLogo = '$iconDir/facebook_logo.svg';
 }
