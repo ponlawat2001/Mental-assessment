@@ -10,7 +10,7 @@ class HomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Assets.imageBackground), fit: BoxFit.cover)),
