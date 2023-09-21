@@ -6,6 +6,7 @@ class ColorTheme {
   static Color main20 = const Color(0xFF9DC08B);
   static Color main10 = const Color(0xFF609966);
   static Color main5 = const Color(0xFF40513B);
+  static Color maingrey = const Color(0xFFD4D4D4);
 
   //Spacific
   static Color stroke = const Color(0xFFBABABA);
@@ -35,7 +36,7 @@ class ColorTheme {
 ThemeData theme() {
   return ThemeData(
     dividerTheme: const DividerThemeData(color: Colors.white, thickness: 1),
-
+    fontFamily: 'Prompt',
     scrollbarTheme: ScrollbarThemeData(
       thickness: MaterialStateProperty.all(5),
       thumbColor: MaterialStateProperty.all(ColorTheme.main5),
