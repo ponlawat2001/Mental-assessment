@@ -42,17 +42,28 @@ ThemeData theme() {
       thumbColor: MaterialStateProperty.all(ColorTheme.main5),
     ),
     checkboxTheme: CheckboxThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
       side: MaterialStateBorderSide.resolveWith(
-          (_) => const BorderSide(width: 1, color: Colors.white)),
-      fillColor: null,
-      checkColor: null,
+        (_) => BorderSide(
+          width: 1.5,
+          color: ColorTheme.main5,
+        ),
+      ),
+      fillColor: MaterialStateProperty.resolveWith((_) => Colors.transparent),
+      checkColor:
+          MaterialStateProperty.resolveWith((_) => ColorTheme.lightGray),
     ),
     cardColor: Colors.white,
     dialogTheme: const DialogTheme(
       backgroundColor: Colors.white,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      labelStyle: TextStyle(
+        color: ColorTheme.main5,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
       suffixIconColor: ColorTheme.main5,
       filled: true,
       isDense: true,
@@ -68,7 +79,7 @@ ThemeData theme() {
       errorStyle: const TextStyle(color: Colors.red),
       hintStyle: TextStyle(
           color: ColorTheme.fieldHint,
-          fontSize: 12,
+          fontSize: 14,
           fontWeight: FontWeight.w300),
       errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -77,10 +88,10 @@ ThemeData theme() {
     iconTheme: const IconThemeData(color: Colors.white),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+      minimumSize: const Size.fromHeight(50),
+      backgroundColor: ColorTheme.main10,
       textStyle: TextStyle(
-        color: ColorTheme.main10,
-        fontWeight: FontWeight.w400,
-      ),
+          color: ColorTheme.white, fontWeight: FontWeight.w500, fontSize: 16),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8), // <-- Radius
       ),
