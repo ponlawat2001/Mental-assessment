@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constant/assets.dart';
 import 'package:mentalassessment/constant/theme.dart';
+import 'package:mentalassessment/view/widgetLayout/homeLayout.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -12,10 +13,9 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  SafeArea body(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        color: Theme.of(context).primaryColor,
+  HomeLayout body(BuildContext context) {
+    return HomeLayout(
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -24,9 +24,8 @@ class WelcomeScreen extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: ColorTheme.main30,
-                      image: const DecorationImage(
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
                           image: AssetImage(Assets.imageWelcome))),
                 ),
               ),
@@ -84,28 +83,35 @@ class WelcomeScreen extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            height: 50,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: ColorTheme.main10,
-                borderRadius: BorderRadius.circular(8)),
-            child: Text('Sign in',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorTheme.white)),
+          child: InkWell(
+            onTap: () => Navigator.pushNamed(context, '/login'),
+            child: Container(
+              height: 50,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: ColorTheme.main10,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Text('Sign in',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(color: ColorTheme.white)),
+            ),
           ),
         ),
         Expanded(
-          child: Container(
-            height: 50,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(8))),
-            child: Text(
-              'Register',
-              style: Theme.of(context).textTheme.headlineSmall,
+          child: InkWell(
+            onTap: () => Navigator.pushNamed(context, '/register'),
+            child: Container(
+              height: 50,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(8))),
+              child: Text(
+                'Register',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             ),
           ),
         ),

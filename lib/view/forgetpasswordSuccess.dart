@@ -47,7 +47,7 @@ class _ForgetPasswordSuccessScreenState
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/login'),
               child: Text(
                 'Sign in',
                 style: Theme.of(context)

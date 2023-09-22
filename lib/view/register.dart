@@ -41,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'สวัสดี',
+              'สร้างบัญชีใหม่',
               style: Theme.of(context)
                   .textTheme
                   .titleSmall!
@@ -149,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(width: 4),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pop(context),
                   child: Text(
                     'Sign in',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(

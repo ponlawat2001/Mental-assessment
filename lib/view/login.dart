@@ -1,6 +1,5 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/view/component/component.dart';
 import '../constant/assets.dart';
 import './widgetLayout/homeLayout.dart';
@@ -139,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(width: 4),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, '/register'),
                   child: Text(
                     'Sign up',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -176,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
         InkWell(
-          onTap: () {},
+          onTap: () => Navigator.pushNamed(context, '/forget'),
           child: Text(
             'Forget password?',
             style: Theme.of(context)

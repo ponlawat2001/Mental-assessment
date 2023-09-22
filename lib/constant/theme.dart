@@ -85,7 +85,7 @@ ThemeData theme() {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(width: 1, color: Colors.red)),
     ),
-    iconTheme: const IconThemeData(color: Colors.white),
+    iconTheme: IconThemeData(color: ColorTheme.main5),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
       minimumSize: const Size.fromHeight(50),
