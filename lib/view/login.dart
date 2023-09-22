@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mentalassessment/view/component/component.dart';
 import '../constant/assets.dart';
 import './widgetLayout/homeLayout.dart';
 import '../constant/theme.dart';
@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = true;
-  bool _rememberMe = true;
+  bool _rememberMe = false;
 
   @override
   void initState() {
@@ -104,8 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             // Divider --Or--
-            dividerOr(context),
-
+            Component.dividerOr(context),
             //Signin with Google Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -113,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 backgroundColor: ColorTheme.white,
               ),
               onPressed: () {},
-              child: socialTextButton(
+              child: Component.socialTextButton(
                   context, Assets.iconGoogleLogo, 'Continue with Google'),
             ),
             const SizedBox(height: 8),
@@ -125,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 backgroundColor: ColorTheme.white,
               ),
               onPressed: () {},
-              child: socialTextButton(
+              child: Component.socialTextButton(
                   context, Assets.iconFacebookLogo, 'Continue with Facebook'),
             ),
             const SizedBox(height: 16),
@@ -139,66 +138,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(width: 4),
-                Text(
-                  'Sign up',
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                      ),
+                InkWell(
+                  onTap: () {},
+                  child: Text(
+                    'Sign up',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                        ),
+                  ),
                 ),
               ],
             ),
           ],
         ),
       )),
-    );
-  }
-
-  Row socialTextButton(BuildContext context, String assetName, String title) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset(
-          assetName,
-          semanticsLabel: 'Google Logo',
-          width: 24,
-          height: 24,
-        ),
-        const SizedBox(width: 16),
-        Text(
-          title,
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(color: ColorTheme.main5),
-        ),
-      ],
-    );
-  }
-
-  Row dividerOr(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Divider(
-            color: ColorTheme.main5,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'or',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        Expanded(
-          child: Divider(
-            color: ColorTheme.main5,
-          ),
-        ),
-      ],
     );
   }
 
