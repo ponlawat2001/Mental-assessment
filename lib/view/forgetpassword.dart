@@ -36,11 +36,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                Assets.iconLogo,
-                semanticLabel: 'Mental Assessment',
-                width: 100,
-                height: 100,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  Assets.iconLogo,
+                  semanticLabel: 'Mental Assessment',
+                  width: 100,
+                  height: 100,
+                ),
               ),
               const SizedBox(height: 16),
               Text(
