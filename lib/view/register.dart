@@ -1,10 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/view/component/component.dart';
-import 'package:mentalassessment/view/widgetLayout/homeLayout.dart';
 
 import '../constant/assets.dart';
 import '../constant/theme.dart';
+import 'widgetLayout/loginLayout.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -24,8 +24,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  HomeLayout body(BuildContext context) {
-    return HomeLayout(
+  LoginLayout body(BuildContext context) {
+    return LoginLayout(
         child: SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),
@@ -106,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
             //Sign up Button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/registersuccess'),
               child: Text(
                 'Sign up',
                 style: Theme.of(context)

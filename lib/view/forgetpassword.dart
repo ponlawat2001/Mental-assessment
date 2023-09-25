@@ -1,9 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/view/widgetLayout/homeLayout.dart';
-
 import '../constant/assets.dart';
 import '../constant/theme.dart';
+import 'widgetLayout/loginLayout.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -20,8 +19,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     );
   }
 
-  HomeLayout body(BuildContext context) {
-    return HomeLayout(
+  LoginLayout body(BuildContext context) {
+    return LoginLayout(
         child: SafeArea(
             child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),

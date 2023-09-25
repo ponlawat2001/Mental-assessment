@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constant/assets.dart';
-import 'package:mentalassessment/view/widgetLayout/homeLayout.dart';
 
 import '../constant/theme.dart';
+import 'widgetLayout/loginLayout.dart';
 
 class ForgetPasswordSuccessScreen extends StatefulWidget {
   const ForgetPasswordSuccessScreen({super.key});
@@ -18,7 +18,7 @@ class _ForgetPasswordSuccessScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeLayout(
+      body: LoginLayout(
           child: SafeArea(
               child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../constant/assets.dart';
 
-class HomeLayout extends StatelessWidget {
+class LoginLayout extends StatelessWidget {
   final Widget? child;
-  const HomeLayout({
+  const LoginLayout({
     super.key,
     this.child,
   });

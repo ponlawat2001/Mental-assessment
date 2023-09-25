@@ -2,8 +2,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/view/component/component.dart';
 import '../constant/assets.dart';
-import './widgetLayout/homeLayout.dart';
 import '../constant/theme.dart';
+import 'widgetLayout/loginLayout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   body(BuildContext context) {
-    return HomeLayout(
+    return LoginLayout(
       child: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),
