@@ -4,7 +4,7 @@ import 'package:mentalassessment/view/component/component.dart';
 
 import '../constant/assets.dart';
 import '../constant/theme.dart';
-import 'widgetLayout/loginLayout.dart';
+import 'widget/widgetLayout/login_layout.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mentalassessment/view/component/component.dart';
 import '../constant/assets.dart';
 import '../constant/theme.dart';
-import 'widgetLayout/loginLayout.dart';
+import 'widget/widgetLayout/login_layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             // Sign in Button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/home'),
               child: Text(
                 'Sign in',
                 style: Theme.of(context)

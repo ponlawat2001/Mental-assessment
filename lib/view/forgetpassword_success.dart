@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constant/assets.dart';
 
 import '../constant/theme.dart';
-import 'widgetLayout/loginLayout.dart';
+import 'widget/widgetLayout/login_layout.dart';
 
 class ForgetPasswordSuccessScreen extends StatefulWidget {
   const ForgetPasswordSuccessScreen({super.key});

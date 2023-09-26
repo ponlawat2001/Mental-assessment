@@ -1,10 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shadow_overlay/shadow_overlay.dart';
 import '../../constant/theme.dart';
 
 class Component {
+  static ClipRRect newsCard(
+    BuildContext context,
+    String imagePath,
+    String title,
+    String detail,
+  ) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Stack(
+        children: [
+          ShadowOverlay(
+            shadowWidth: 250,
+            shadowHeight: 200,
+            child: Container(
+              width: 250,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(imagePath), fit: BoxFit.cover),
+              ),
+            ),
+          ),
+          Container(
+            width: 250,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    detail,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: ColorTheme.main5),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   static Row socialTextButton(
-      BuildContext context, String assetName, String title) {
+    BuildContext context,
+    String assetName,
+    String title,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
