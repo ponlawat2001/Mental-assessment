@@ -11,4 +11,8 @@ class Assets {
   static const iconGoogleLogo = '$iconDir/google_logo.svg';
   static const iconFacebookLogo = '$iconDir/facebook_logo.svg';
   static const iconSuccess = '$iconDir/success.svg';
+  static const iconMessage = '$iconDir/msg.svg';
+  static const iconEdit = '$iconDir/edit.svg';
+  static const iconClipboard = '$iconDir/clipboard.svg';
+  static const iconPerson = '$iconDir/person.svg';
 }
