@@ -3,6 +3,7 @@ class Assets {
   static const imageDir = 'assets/images';
   static const imageWelcome = '$imageDir/welcome.png';
   static const imageBackground = '$imageDir/background.png';
+  static const imageBackground2 = '$imageDir/background2.png';
 
   //icons
   static const iconDir = 'assets/icons';
