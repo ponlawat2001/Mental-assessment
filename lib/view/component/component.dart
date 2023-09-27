@@ -1,12 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mentalassessment/constant/assets.dart';
 import 'package:shadow_overlay/shadow_overlay.dart';
 import '../../constant/theme.dart';
 
 class Component {
   static ClipRRect newsCard(
     BuildContext context,
-    String imagePath,
+    String? imagePath,
     String title,
     String detail,
   ) {
@@ -20,8 +23,10 @@ class Component {
             child: Container(
               width: 250,
               decoration: BoxDecoration(
+                color: Colors.white,
                 image: DecorationImage(
-                    image: AssetImage(imagePath), fit: BoxFit.cover),
+                    image: AssetImage(imagePath ?? Assets.iconImage),
+                    fit: imagePath == null ? BoxFit.none : BoxFit.cover),
               ),
             ),
           ),

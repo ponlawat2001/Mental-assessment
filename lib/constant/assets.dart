@@ -15,4 +15,5 @@ class Assets {
   static const iconEdit = '$iconDir/edit.svg';
   static const iconClipboard = '$iconDir/clipboard.svg';
   static const iconPerson = '$iconDir/person.svg';
+  static const iconImage = '$iconDir/image.png';
 }
