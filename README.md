@@ -1,6 +1,6 @@
-# mentalassessment
+# Mentalassessment
 
-A new Flutter project.
+Mental health care mobile application
 
 ## Getting Started
 
