@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constant/assets.dart';
 import 'package:mentalassessment/constant/theme.dart';
-import 'package:mentalassessment/view/component/component.dart';
+import 'package:mentalassessment/view/widget/newslist_widget.dart';
 import 'package:mentalassessment/view/widget/widgetLayout/home_layout.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,115 +13,160 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedindex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  _onItemTapped(int index) {
+    setState(() {
+      _selectedindex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeLayout(
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
+      body: body(context),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: ColorTheme.white,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+          ),
+        ],
+        currentIndex: _selectedindex,
+        selectedItemColor: ColorTheme.main5,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+
+  HomeLayout body(BuildContext context) {
+    return HomeLayout(
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                             color: ColorTheme.white,
                             borderRadius: BorderRadius.circular(32)),
-                        child: const Icon(
-                          Icons.person_outline_rounded,
-                          size: 36,
+                        child: SvgPicture.asset(
+                          Assets.iconPerson,
+                          color: ColorTheme.main5,
+                          width: 24,
+                          height: 24,
+                        )),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: ColorTheme.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              'ปรึกษากับเรา',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(fontWeight: FontWeight.w300),
+                            ),
+                          ],
                         ),
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 16),
-                          decoration: BoxDecoration(
-                            color: ColorTheme.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            'ปรึกษากับเรา',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(fontWeight: FontWeight.w300),
-                          ),
-                        ),
-                      )
+                    )
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'สวัสดี พลวัต',
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  'เริ่มทำการประเมินกัน \nมีแบบประเมินหลายแบบให้เลือกเลย',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.w300),
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      alignment: Alignment.center,
+                      backgroundColor: ColorTheme.worseEmoji,
+                      minimumSize: const Size(200, 50),
+                      maximumSize: const Size.fromWidth(210),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 16)),
+                  onPressed: () {},
+                  child: Row(
+                    children: [
+                      const Icon(Icons.heart_broken),
+                      const SizedBox(width: 8),
+                      Text(
+                        'เริ่มทำแบบประเมินหลัก',
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.w300,
+                            color: ColorTheme.white),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'สวัสดี พลวัต',
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(fontWeight: FontWeight.w400),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: Divider(
+                        color: ColorTheme.stroke,
+                      )),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'เริ่มทำการประเมินกัน \nมีแบบประเมินหลายแบบให้เลือกเลย',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(fontWeight: FontWeight.w300),
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        alignment: Alignment.center,
-                        backgroundColor: ColorTheme.worseEmoji,
-                        minimumSize: const Size(200, 50),
-                        maximumSize: const Size.fromWidth(210),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 16)),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        const Icon(Icons.heart_broken),
-                        const SizedBox(width: 8),
-                        Text(
-                          'เริ่มทำแบบประเมินหลัก',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(
-                                  fontWeight: FontWeight.w300,
-                                  color: ColorTheme.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                            child: Divider(
-                          color: ColorTheme.stroke,
-                        )),
-                      ],
-                    ),
-                  ),
-                  navMenu(context),
-                  const SizedBox(height: 24),
-                  Text(
-                    'ข่าวสารและบทความ',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 24),
-                  Newlist(),
-                ],
-              ),
+                ),
+                navMenu(context),
+                const SizedBox(height: 24),
+                Text(
+                  'ข่าวสารและบทความ',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 24),
+                const NewlistWidget(
+                  itemcount: 2,
+                  headline: 'โรคซึมเศร้าคืออะไร',
+                  detail:
+                      'คนส่วนใหญ่แล้วคำว่าโรคซึมเศร้าฟังดูไม่คุ้นหูถ้าพูดถึงเรื่องซึมเศร้าเรามักจะนึกกันว่าเป็นเรื่องของอารมณ์',
+                  // imagePath: Assets.imageWelcome,
+                ),
+              ],
             ),
           ),
         ),
@@ -144,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Colors.transparent,
               Colors.purple
             ],
-            stops: [0.0, 0.03, 0.95, 1.0],
+            stops: [0.0, 0.01, 0.99, 1.0],
           ).createShader(rect);
         },
         child: ListView(
@@ -160,12 +205,6 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               Assets.iconEdit,
               'เขียนระบาย',
-              '/',
-            ),
-            buttonNav(
-              context,
-              Assets.iconMessage,
-              'ติดต่อขอคำปรึกษา',
               '/',
             ),
             buttonNav(
