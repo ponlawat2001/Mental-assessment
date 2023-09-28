@@ -61,6 +61,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/navigation/
+
   fonts:
     - family: Prompt
       fonts:
