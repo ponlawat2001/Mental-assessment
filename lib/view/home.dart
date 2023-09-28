@@ -95,19 +95,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {},
                   child: Row(
                     children: [
-                      const Icon(Icons.heart_broken),
+                      SvgPicture.asset(Assets.iconHeart),
                       const SizedBox(width: 8),
                       Text(
                         'เริ่มทำแบบประเมินหลัก',
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w400,
                             color: ColorTheme.white),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

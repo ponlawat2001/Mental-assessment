@@ -16,6 +16,8 @@ class Assets {
   static const iconClipboard = '$iconDir/clipboard.svg';
   static const iconPerson = '$iconDir/person.svg';
   static const iconImage = '$iconDir/image.png';
+  static const iconHeart = '$iconDir/heart.svg';
+
   //navigation
   static const iconDirNavigation = 'assets/icons/navigation';
   static const iconHome = '$iconDirNavigation/home.svg';
