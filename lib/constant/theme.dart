@@ -35,6 +35,7 @@ class ColorTheme {
 
 ThemeData theme() {
   return ThemeData(
+    canvasColor: ColorTheme.white,
     dividerTheme: const DividerThemeData(color: Colors.white, thickness: 1),
     fontFamily: 'Prompt',
     scrollbarTheme: ScrollbarThemeData(
