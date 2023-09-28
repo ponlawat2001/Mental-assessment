@@ -22,8 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   HomeLayout body(BuildContext context) {
     return HomeLayout(
-      child: SafeArea(
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
+        child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(

@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(width: 4),
                 InkWell(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.pushNamed(context, '/login'),
                   child: Text(
                     'Sign in',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
