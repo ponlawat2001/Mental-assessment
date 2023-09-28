@@ -16,4 +16,16 @@ class Assets {
   static const iconClipboard = '$iconDir/clipboard.svg';
   static const iconPerson = '$iconDir/person.svg';
   static const iconImage = '$iconDir/image.png';
+  //navigation
+  static const iconDirNavigation = 'assets/icons/navigation';
+  static const iconHome = '$iconDirNavigation/home.svg';
+  static const iconVent = '$iconDirNavigation/vent.svg';
+  static const iconAssess = '$iconDirNavigation/assess.svg';
+  static const iconContact = '$iconDirNavigation/contact.svg';
+  static const iconProfile = '$iconDirNavigation/profile.svg';
+  static const iconActiveHome = '$iconDirNavigation/home-active.svg';
+  static const iconActiveVent = '$iconDirNavigation/vent-active.svg';
+  static const iconActiveAssess = '$iconDirNavigation/assess-active.svg';
+  static const iconActiveContact = '$iconDirNavigation/contact-active.svg';
+  static const iconActiveProfile = '$iconDirNavigation/profile-active.svg';
 }

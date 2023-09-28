@@ -13,43 +13,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedindex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  _onItemTapped(int index) {
-    setState(() {
-      _selectedindex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: body(context),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: ColorTheme.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
-        ],
-        currentIndex: _selectedindex,
-        selectedItemColor: ColorTheme.main5,
-        onTap: _onItemTapped,
-      ),
     );
   }
 

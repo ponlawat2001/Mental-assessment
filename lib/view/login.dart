@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             // Sign in Button
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/home'),
+              onPressed: () => Navigator.pushNamed(context, '/navigator'),
               child: Text(
                 'Sign in',
                 style: Theme.of(context)
