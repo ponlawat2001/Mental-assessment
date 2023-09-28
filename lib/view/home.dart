@@ -39,9 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(32)),
                         child: SvgPicture.asset(
                           Assets.iconPerson,
-                          color: ColorTheme.main5,
                           width: 24,
                           height: 24,
+                          colorFilter: ColorFilter.mode(
+                              ColorTheme.main5, BlendMode.srcIn),
                         )),
                     InkWell(
                       onTap: () {},
