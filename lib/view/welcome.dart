@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constant/assets.dart';
 import 'package:mentalassessment/constant/theme.dart';
-import 'widget/widgetLayout/login_layout.dart';
+import 'widget/widgetLayout/layout.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -13,8 +13,9 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  LoginLayout body(BuildContext context) {
-    return LoginLayout(
+  Layout body(BuildContext context) {
+    return Layout(
+      backgroundAsset: Assets.imageBackground,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),

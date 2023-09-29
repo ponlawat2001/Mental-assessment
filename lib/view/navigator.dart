@@ -38,7 +38,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
       body: _pageName.elementAt(_selectedindex),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+            topLeft: Radius.circular(32), topRight: Radius.circular(32)),
         child: SizedBox(
           height: 110,
           child: BottomNavigationBar(

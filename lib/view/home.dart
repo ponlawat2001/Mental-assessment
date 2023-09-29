@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constant/assets.dart';
 import 'package:mentalassessment/constant/theme.dart';
 import 'package:mentalassessment/view/widget/newslist_widget.dart';
-import 'package:mentalassessment/view/widget/widgetLayout/home_layout.dart';
+import 'package:mentalassessment/view/widget/widgetLayout/layout.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,8 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  HomeLayout body(BuildContext context) {
-    return HomeLayout(
+  Layout body(BuildContext context) {
+    return Layout(
+      backgroundAsset: Assets.imageBackground2,
       child: SingleChildScrollView(
         child: SafeArea(
           child: Padding(

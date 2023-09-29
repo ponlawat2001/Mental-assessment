@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mentalassessment/view/component/component.dart';
 import '../constant/assets.dart';
 import '../constant/theme.dart';
-import 'widget/widgetLayout/login_layout.dart';
+import 'widget/widgetLayout/layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,8 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  body(BuildContext context) {
-    return LoginLayout(
+  Layout body(BuildContext context) {
+    return Layout(
+      backgroundAsset: Assets.imageBackground,
       child: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),
