@@ -4,8 +4,8 @@ import 'package:mentalassessment/constant/assets.dart';
 import 'package:mentalassessment/view/forgetpassword.dart';
 import 'package:mentalassessment/view/home.dart';
 import 'package:mentalassessment/view/login.dart';
+import 'package:mentalassessment/view/news.dart';
 import 'package:mentalassessment/view/register.dart';
-import 'package:mentalassessment/view/welcome.dart';
 
 import '../constant/theme.dart';
 
@@ -22,7 +22,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
     const HomeScreen(),
     const ForgetPasswordScreen(),
     const RegisterScreen(),
-    const WelcomeScreen(),
+    const NewsScreen(),
     const LoginScreen(),
   ];
 
