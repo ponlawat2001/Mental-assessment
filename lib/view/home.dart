@@ -128,12 +128,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 24),
-                const NewlistWidget(
-                  itemcount: 2,
-                  headline: 'โรคซึมเศร้าคืออะไร',
-                  detail:
-                      'คนส่วนใหญ่แล้วคำว่าโรคซึมเศร้าฟังดูไม่คุ้นหูถ้าพูดถึงเรื่องซึมเศร้าเรามักจะนึกกันว่าเป็นเรื่องของอารมณ์',
-                  // imagePath: Assets.imageWelcome,
+                const SizedBox(
+                  height: 250,
+                  child: NewlistWidget(
+                    itemcount: 2,
+                    headline: 'โรคซึมเศร้าคืออะไร',
+                    detail:
+                        'คนส่วนใหญ่แล้วคำว่าโรคซึมเศร้าฟังดูไม่คุ้นหูถ้าพูดถึงเรื่องซึมเศร้าเรามักจะนึกกันว่าเป็นเรื่องของอารมณ์',
+                    // imagePath: Assets.imageWelcome,
+                  ),
                 ),
               ],
             ),

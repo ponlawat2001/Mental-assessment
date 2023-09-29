@@ -10,50 +10,90 @@ class Component {
     String? imagePath,
     String title,
     String detail,
+    bool isvertical,
   ) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: Stack(
         children: [
           ShadowOverlay(
-            shadowWidth: 250,
-            shadowHeight: 200,
-            child: Container(
-              width: 250,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                    image: AssetImage(imagePath ?? Assets.iconImage),
-                    fit: imagePath == null ? BoxFit.none : BoxFit.cover),
-              ),
-            ),
-          ),
-          Container(
-            width: 250,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleLarge,
+            shadowWidth: 500,
+            shadowHeight: 250,
+            child: isvertical
+                ? Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                        color: ColorTheme.white,
+                        image: DecorationImage(
+                            image: AssetImage(imagePath ?? Assets.iconImage),
+                            fit: imagePath == null
+                                ? BoxFit.none
+                                : BoxFit.cover)),
+                  )
+                : Container(
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: ColorTheme.white,
+                        image: DecorationImage(
+                            image: AssetImage(imagePath ?? Assets.iconImage),
+                            fit: imagePath == null
+                                ? BoxFit.none
+                                : BoxFit.cover)),
                   ),
-                  Text(
-                    detail,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: ColorTheme.main5),
-                  ),
-                ],
-              ),
-            ),
           ),
+          isvertical
+              ? Container(
+                  height: 250,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        Text(
+                          detail,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: ColorTheme.main5),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : Container(
+                  width: 250,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        Text(
+                          detail,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: ColorTheme.main5),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
         ],
       ),
     );
