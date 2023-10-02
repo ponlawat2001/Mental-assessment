@@ -39,6 +39,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   shadow_overlay: ^1.0.5
   flutter_native_splash: ^2.3.2
+  firebase_core: ^2.16.0
 
 dev_dependencies:
   flutter_test:
