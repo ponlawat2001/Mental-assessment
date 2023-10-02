@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>48737335927-869ha5rujv0ggd58aoejc062bbb5ncqc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.48737335927-869ha5rujv0ggd58aoejc062bbb5ncqc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC4h_tQiUvCYWsXrNgjpdym_fn8Kgaueg4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>48737335927</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ponlawat.mentalassessment</string>
+	<key>PROJECT_ID</key>
+	<string>mental-assessment</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mental-assessment.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:48737335927:ios:2334d2c88d5fa254c6a472</string>
+</dict>
+</plist>
