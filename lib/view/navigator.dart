@@ -35,6 +35,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: _pageName.elementAt(_selectedindex),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
