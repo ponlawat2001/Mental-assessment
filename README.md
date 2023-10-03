@@ -1,16 +1,12 @@
 # Mentalassessment
 
 Mental health care mobile application
+A mental assessment application typically 
+aims to assess and monitor an individual's mental health,
+offering insights into their emotional well-being,
+stress levels,mood changes,and potential mental health conditions.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technology Stack:
+The technology stack for a mental assessment application could include 
+front-end React lib, back-end technologies such as Node.js Nest.js framework, 
+and databases Firestore, Firebase Storage and FirebaseAuth etc.
