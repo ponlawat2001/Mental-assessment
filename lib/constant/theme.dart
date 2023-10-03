@@ -6,6 +6,8 @@ class ColorTheme {
   static Color main20 = const Color(0xFF9DC08B);
   static Color main10 = const Color(0xFF609966);
   static Color main5 = const Color(0xFF40513B);
+  static Color maingrey = const Color(0xFFD4D4D4);
+
   //Spacific
   static Color stroke = const Color(0xFFBABABA);
   static Color fieldHint = const Color(0xFF9C9C9C);
@@ -15,6 +17,7 @@ class ColorTheme {
   static Color badScore = const Color(0xffFF9264);
   static Color disableField = const Color(0xffD0D0D0);
   static Color greenConfirm = const Color(0xff609966);
+
   //General
   static Color white = Colors.white;
   static Color lightGray = const Color(0xff636363);
@@ -32,24 +35,37 @@ class ColorTheme {
 
 ThemeData theme() {
   return ThemeData(
+    canvasColor: ColorTheme.white,
     dividerTheme: const DividerThemeData(color: Colors.white, thickness: 1),
-
+    fontFamily: 'Prompt',
     scrollbarTheme: ScrollbarThemeData(
       thickness: MaterialStateProperty.all(5),
       thumbColor: MaterialStateProperty.all(ColorTheme.main5),
     ),
     checkboxTheme: CheckboxThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
       side: MaterialStateBorderSide.resolveWith(
-          (_) => const BorderSide(width: 1, color: Colors.white)),
-      fillColor: null,
-      checkColor: null,
+        (_) => BorderSide(
+          width: 1.5,
+          color: ColorTheme.main5,
+        ),
+      ),
+      fillColor: MaterialStateProperty.resolveWith((_) => Colors.transparent),
+      checkColor:
+          MaterialStateProperty.resolveWith((_) => ColorTheme.lightGray),
     ),
     cardColor: Colors.white,
     dialogTheme: const DialogTheme(
       backgroundColor: Colors.white,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      labelStyle: TextStyle(
+        color: ColorTheme.main5,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
+      suffixIconColor: ColorTheme.main5,
       filled: true,
       isDense: true,
       border: OutlineInputBorder(
@@ -65,18 +81,18 @@ ThemeData theme() {
       hintStyle: TextStyle(
           color: ColorTheme.fieldHint,
           fontSize: 14,
-          fontWeight: FontWeight.w400),
+          fontWeight: FontWeight.w300),
       errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(width: 1, color: Colors.red)),
     ),
-    iconTheme: const IconThemeData(color: Colors.white),
+    iconTheme: IconThemeData(color: ColorTheme.main5),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+      minimumSize: const Size.fromHeight(50),
+      backgroundColor: ColorTheme.main10,
       textStyle: TextStyle(
-        color: ColorTheme.main10,
-        fontWeight: FontWeight.w400,
-      ),
+          color: ColorTheme.white, fontWeight: FontWeight.w500, fontSize: 16),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8), // <-- Radius
       ),
