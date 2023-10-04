@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/service/firebase_service.dart';
+import 'package:mentalassessment/service/auth_service.dart';
 import 'package:mentalassessment/view/component/component.dart';
 import '../constant/assets.dart';
 import '../constant/theme.dart';
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   backgroundColor: ColorTheme.white,
                 ),
                 onPressed: () async {
-                  FirebaseService.signInWithGoogle(context);
+                  AuthService.signInWithGoogle(context);
                 },
                 child: Component.socialTextButton(
                     context, Assets.iconGoogleLogo, 'Continue with Google'),
