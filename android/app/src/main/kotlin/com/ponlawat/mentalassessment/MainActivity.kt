@@ -1,4 +1,4 @@
-package com.example.mentalassessment
+package com.ponlawat.mentalassessment
 
 import io.flutter.embedding.android.FlutterActivity
 

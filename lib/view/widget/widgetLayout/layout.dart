@@ -11,12 +11,18 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(
-            image: backgroundAsset.isNotEmpty
-                ? DecorationImage(
-                    image: AssetImage(backgroundAsset), fit: BoxFit.cover)
-                : null),
-        child: child);
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+              image: backgroundAsset.isNotEmpty
+                  ? DecorationImage(
+                      image: AssetImage(backgroundAsset), fit: BoxFit.cover)
+                  : null),
+        ),
+        child ?? Container()
+      ],
+    );
   }
 }

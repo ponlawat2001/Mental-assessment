@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+		<!-- Facebook signin -->
+		<key>FacebookAppID</key>
+		<string>7470270516335578</string>
+		<key>FacebookClientToken</key>
+		<string>be1f06b9cc7170bd0d604174fbd55a5b</string>
+		<key>FacebookDisplayName</key>
+		<string>Mental Assessment</string>
+
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>CFBundleDevelopmentRegion</key>
@@ -15,13 +23,14 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>mentalassessment</string>
+		<string>Mental Assessment</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
 		<string>$(FLUTTER_BUILD_NAME)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
+
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -29,6 +38,9 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
+					<!-- Facebook signin -->
+					<string>fb7470270516335578</string>
+					<!-- Google signin -->
 					<string>com.googleusercontent.apps.48737335927-869ha5rujv0ggd58aoejc062bbb5ncqc</string>
 				</array>
 			</dict>
