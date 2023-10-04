@@ -135,7 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   foregroundColor: ColorTheme.main10,
                   backgroundColor: ColorTheme.white,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  AuthService.signInWithFacebook(context);
+                },
                 child: Component.socialTextButton(
                     context, Assets.iconFacebookLogo, 'Continue with Facebook'),
               ),
