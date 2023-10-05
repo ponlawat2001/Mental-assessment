@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mentalassessment/constant/assets.dart';
-import 'package:mentalassessment/constant/theme.dart';
-import 'package:mentalassessment/view/widget/newslist_widget.dart';
-import 'package:mentalassessment/view/widget/widgetLayout/layout.dart';
+import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/views/widgets/newslist_widget.dart';
+import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

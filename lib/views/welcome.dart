@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/constant/assets.dart';
-import 'package:mentalassessment/constant/theme.dart';
-import 'widget/widgetLayout/layout.dart';
+import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/constants/theme.dart';
+import 'widgets/widgetLayout/layout.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

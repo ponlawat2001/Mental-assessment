@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mentalassessment/constant/assets.dart';
+import 'package:mentalassessment/constants/assets.dart';
 
-import '../constant/theme.dart';
+import '../constants/theme.dart';
 import 'login/forgetpassword.dart';
 import 'login/home.dart';
 import 'login/login.dart';

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/view/navigator.dart';
-import 'package:mentalassessment/view/news.dart';
-import 'package:mentalassessment/view/welcome.dart';
+import 'package:mentalassessment/views/navigator.dart';
+import 'package:mentalassessment/views/news.dart';
+import 'package:mentalassessment/views/welcome.dart';
 
-import '../view/login/forgetpassword.dart';
-import '../view/login/forgetpassword_success.dart';
-import '../view/login/home.dart';
-import '../view/login/login.dart';
-import '../view/login/register.dart';
-import '../view/login/register_success.dart';
+import '../views/login/forgetpassword.dart';
+import '../views/login/forgetpassword_success.dart';
+import '../views/login/home.dart';
+import '../views/login/login.dart';
+import '../views/login/register.dart';
+import '../views/login/register_success.dart';
 
 class RouteData {
   static Map<String, Widget Function(BuildContext)> routeData = {

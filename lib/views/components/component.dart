@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mentalassessment/constant/assets.dart';
+import 'package:mentalassessment/constants/assets.dart';
 import 'package:shadow_overlay/shadow_overlay.dart';
-import '../../constant/theme.dart';
+import '../../constants/theme.dart';
 
 class Component {
   static ClipRRect newsCard(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/view/component/component.dart';
+import 'package:mentalassessment/views/components/component.dart';
 
-import '../../constant/assets.dart';
-import '../../constant/formvalidate.dart';
-import '../../constant/theme.dart';
-import '../widget/widgetLayout/layout.dart';
+import '../../constants/assets.dart';
+import '../../constants/formvalidate.dart';
+import '../../constants/theme.dart';
+import '../widgets/widgetLayout/layout.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

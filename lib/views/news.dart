@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/view/widget/newslist_widget.dart';
-import 'package:mentalassessment/view/widget/widgetLayout/layout.dart';
+import 'package:mentalassessment/views/widgets/newslist_widget.dart';
+import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
-import '../constant/assets.dart';
-import '../constant/theme.dart';
+import '../constants/assets.dart';
+import '../constants/theme.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});

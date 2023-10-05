@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/constant/formvalidate.dart';
-import 'package:mentalassessment/service/auth_service.dart';
-import 'package:mentalassessment/view/component/component.dart';
-import '../../constant/assets.dart';
-import '../../constant/theme.dart';
-import '../widget/widgetLayout/layout.dart';
+import 'package:mentalassessment/constants/formvalidate.dart';
+import 'package:mentalassessment/services/auth_service.dart';
+import 'package:mentalassessment/views/components/component.dart';
+import '../../constants/assets.dart';
+import '../../constants/theme.dart';
+import '../widgets/widgetLayout/layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
