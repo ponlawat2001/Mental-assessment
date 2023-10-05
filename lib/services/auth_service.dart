@@ -40,6 +40,7 @@ class AuthService {
 
   static signInWithEmail(PostEmailLogin? data) async {
     final dio = Dio();
+    print(Serverinfo.login);
     Response response = await dio.post(
       Serverinfo.login,
       data: {
@@ -49,6 +50,6 @@ class AuthService {
     );
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
-    print(result.result);
+    print(result.message);
   }
 }
