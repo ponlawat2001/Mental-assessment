@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constants/formvalidate.dart';
+import 'package:mentalassessment/model/login/login_post_model.dart';
 import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 import '../../constants/assets.dart';
@@ -129,7 +130,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Sign in Button
                 ElevatedButton(
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {}
+                    if (formKey.currentState!.validate()) {
+                      PostEmailLogin? temp = PostEmailLogin(
+                        email: emailField.text,
+                        password: passwordField.text,
+                      );
+                      AuthService.signInWithEmail(temp);
+                    }
                   },
                   child: Text(
                     'Sign in',

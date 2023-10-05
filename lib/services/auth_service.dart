@@ -1,7 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:mentalassessment/constants/serverinfo.dart';
+import 'package:mentalassessment/model/login/login_post_model.dart';
+
+import '../model/login/login_res_model.dart';
 
 class AuthService {
   static signInWithGoogle(BuildContext context) async {
@@ -31,5 +36,19 @@ class AuthService {
         .then((user) {
       Navigator.pushReplacementNamed(context, '/navigator');
     }).catchError((e) => null);
+  }
+
+  static signInWithEmail(PostEmailLogin? data) async {
+    final dio = Dio();
+    Response response = await dio.post(
+      Serverinfo.login,
+      data: {
+        'email': data?.email,
+        'password': data?.password,
+      },
+    );
+    ResEmailLogin result = ResEmailLogin(
+        message: response.data['message'], result: response.data['result']);
+    print(result.result);
   }
 }

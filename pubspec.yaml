@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^6.1.5
   firebase_auth: ^4.10.0
   flutter_facebook_auth: ^6.0.2
+  dio: ^5.3.3
 
 dev_dependencies:
   flutter_test:

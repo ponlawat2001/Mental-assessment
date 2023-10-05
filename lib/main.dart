@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mentalassessment/constant/theme.dart';
-import 'package:mentalassessment/route/routedata.dart';
+import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/routes/routedata.dart';
 
 main() async {
   runApp(const MyApp());
