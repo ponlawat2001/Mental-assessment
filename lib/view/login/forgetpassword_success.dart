@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constant/assets.dart';
 
-import '../constant/theme.dart';
-import 'widget/widgetLayout/layout.dart';
+import '../../constant/theme.dart';
+import '../widget/widgetLayout/layout.dart';
 
 class ForgetPasswordSuccessScreen extends StatefulWidget {
   const ForgetPasswordSuccessScreen({super.key});

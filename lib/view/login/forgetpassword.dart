@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import '../constant/assets.dart';
-import '../constant/theme.dart';
-import 'widget/widgetLayout/layout.dart';
+import '../../constant/assets.dart';
+import '../../constant/theme.dart';
+import '../widget/widgetLayout/layout.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});

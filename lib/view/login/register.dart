@@ -2,9 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/view/component/component.dart';
 
-import '../constant/assets.dart';
-import '../constant/theme.dart';
-import 'widget/widgetLayout/layout.dart';
+import '../../constant/assets.dart';
+import '../../constant/theme.dart';
+import '../widget/widgetLayout/layout.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

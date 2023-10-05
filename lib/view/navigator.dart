@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mentalassessment/constant/assets.dart';
-import 'package:mentalassessment/view/forgetpassword.dart';
-import 'package:mentalassessment/view/home.dart';
-import 'package:mentalassessment/view/login.dart';
-import 'package:mentalassessment/view/news.dart';
-import 'package:mentalassessment/view/register.dart';
 
 import '../constant/theme.dart';
+import 'login/forgetpassword.dart';
+import 'login/home.dart';
+import 'login/login.dart';
+import 'login/register.dart';
+import 'news.dart';
 
 class NavigatorScreen extends StatefulWidget {
   const NavigatorScreen({super.key});
