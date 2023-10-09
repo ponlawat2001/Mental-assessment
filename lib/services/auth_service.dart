@@ -7,6 +7,7 @@ import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
 
 import '../model/login/login_res_model.dart';
+import '../views/widgets/alert_wrongpass.dart';
 
 class AuthService {
   static signInWithGoogle(BuildContext context) async {
@@ -38,9 +39,8 @@ class AuthService {
     }).catchError((e) => null);
   }
 
-  static signInWithEmail(PostEmailLogin? data) async {
+  static signInWithEmail(PostEmailLogin? data, context) async {
     final dio = Dio();
-    print(Serverinfo.login);
     Response response = await dio.post(
       Serverinfo.login,
       data: {
@@ -51,5 +51,8 @@ class AuthService {
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     print(result.message);
+    if (result.result == '') {
+      AlertDialogselect.alertworngpass(context);
+    }
   }
 }

@@ -88,16 +88,20 @@ ThemeData theme() {
     ),
     iconTheme: IconThemeData(color: ColorTheme.main5),
     elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-      minimumSize: const Size.fromHeight(50),
-      backgroundColor: ColorTheme.main10,
-      textStyle: TextStyle(
-          color: ColorTheme.white, fontWeight: FontWeight.w500, fontSize: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8), // <-- Radius
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromHeight(50),
+        backgroundColor: ColorTheme.main10,
+        textStyle: TextStyle(
+            fontFamily: 'Prompt',
+            color: ColorTheme.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // <-- Radius
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-    )),
+    ),
 
     primaryColor: ColorTheme.main30,
     // primaryColorDark: ColorTheme.ground,

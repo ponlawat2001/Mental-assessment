@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         email: emailField.text,
                         password: passwordField.text,
                       );
-                      AuthService.signInWithEmail(temp);
+                      AuthService.signInWithEmail(temp, context);
                     }
                   },
                   child: Text(
