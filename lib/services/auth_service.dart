@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/login/login_res_model.dart';
 import '../views/widgets/alert_wrongpass.dart';
@@ -40,6 +41,8 @@ class AuthService {
   }
 
   static signInWithEmail(PostEmailLogin? data, context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     final dio = Dio();
     Response response = await dio.post(
       Serverinfo.login,
@@ -50,9 +53,11 @@ class AuthService {
     );
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
-    print(result.message);
     if (result.result == '') {
       AlertDialogselect.alertworngpass(context);
+    } else {
+      prefs.setString('token', result.result!);
     }
+    print('token in prefs: ${prefs.get('token')}');
   }
 }
