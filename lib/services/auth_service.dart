@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ import '../views/widgets/alert_wrongpass.dart';
 
 class AuthService {
   static signInWithGoogle(BuildContext context) async {
-// Trigger the authentication flow
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     final GoogleSignInAuthentication googleAuth =
@@ -23,6 +25,8 @@ class AuthService {
       idToken: googleAuth.idToken,
     );
     await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+      prefs.setString('token', googleAuth.idToken ?? '');
+      log('token in prefs: ${prefs.get('token')}');
       Navigator.pushReplacementNamed(context, '/navigator');
     }).catchError((e) => null);
   }
@@ -59,5 +63,19 @@ class AuthService {
       prefs.setString('token', result.result!);
     }
     print('token in prefs: ${prefs.get('token')}');
+  }
+
+  static Future<bool> signInCheck(context) async {
+    bool isSignIn = false;
+    FirebaseAuth.instance.idTokenChanges().listen((User? user) {
+      if (user == null) {
+        isSignIn = false;
+      } else {
+        isSignIn = true;
+        Navigator.pushReplacementNamed(context, '/navigator');
+      }
+    });
+    await Future.delayed(const Duration(milliseconds: 1));
+    return isSignIn;
   }
 }
