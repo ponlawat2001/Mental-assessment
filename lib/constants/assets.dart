@@ -4,6 +4,8 @@ class Assets {
   static const imageWelcome = '$imageDir/welcome.png';
   static const imageBackground = '$imageDir/background.png';
   static const imageBackground2 = '$imageDir/background2.png';
+  static const imageBackground3 = '$imageDir/background3.png';
+  static const imageBackground3_1 = '$imageDir/background3-1.png';
 
   //icons
   static const iconDir = 'assets/icons';
