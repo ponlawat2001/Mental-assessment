@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/views/profile/profile.dart';
 
 import '../constants/theme.dart';
 import 'login/forgetpassword.dart';
-import 'login/home.dart';
-import 'login/login.dart';
+import 'home.dart';
 import 'login/register.dart';
 import 'news.dart';
 
@@ -23,7 +23,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
     const ForgetPasswordScreen(),
     const RegisterScreen(),
     const NewsScreen(),
-    const LoginScreen(),
+    const ProfileScreen(),
   ];
 
   _onItemTapped(int index) {

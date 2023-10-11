@@ -43,8 +43,8 @@ class AlertDialogselect {
                     padding: const EdgeInsets.all(4),
                   ),
                   onPressed: () async {
-                    await FirebaseAuth.instance.signOut().then(
-                        (e) => Navigator.pushReplacementNamed(context, '/'));
+                    await FirebaseAuth.instance.signOut().then((e) =>
+                        Navigator.popUntil(context, (route) => route.isFirst));
                   },
                   child: const Text('ตกลง'),
                 ),

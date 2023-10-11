@@ -10,7 +10,7 @@ import 'package:mentalassessment/model/login/login_post_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/login/login_res_model.dart';
-import '../views/widgets/alert_wrongpass.dart';
+import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
   static signInWithGoogle(BuildContext context) async {
@@ -61,6 +61,7 @@ class AuthService {
       AlertDialogselect.alertworngpass(context);
     } else {
       prefs.setString('token', result.result!);
+      Navigator.pushReplacementNamed(context, '/navigator');
     }
     print('token in prefs: ${prefs.get('token')}');
   }
@@ -77,5 +78,9 @@ class AuthService {
     });
     await Future.delayed(const Duration(milliseconds: 1));
     return isSignIn;
+  }
+
+  static signOut(context) async {
+    AlertDialogselect.alertlogout(context);
   }
 }
