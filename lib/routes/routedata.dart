@@ -5,7 +5,7 @@ import 'package:mentalassessment/views/welcome.dart';
 
 import '../views/login/forgetpassword.dart';
 import '../views/login/forgetpassword_success.dart';
-import '../views/login/home.dart';
+import '../views/home.dart';
 import '../views/login/login.dart';
 import '../views/login/register.dart';
 import '../views/login/register_success.dart';
