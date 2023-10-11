@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mentalassessment/constant/assets.dart';
+import 'package:mentalassessment/constants/assets.dart';
 
-import '../constant/theme.dart';
-import 'widget/widgetLayout/layout.dart';
+import '../../constants/theme.dart';
+import '../widgets/widgetLayout/layout.dart';
 
 class RegisterSuccessScreen extends StatefulWidget {
   const RegisterSuccessScreen({super.key});

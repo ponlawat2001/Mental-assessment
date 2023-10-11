@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../component/component.dart';
+import '../components/component.dart';
 
 class NewlistWidget extends StatelessWidget {
   final int itemcount;

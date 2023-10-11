@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mentalassessment/constant/assets.dart';
-import 'package:mentalassessment/view/forgetpassword.dart';
-import 'package:mentalassessment/view/home.dart';
-import 'package:mentalassessment/view/login.dart';
-import 'package:mentalassessment/view/news.dart';
-import 'package:mentalassessment/view/register.dart';
+import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/views/profile/profile.dart';
 
-import '../constant/theme.dart';
+import '../constants/theme.dart';
+import 'login/forgetpassword.dart';
+import 'home.dart';
+import 'login/register.dart';
+import 'news.dart';
 
 class NavigatorScreen extends StatefulWidget {
   const NavigatorScreen({super.key});
@@ -23,7 +23,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
     const ForgetPasswordScreen(),
     const RegisterScreen(),
     const NewsScreen(),
-    const LoginScreen(),
+    const ProfileScreen(),
   ];
 
   _onItemTapped(int index) {

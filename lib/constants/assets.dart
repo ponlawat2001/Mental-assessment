@@ -4,6 +4,8 @@ class Assets {
   static const imageWelcome = '$imageDir/welcome.png';
   static const imageBackground = '$imageDir/background.png';
   static const imageBackground2 = '$imageDir/background2.png';
+  static const imageBackground3 = '$imageDir/background3.png';
+  static const imageBackground3_1 = '$imageDir/background3-1.png';
 
   //icons
   static const iconDir = 'assets/icons';
@@ -17,6 +19,7 @@ class Assets {
   static const iconPerson = '$iconDir/person.svg';
   static const iconImage = '$iconDir/image.png';
   static const iconHeart = '$iconDir/heart.svg';
+  static const iconInfo = '$iconDir/info.svg';
 
   //navigation
   static const iconDirNavigation = 'assets/icons/navigation';
