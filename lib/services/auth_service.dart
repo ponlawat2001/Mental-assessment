@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
   static signInWithGoogle(BuildContext context) async {
+    AlertDialogselect.loadingDialog(context);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -26,7 +25,7 @@ class AuthService {
     );
     await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
       prefs.setString('token', googleAuth.idToken ?? '');
-      log('token in prefs: ${prefs.get('token')}');
+      Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
     }).catchError((e) => null);
   }
@@ -45,6 +44,7 @@ class AuthService {
   }
 
   static signInWithEmail(PostEmailLogin? data, context) async {
+    AlertDialogselect.loadingDialog(context);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final dio = Dio();
@@ -58,12 +58,13 @@ class AuthService {
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     if (result.result == '') {
-      AlertDialogselect.alertworngpass(context);
+      await AlertDialogselect.alertworngpass(context);
+      Navigator.pop(context);
     } else {
       prefs.setString('token', result.result!);
+      Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
     }
-    print('token in prefs: ${prefs.get('token')}');
   }
 
   static Future<bool> signInCheck(context) async {

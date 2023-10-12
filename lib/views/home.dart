@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
@@ -94,7 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       maximumSize: const Size.fromWidth(210),
                       padding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 16)),
-                  onPressed: () {},
+                  onPressed: () {
+                    AlertDialogselect.loadingDialog(context);
+                  },
                   child: Row(
                     children: [
                       SvgPicture.asset(Assets.iconHeart),
