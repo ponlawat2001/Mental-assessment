@@ -44,8 +44,8 @@ class AlertDialogselect {
                   ),
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut().then((e) {
-                      Navigator.popUntil(context,
-                          ModalRoute.withName(Navigator.defaultRouteName));
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', ModalRoute.withName('/'));
                     });
                   },
                   child: const Text('ตกลง'),
