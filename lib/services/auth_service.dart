@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +23,19 @@ class AuthService {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-      prefs.setString('token', googleAuth.idToken ?? '');
-      log('token in prefs: ${prefs.get('token')}');
+    try {
+      if (!context.mounted) return;
+      AlertDialogselect.loadingDialog(context);
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      String? token = await FirebaseAuth.instance.currentUser!.getIdToken();
+      prefs.setString('token', token ?? '');
+      log(prefs.getString('token') ?? '');
+      if (!context.mounted) return;
+      Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
-    }).catchError((e) => null);
+    } catch (e) {
+      return null;
+    }
   }
 
   static signInWithFacebook(BuildContext context) async {
@@ -45,6 +52,7 @@ class AuthService {
   }
 
   static signInWithEmail(PostEmailLogin? data, context) async {
+    AlertDialogselect.loadingDialog(context);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final dio = Dio();
@@ -58,12 +66,13 @@ class AuthService {
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     if (result.result == '') {
-      AlertDialogselect.alertworngpass(context);
+      await AlertDialogselect.alertworngpass(context);
+      Navigator.pop(context);
     } else {
       prefs.setString('token', result.result!);
+      Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
     }
-    print('token in prefs: ${prefs.get('token')}');
   }
 
   static Future<bool> signInCheck(context) async {

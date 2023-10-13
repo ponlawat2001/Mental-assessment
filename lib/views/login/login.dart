@@ -4,6 +4,7 @@ import 'package:mentalassessment/constants/formvalidate.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
 import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/assets.dart';
 import '../../constants/theme.dart';
 import '../widgets/widgetLayout/layout.dart';
@@ -21,6 +22,23 @@ class _LoginScreenState extends State<LoginScreen> {
   UserCredential? googlesignin;
   bool _passwordVisible = true;
   bool _rememberMe = false;
+
+  @override
+  initState() {
+    super.initState();
+    callRemember();
+  }
+
+  Future<void> callRemember() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? temp = prefs.getStringList('remember');
+    _rememberMe = prefs.getBool('isCheckremember') ?? false;
+    if (temp != null) {
+      emailField.text = temp[0];
+      passwordField.text = temp[1];
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,12 +142,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Sign in Button
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    final SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     if (formKey.currentState!.validate()) {
                       PostEmailLogin? temp = PostEmailLogin(
                         email: emailField.text,
                         password: passwordField.text,
                       );
+                      if (_rememberMe) {
+                        prefs.setBool('isCheckremember', true);
+                        prefs.setStringList('remember',
+                            <String>[emailField.text, passwordField.text]);
+                      } else if (prefs.getStringList('remember') != null) {
+                        prefs.remove('remember');
+                        prefs.remove('isCheckremember');
+                      }
+                      if (!context.mounted) return;
                       AuthService.signInWithEmail(temp, context);
                     }
                   },
@@ -208,12 +237,13 @@ class _LoginScreenState extends State<LoginScreen> {
         Row(
           children: [
             Checkbox(
-                value: _rememberMe,
-                onChanged: (bool? value) {
-                  setState(() {
-                    _rememberMe = value!;
-                  });
-                }),
+              value: _rememberMe,
+              onChanged: (bool? value) {
+                setState(() {
+                  _rememberMe = value!;
+                });
+              },
+            ),
             Text(
               'Remember Me',
               style: Theme.of(context).textTheme.headlineSmall,

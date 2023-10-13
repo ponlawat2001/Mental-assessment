@@ -43,8 +43,10 @@ class AlertDialogselect {
                     padding: const EdgeInsets.all(4),
                   ),
                   onPressed: () async {
-                    await FirebaseAuth.instance.signOut().then((e) =>
-                        Navigator.popUntil(context, (route) => route.isFirst));
+                    await FirebaseAuth.instance.signOut().then((e) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', ModalRoute.withName('/'));
+                    });
                   },
                   child: const Text('ตกลง'),
                 ),
@@ -109,5 +111,18 @@ class AlertDialogselect {
             ],
           );
         });
+  }
+
+  static loadingDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return Center(
+            child: CircularProgressIndicator(
+          color: ColorTheme.main30,
+        ));
+      },
+    );
   }
 }
