@@ -13,6 +13,11 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -127,7 +132,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.white,
+                image: const DecorationImage(
+                    image: AssetImage(Assets.imageAvatarfemale01)),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
