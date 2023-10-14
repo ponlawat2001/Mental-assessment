@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +57,10 @@ class AuthService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final dio = Dio();
+
     Response response = await dio.post(
-      Serverinfo.login,
+      //for dev
+      (Platform.isAndroid) ? Serverinfo.loginAndroid : Serverinfo.login,
       data: {
         'email': data?.email,
         'password': data?.password,
