@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
+import 'package:mentalassessment/model/register/register_post_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/login/login_res_model.dart';
@@ -94,5 +96,18 @@ class AuthService {
 
   static signOut(context) async {
     AlertDialogselect.alertlogout(context);
+  }
+
+  static register(RegisterModel data) async {
+    final db = FirebaseFirestore.instance;
+
+    final post = {
+      "email": data.email,
+      "password": data.password,
+      "avatar": data.avatar,
+    };
+
+    await db.collection("Users").add(post).then((documentSnapshot) =>
+        print("Added Data with ID: ${documentSnapshot.id}"));
   }
 }

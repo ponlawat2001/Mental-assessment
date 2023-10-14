@@ -1,4 +1,7 @@
+import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
+import 'package:mentalassessment/model/register/register_post_model.dart';
+import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 
 import '../../constants/assets.dart';
@@ -155,12 +158,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility))),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
 
                     //Sign up Button
                     ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          RegisterModel data = RegisterModel(
+                              email: _emailField.text,
+                              password:
+                                  Crypt.sha256(_passwordField.text).toString(),
+                              avatar: 'avatarfemale01');
+                          AuthService.register(data);
+                        }
                       },
                       child: Text(
                         'Sign up',
