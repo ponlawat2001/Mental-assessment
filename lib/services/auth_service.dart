@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +70,8 @@ class AuthService {
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     if (result.result == '') {
-      await AlertDialogselect.alertworngpass(context);
+      await AlertDialogselect.alertcation(
+          context, 'อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'กรุณาตรวจสอบใหม่อีกครั้ง');
       Navigator.pop(context);
     } else {
       prefs.setString('token', result.result!);
@@ -98,16 +98,34 @@ class AuthService {
     AlertDialogselect.alertlogout(context);
   }
 
-  static register(RegisterModel data) async {
-    final db = FirebaseFirestore.instance;
+  static register(BuildContext context, RegisterModel data) async {
+    final dio = Dio();
 
     final post = {
       "email": data.email,
       "password": data.password,
       "avatar": data.avatar,
     };
+    AlertDialogselect.loadingDialog(context);
+    Response response = await dio.post(
+      //for dev
+      (Platform.isAndroid)
+          ? Serverinfo.registeAndroid
+          : Serverinfo.registeAndroid,
+      data: {
+        'email': data.email,
+        'password': data.password,
+      },
+    );
+    Navigator.pop(context);
 
-    await db.collection("Users").add(post).then((documentSnapshot) =>
-        print("Added Data with ID: ${documentSnapshot.id}"));
+    if (response.data['message'] == 'auth/email-already-in-use') {
+      if (!context.mounted) return;
+      AlertDialogselect.alertcation(
+          context, 'บัญชีนี้ถูกใช้แล้ว', 'กรุณาลองใหม่อีกครั้ง');
+    }
+    print(response.data);
+
+    if (!context.mounted) return;
   }
 }

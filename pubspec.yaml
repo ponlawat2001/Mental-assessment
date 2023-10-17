@@ -45,7 +45,6 @@ dependencies:
   dio: ^5.3.3
   shared_preferences: ^2.2.1
   get: ^4.6.6
-  firebase_core: ^2.17.0
   cloud_firestore: ^4.9.3
   crypt: ^4.3.1
 
