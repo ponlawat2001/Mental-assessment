@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           .bodySmall!
                           .copyWith(fontSize: 16, color: ColorTheme.main5),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
                     TextFormField(
                       controller: _emailField,
                       onChanged: (value) {
@@ -104,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _passwordField.text = value;
                       },
                       validator: (value) {
-                        temppassword = value ?? '';
+                        temppassword = _passwordField.text;
                         if (Formvalidate.notemptyForm(value ?? '') != '') {
                           return Formvalidate.notemptyForm(value ?? '');
                         } else if (temppassword2 != value) {
@@ -134,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _passwordconfirmField.text = value;
                       },
                       validator: (value) {
-                        temppassword2 = value ?? '';
+                        temppassword2 = _passwordconfirmField.text;
 
                         if (Formvalidate.notemptyForm(value ?? '') != '') {
                           return Formvalidate.notemptyForm(value ?? '');
@@ -162,14 +162,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     //Sign up Button
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           RegisterModel data = RegisterModel(
                               email: _emailField.text,
                               password:
                                   Crypt.sha256(_passwordField.text).toString(),
                               avatar: 'avatarfemale01');
-                          AuthService.register(data);
+                          await AuthService.register(context, data);
                         }
                       },
                       child: Text(
