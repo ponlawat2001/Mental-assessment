@@ -34,7 +34,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Layout body(BuildContext context) {
     String temppassword = '';
-    String temppassword2 = '';
 
     return Layout(
         backgroundAsset: Assets.imageBackground,
@@ -107,8 +106,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         temppassword = _passwordField.text;
                         if (Formvalidate.notemptyForm(value ?? '') != '') {
                           return Formvalidate.notemptyForm(value ?? '');
-                        } else if (temppassword2 != value) {
-                          return 'รหัสผ่านไม่ตรงกัน';
                         }
                         return null;
                       },
@@ -134,8 +131,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _passwordconfirmField.text = value;
                       },
                       validator: (value) {
-                        temppassword2 = _passwordconfirmField.text;
-
                         if (Formvalidate.notemptyForm(value ?? '') != '') {
                           return Formvalidate.notemptyForm(value ?? '');
                         } else if (temppassword != value) {
@@ -189,7 +184,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         foregroundColor: ColorTheme.main10,
                         backgroundColor: ColorTheme.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        AuthService.signInWithGoogle(context);
+                      },
                       child: Component.socialTextButton(context,
                           Assets.iconGoogleLogo, 'Continue with Google'),
                     ),
