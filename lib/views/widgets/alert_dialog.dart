@@ -67,7 +67,8 @@ class AlertDialogselect {
         });
   }
 
-  static Future<void> alertworngpass(BuildContext context) async {
+  static Future<void> alertcation(
+      BuildContext context, String title, String subtitle) async {
     return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -90,11 +91,11 @@ class AlertDialogselect {
                     height: 16,
                   ),
                   Text(
-                    'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
+                    title,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Text(
-                    'กรุณาตรวจสอบอีกครั้ง',
+                    subtitle,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],

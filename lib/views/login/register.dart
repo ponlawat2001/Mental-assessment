@@ -1,4 +1,7 @@
+import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
+import 'package:mentalassessment/model/register/register_post_model.dart';
+import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 
 import '../../constants/assets.dart';
@@ -31,7 +34,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Layout body(BuildContext context) {
     String temppassword = '';
-    String temppassword2 = '';
 
     return Layout(
         backgroundAsset: Assets.imageBackground,
@@ -71,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           .bodySmall!
                           .copyWith(fontSize: 16, color: ColorTheme.main5),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
                     TextFormField(
                       controller: _emailField,
                       onChanged: (value) {
@@ -101,11 +103,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _passwordField.text = value;
                       },
                       validator: (value) {
-                        temppassword = value ?? '';
+                        temppassword = _passwordField.text;
                         if (Formvalidate.notemptyForm(value ?? '') != '') {
                           return Formvalidate.notemptyForm(value ?? '');
-                        } else if (temppassword2 != value) {
-                          return 'รหัสผ่านไม่ตรงกัน';
                         }
                         return null;
                       },
@@ -131,8 +131,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _passwordconfirmField.text = value;
                       },
                       validator: (value) {
-                        temppassword2 = value ?? '';
-
                         if (Formvalidate.notemptyForm(value ?? '') != '') {
                           return Formvalidate.notemptyForm(value ?? '');
                         } else if (temppassword != value) {
@@ -155,12 +153,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility))),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
 
                     //Sign up Button
                     ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          RegisterModel data = RegisterModel(
+                              email: _emailField.text,
+                              password:
+                                  Crypt.sha256(_passwordField.text).toString(),
+                              avatar: 'avatarfemale01');
+                          await AuthService.register(context, data);
+                        }
                       },
                       child: Text(
                         'Sign up',
@@ -179,7 +184,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         foregroundColor: ColorTheme.main10,
                         backgroundColor: ColorTheme.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        AuthService.signInWithGoogle(context);
+                      },
                       child: Component.socialTextButton(context,
                           Assets.iconGoogleLogo, 'Continue with Google'),
                     ),

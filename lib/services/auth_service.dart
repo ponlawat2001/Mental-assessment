@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +7,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
+import 'package:mentalassessment/model/register/register_post_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/login/login_res_model.dart';
 import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
+  static fetchToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
+    await prefs.setString('token', newtoken ?? '');
+    print(newtoken);
+  }
+
   static signInWithGoogle(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -56,8 +65,10 @@ class AuthService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final dio = Dio();
+
     Response response = await dio.post(
-      Serverinfo.login,
+      //for dev
+      (Platform.isAndroid) ? Serverinfo.loginAndroid : Serverinfo.login,
       data: {
         'email': data?.email,
         'password': data?.password,
@@ -66,7 +77,8 @@ class AuthService {
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     if (result.result == '') {
-      await AlertDialogselect.alertworngpass(context);
+      await AlertDialogselect.alertcation(
+          context, 'อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'กรุณาตรวจสอบใหม่อีกครั้ง');
       Navigator.pop(context);
     } else {
       prefs.setString('token', result.result!);
@@ -91,5 +103,35 @@ class AuthService {
 
   static signOut(context) async {
     AlertDialogselect.alertlogout(context);
+  }
+
+  static register(BuildContext context, RegisterModel data) async {
+    final dio = Dio();
+    // final post = {
+    //   "email": data.email,
+    //   "avatar": data.avatar,
+    // };
+    AlertDialogselect.loadingDialog(context);
+    Response response = await dio.post(
+      //for dev
+      (Platform.isAndroid)
+          ? Serverinfo.registeAndroid
+          : Serverinfo.registeAndroid,
+      data: {
+        'email': data.email,
+        'password': data.password,
+      },
+    );
+    if (!context.mounted) return;
+    Navigator.pop(context);
+
+    if (response.data['message'] == 'auth/email-already-in-use') {
+      if (!context.mounted) return;
+      AlertDialogselect.alertcation(
+          context, 'บัญชีนี้ถูกใช้แล้ว', 'กรุณาลองใหม่อีกครั้ง');
+    } else {
+      signInWithEmail(
+          PostEmailLogin(email: data.email, password: data.password), context);
+    }
   }
 }
