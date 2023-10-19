@@ -14,6 +14,13 @@ import '../model/login/login_res_model.dart';
 import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
+  static fetchToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
+    await prefs.setString('token', newtoken ?? '');
+    print(newtoken);
+  }
+
   static signInWithGoogle(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -100,12 +107,10 @@ class AuthService {
 
   static register(BuildContext context, RegisterModel data) async {
     final dio = Dio();
-
-    final post = {
-      "email": data.email,
-      "password": data.password,
-      "avatar": data.avatar,
-    };
+    // final post = {
+    //   "email": data.email,
+    //   "avatar": data.avatar,
+    // };
     AlertDialogselect.loadingDialog(context);
     Response response = await dio.post(
       //for dev
@@ -117,15 +122,16 @@ class AuthService {
         'password': data.password,
       },
     );
+    if (!context.mounted) return;
     Navigator.pop(context);
 
     if (response.data['message'] == 'auth/email-already-in-use') {
       if (!context.mounted) return;
       AlertDialogselect.alertcation(
           context, 'บัญชีนี้ถูกใช้แล้ว', 'กรุณาลองใหม่อีกครั้ง');
+    } else {
+      signInWithEmail(
+          PostEmailLogin(email: data.email, password: data.password), context);
     }
-    print(response.data);
-
-    if (!context.mounted) return;
   }
 }

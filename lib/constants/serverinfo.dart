@@ -11,4 +11,7 @@ class Serverinfo {
   //register
   static String usersAndroid = '$serverAndroid/users';
   static String registeAndroid = '$usersAndroid/create';
+
+  //user
+  static String usersAvatar = '$usersAndroid/findOneAvatar';
 }
