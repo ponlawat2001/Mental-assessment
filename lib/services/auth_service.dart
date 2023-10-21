@@ -14,6 +14,19 @@ import '../model/login/login_res_model.dart';
 import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
+  static sendResetpassword(String email, context) async {
+    AlertDialogselect.loadingDialog(context);
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((_) {
+      Navigator.pushReplacementNamed(context, '/forgetsuccess');
+    }).catchError(
+      (e) async {
+        await AlertDialogselect.alertcation(
+            context, 'ไม่พบอีเมลนี้ในระบบ', 'กรุณาตรวจสอบใหม่อีกครั้ง');
+        Navigator.pop(context);
+      },
+    );
+  }
+
   static fetchToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
@@ -118,10 +131,6 @@ class AuthService {
 
   static register(BuildContext context, RegisterModel data) async {
     final dio = Dio();
-    // final post = {
-    //   "email": data.email,
-    //   "avatar": data.avatar,
-    // };
     AlertDialogselect.loadingDialog(context);
     Response response = await dio.post(
       //for dev
