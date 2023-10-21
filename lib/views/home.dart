@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
-import 'package:mentalassessment/services/auth_service.dart';
-import 'package:mentalassessment/services/user_service.dart';
+import 'package:mentalassessment/controllers/user_controller.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
@@ -17,10 +16,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  UserController userController = Get.put(UserController());
+
   @override
   void initState() {
     super.initState();
-    UserService.avatarUser(FirebaseAuth.instance.currentUser?.email ?? '');
+    userController.fetchUsers();
   }
 
   @override
@@ -43,28 +44,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    true
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: Image.asset(
-                              Assets.imageAvatarfemale01,
-                              width: 52,
-                              height: 52,
-                            ),
-                          )
-                        : Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: ColorTheme.white,
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                            child: SvgPicture.asset(
-                              Assets.iconPerson,
-                              width: 24,
-                              height: 24,
-                              colorFilter: ColorFilter.mode(
-                                  ColorTheme.main5, BlendMode.srcIn),
-                            )),
+                    GetX<UserController>(
+                        init: UserController(),
+                        builder: (controller) {
+                          return controller.users.value.avatar == ''
+                              ? Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: ColorTheme.white,
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: SvgPicture.asset(
+                                    Assets.iconPerson,
+                                    width: 24,
+                                    height: 24,
+                                    colorFilter: ColorFilter.mode(
+                                        ColorTheme.main5, BlendMode.srcIn),
+                                  ))
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(32),
+                                  child: Image.asset(
+                                    Assets.imageAvatarfemale01,
+                                    width: 52,
+                                    height: 52,
+                                  ),
+                                );
+                        }),
                     InkWell(
                       onTap: () {},
                       child: Container(

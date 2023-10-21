@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
-import '../services/auth_service.dart';
 import 'widgets/widgetLayout/layout.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -9,7 +8,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthService.signInCheck(context);
+    // AuthService.signInCheck(context);
+
     return Scaffold(
       body: body(context),
     );

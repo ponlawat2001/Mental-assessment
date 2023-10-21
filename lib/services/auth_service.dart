@@ -17,8 +17,8 @@ class AuthService {
   static fetchToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
-    await prefs.setString('token', newtoken ?? '');
-    print(newtoken);
+    newtoken != null ? await prefs.setString('token', newtoken) : {};
+    print('fetchNewtoken: ${prefs.get('token')}');
   }
 
   static signInWithGoogle(BuildContext context) async {
@@ -60,7 +60,7 @@ class AuthService {
     }).catchError((e) => null);
   }
 
-  static signInWithEmail(PostEmailLogin? data, context) async {
+  static signInWithEmail(PostEmailLogin data, context) async {
     AlertDialogselect.loadingDialog(context);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -70,10 +70,13 @@ class AuthService {
       //for dev
       (Platform.isAndroid) ? Serverinfo.loginAndroid : Serverinfo.login,
       data: {
-        'email': data?.email,
-        'password': data?.password,
+        'email': data.email,
+        'password': data.password,
       },
     );
+    //signin email
+
+    //signin api
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     if (result.result == '') {
@@ -81,6 +84,8 @@ class AuthService {
           context, 'อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'กรุณาตรวจสอบใหม่อีกครั้ง');
       Navigator.pop(context);
     } else {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: data.email, password: data.password);
       prefs.setString('token', result.result!);
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
@@ -89,15 +94,21 @@ class AuthService {
 
   static Future<bool> signInCheck(context) async {
     bool isSignIn = false;
-    FirebaseAuth.instance.idTokenChanges().listen((User? user) {
-      if (user == null) {
-        isSignIn = false;
-      } else {
-        isSignIn = true;
-        Navigator.pushReplacementNamed(context, '/navigator');
-      }
-    });
-    await Future.delayed(const Duration(milliseconds: 1));
+    (FirebaseAuth.instance.currentUser == null)
+        ? isSignIn = false
+        : {
+            isSignIn = true,
+            Navigator.pushReplacementNamed(context, '/navigator')
+          };
+    // FirebaseAuth.instance.idTokenChanges().listen((User? user) {
+    //   if (user == null) {
+    //     isSignIn = false;
+    //   } else {
+    //     isSignIn = true;
+    //     Navigator.pushReplacementNamed(context, '/navigator');
+    //   }
+    // });
+    // await Future.delayed(const Duration(milliseconds: 1));
     return isSignIn;
   }
 

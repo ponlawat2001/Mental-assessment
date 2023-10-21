@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
-import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
 
 import '../constants/theme.dart';
@@ -21,7 +20,6 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
   @override
   void initState() {
     super.initState();
-    AuthService.fetchToken();
   }
 
   int _selectedindex = 0;
