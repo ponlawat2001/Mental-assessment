@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/views/navigator.dart';
-import 'package:mentalassessment/views/news.dart';
+import 'package:mentalassessment/views/news/news.dart';
 import 'package:mentalassessment/views/welcome.dart';
 
 import '../views/login/forgetpassword.dart';

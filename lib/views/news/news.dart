@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
-import '../constants/assets.dart';
-import '../constants/theme.dart';
+import '../../constants/assets.dart';
+import '../../constants/theme.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -13,6 +13,11 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

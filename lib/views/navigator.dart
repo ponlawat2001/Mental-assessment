@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,7 @@ import '../controllers/user_controller.dart';
 import 'login/forgetpassword.dart';
 import 'home.dart';
 import 'login/register.dart';
-import 'news.dart';
+import 'news/news.dart';
 
 class NavigatorScreen extends StatefulWidget {
   const NavigatorScreen({super.key});
@@ -51,7 +53,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32), topRight: Radius.circular(32)),
         child: SizedBox(
-          height: 110,
+          height: Platform.isAndroid ? 90 : 110,
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             backgroundColor: ColorTheme.white,
