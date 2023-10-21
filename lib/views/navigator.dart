@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
 
 import '../constants/theme.dart';
+import '../controllers/user_controller.dart';
 import 'login/forgetpassword.dart';
 import 'home.dart';
 import 'login/register.dart';
@@ -17,9 +19,12 @@ class NavigatorScreen extends StatefulWidget {
 }
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
+  UserController userController = Get.put(UserController());
+
   @override
   void initState() {
     super.initState();
+    userController.fetchUsers();
   }
 
   int _selectedindex = 0;

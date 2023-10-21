@@ -16,12 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  UserController userController = Get.put(UserController());
-
   @override
   void initState() {
     super.initState();
-    userController.fetchUsers();
   }
 
   @override
