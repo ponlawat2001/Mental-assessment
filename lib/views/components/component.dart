@@ -24,21 +24,25 @@ class Component {
                     height: 250,
                     decoration: BoxDecoration(
                         color: ColorTheme.white,
-                        image: DecorationImage(
-                            image: AssetImage(imagePath ?? Assets.iconImage),
-                            fit: imagePath == null
-                                ? BoxFit.none
-                                : BoxFit.cover)),
+                        image: imagePath == null
+                            ? const DecorationImage(
+                                image: AssetImage(Assets.iconImage),
+                                fit: BoxFit.none)
+                            : DecorationImage(
+                                image: NetworkImage(imagePath),
+                                fit: BoxFit.cover)),
                   )
                 : Container(
                     width: 250,
                     decoration: BoxDecoration(
                         color: ColorTheme.white,
-                        image: DecorationImage(
-                            image: AssetImage(imagePath ?? Assets.iconImage),
-                            fit: imagePath == null
-                                ? BoxFit.none
-                                : BoxFit.cover)),
+                        image: imagePath == null
+                            ? const DecorationImage(
+                                image: AssetImage(Assets.iconImage),
+                                fit: BoxFit.none)
+                            : DecorationImage(
+                                image: NetworkImage(imagePath),
+                                fit: BoxFit.cover)),
                   ),
           ),
           isvertical

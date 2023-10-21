@@ -14,4 +14,8 @@ class Serverinfo {
 
   //user
   static String usersAvatar = '$usersAndroid/findOneAvatar';
+
+  //news
+  static String newsAndroid = '$serverAndroid/news';
+  static String newsfind = '$newsAndroid/findAll';
 }

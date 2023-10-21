@@ -8,6 +8,8 @@ import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
+import '../services/news_service.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -19,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    NewsService.fetchNews();
   }
 
   @override
@@ -154,13 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 24),
                 const SizedBox(
                   height: 250,
-                  child: NewlistWidget(
-                    itemcount: 2,
-                    headline: 'โรคซึมเศร้าคืออะไร',
-                    detail:
-                        'คนส่วนใหญ่แล้วคำว่าโรคซึมเศร้าฟังดูไม่คุ้นหูถ้าพูดถึงเรื่องซึมเศร้าเรามักจะนึกกันว่าเป็นเรื่องของอารมณ์',
-                    // imagePath: Assets.imageWelcome,
-                  ),
+                  child: NewlistWidget(),
                 ),
               ],
             ),
