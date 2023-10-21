@@ -107,21 +107,21 @@ class AuthService {
 
   static Future<bool> signInCheck(context) async {
     bool isSignIn = false;
-    (FirebaseAuth.instance.currentUser == null)
-        ? isSignIn = false
-        : {
-            isSignIn = true,
-            Navigator.pushReplacementNamed(context, '/navigator')
-          };
-    // FirebaseAuth.instance.idTokenChanges().listen((User? user) {
-    //   if (user == null) {
-    //     isSignIn = false;
-    //   } else {
-    //     isSignIn = true;
-    //     Navigator.pushReplacementNamed(context, '/navigator');
-    //   }
-    // });
-    // await Future.delayed(const Duration(milliseconds: 1));
+    // (FirebaseAuth.instance.currentUser == null)
+    //     ? isSignIn = false
+    //     : {
+    //         isSignIn = true,
+    //         Navigator.pushReplacementNamed(context, '/navigator')
+    //       };
+    FirebaseAuth.instance.idTokenChanges().listen((User? user) {
+      if (user == null) {
+        isSignIn = false;
+      } else {
+        isSignIn = true;
+        Navigator.pushReplacementNamed(context, '/navigator');
+      }
+    });
+    await Future.delayed(const Duration(milliseconds: 1));
     return isSignIn;
   }
 
