@@ -29,8 +29,9 @@ class NewlistWidget extends StatelessWidget {
                       false)
                   ? controller.newslist.value.result![index].imageUrl
                   : null,
-              controller.newslist.value.result?[index].title ?? 'Unknonw',
-              controller.newslist.value.result?[index].intro ?? 'Unknonw',
+              controller.newslist.value.result?[index].title ?? 'Unknown',
+              controller.newslist.value.result?[index].intro ?? 'Unknown',
+              controller.newslist.value.result?[index].newsContent ?? 'Unknown',
               axis == Axis.vertical),
         );
       },

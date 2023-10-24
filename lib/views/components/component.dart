@@ -1,104 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/model/news/news_model.dart';
 import 'package:shadow_overlay/shadow_overlay.dart';
 import '../../constants/theme.dart';
 
 class Component {
-  static ClipRRect newsCard(
+  static Widget newsCard(
     BuildContext context,
     String? imagePath,
     String title,
-    String detail,
+    String intro,
+    String content,
     bool isvertical,
   ) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: Stack(
-        children: [
-          ShadowOverlay(
-            shadowWidth: 500,
-            shadowHeight: 250,
-            child: isvertical
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/newsdetail',
+            arguments: NewsResult(
+              imageUrl: imagePath,
+              intro: intro,
+              newsContent: content,
+              title: title,
+              isDelete: false,
+            ));
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            ShadowOverlay(
+              shadowWidth: 500,
+              shadowHeight: 250,
+              child: isvertical
+                  ? Container(
+                      height: 250,
+                      decoration: BoxDecoration(
+                          color: ColorTheme.white,
+                          image: imagePath == null
+                              ? const DecorationImage(
+                                  image: AssetImage(Assets.iconImage),
+                                  fit: BoxFit.none)
+                              : DecorationImage(
+                                  image: NetworkImage(imagePath),
+                                  fit: BoxFit.cover)),
+                    )
+                  : Container(
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: ColorTheme.white,
+                          image: imagePath == null
+                              ? const DecorationImage(
+                                  image: AssetImage(Assets.iconImage),
+                                  fit: BoxFit.none)
+                              : DecorationImage(
+                                  image: NetworkImage(imagePath),
+                                  fit: BoxFit.cover)),
+                    ),
+            ),
+            isvertical
                 ? Container(
                     height: 250,
                     decoration: BoxDecoration(
-                        color: ColorTheme.white,
-                        image: imagePath == null
-                            ? const DecorationImage(
-                                image: AssetImage(Assets.iconImage),
-                                fit: BoxFit.none)
-                            : DecorationImage(
-                                image: NetworkImage(imagePath),
-                                fit: BoxFit.cover)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          Text(
+                            intro,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: ColorTheme.main5),
+                          ),
+                        ],
+                      ),
+                    ),
                   )
                 : Container(
                     width: 250,
                     decoration: BoxDecoration(
-                        color: ColorTheme.white,
-                        image: imagePath == null
-                            ? const DecorationImage(
-                                image: AssetImage(Assets.iconImage),
-                                fit: BoxFit.none)
-                            : DecorationImage(
-                                image: NetworkImage(imagePath),
-                                fit: BoxFit.cover)),
-                  ),
-          ),
-          isvertical
-              ? Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        Text(
-                          detail,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: ColorTheme.main5),
-                        ),
-                      ],
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          Text(
+                            intro,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: ColorTheme.main5),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                )
-              : Container(
-                  width: 250,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        Text(
-                          detail,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: ColorTheme.main5),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }
