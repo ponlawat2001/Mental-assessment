@@ -1,9 +1,9 @@
 class PostEmailLogin {
-  String? email;
-  String? password;
+  String email;
+  String password;
 
   PostEmailLogin({
-    this.email,
-    this.password,
+    required this.email,
+    required this.password,
   });
 }

@@ -10,6 +10,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthService.signInCheck(context);
+
     return Scaffold(
       body: body(context),
     );

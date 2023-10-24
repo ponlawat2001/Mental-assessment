@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/views/navigator.dart';
-import 'package:mentalassessment/views/news.dart';
+import 'package:mentalassessment/views/news/news.dart';
+import 'package:mentalassessment/views/news/news_detail.dart';
 import 'package:mentalassessment/views/welcome.dart';
 
 import '../views/login/forgetpassword.dart';
@@ -19,6 +20,7 @@ class RouteData {
     '/registersuccess': (context) => const RegisterSuccessScreen(),
     '/forget': (context) => const ForgetPasswordScreen(),
     '/forgetsuccess': (context) => const ForgetPasswordSuccessScreen(),
+    '/newsdetail': (context) => const NewsDetailScreen(),
 
     //Navigator here
     '/navigator': (context) => const NavigatorScreen(),

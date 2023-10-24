@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mentalassessment/services/news_service.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
-import '../constants/assets.dart';
-import '../constants/theme.dart';
+import '../../constants/assets.dart';
+import '../../constants/theme.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -13,6 +14,12 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    NewsService.fetchNews();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +50,8 @@ class _NewsScreenState extends State<NewsScreen> {
                 const SizedBox(height: 8),
                 const Flexible(
                   child: NewlistWidget(
-                      axis: Axis.vertical,
-                      headline: 'โรคซึมเศร้าคืออะไร',
-                      detail:
-                          'คนส่วนใหญ่แล้วคำว่าโรคซึมเศร้าฟังดูไม่คุ้นหูถ้าพูดถึงเรื่องซึมเศร้าเรามักจะนึกกันว่าเป็นเรื่องของอารมณ์',
-                      // imagePath: Assets.imageWelcome,
-                      itemcount: 4),
+                    axis: Axis.vertical,
+                  ),
                 )
               ],
             ),

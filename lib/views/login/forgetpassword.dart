@@ -1,6 +1,7 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:mentalassessment/services/auth_service.dart';
 import '../../constants/assets.dart';
+import '../../constants/formvalidate.dart';
 import '../../constants/theme.dart';
 import '../widgets/widgetLayout/layout.dart';
 
@@ -12,6 +13,8 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  late String resetpasswordEmail;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +23,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   }
 
   Layout body(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+
     return Layout(
         backgroundAsset: Assets.imageBackground,
         child: SafeArea(
@@ -32,55 +37,69 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.arrow_back_rounded),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      Assets.iconLogo,
-                      semanticLabel: 'Mental Assessment',
-                      width: 100,
-                      height: 100,
+              Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        Assets.iconLogo,
+                        semanticLabel: 'Mental Assessment',
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'เจอกันอีกแล้ว วันนี้ก็มาพยายามทำวันนี้ให้เป็นวันที่ดีอีกวันกันเถอะ',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(fontSize: 16, color: ColorTheme.main5),
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    validator: (value) {
-                      return EmailValidator.validate(value!)
-                          ? 'อีเมลไม่ถูกต้อง'
-                          : '';
-                    },
-                    style: Theme.of(context).inputDecorationTheme.labelStyle,
-                    cursorColor: ColorTheme.main5,
-                    decoration:
-                        const InputDecoration(hintText: 'Enter your email..'),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // ResetPassword Button
-                  ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/forgetsuccess'),
-                    child: Text(
-                      'Continue',
+                    const SizedBox(height: 16),
+                    Text(
+                      'เจอกันอีกแล้ว วันนี้ก็มาพยายามทำวันนี้ให้เป็นวันที่ดีอีกวันกันเถอะ',
+                      textAlign: TextAlign.start,
                       style: Theme.of(context)
                           .textTheme
-                          .titleLarge!
-                          .copyWith(color: ColorTheme.white),
+                          .bodySmall!
+                          .copyWith(fontSize: 16, color: ColorTheme.main5),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      validator: (value) {
+                        if (Formvalidate.notemptyForm(value ?? '') != '') {
+                          return Formvalidate.notemptyForm(value ?? '');
+                        } else if (Formvalidate.emailvalidateForm(
+                                value ?? '') !=
+                            '') {
+                          return Formvalidate.emailvalidateForm(value ?? '');
+                        }
+
+                        return null;
+                      },
+                      onChanged: (value) => resetpasswordEmail = value,
+                      style: Theme.of(context).inputDecorationTheme.labelStyle,
+                      cursorColor: ColorTheme.main5,
+                      decoration:
+                          const InputDecoration(hintText: 'Enter your email..'),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // ResetPassword Button
+                    ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          AuthService.sendResetpassword(
+                              resetpasswordEmail, context);
+                        }
+                      },
+                      child: Text(
+                        'Continue',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: ColorTheme.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

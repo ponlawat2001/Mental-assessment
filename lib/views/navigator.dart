@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
-import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
 
 import '../constants/theme.dart';
+import '../controllers/user_controller.dart';
 import 'login/forgetpassword.dart';
 import 'home.dart';
 import 'login/register.dart';
-import 'news.dart';
+import 'news/news.dart';
 
 class NavigatorScreen extends StatefulWidget {
   const NavigatorScreen({super.key});
@@ -18,10 +21,12 @@ class NavigatorScreen extends StatefulWidget {
 }
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
+  UserController userController = Get.put(UserController());
+
   @override
   void initState() {
     super.initState();
-    AuthService.fetchToken();
+    userController.fetchUsers();
   }
 
   int _selectedindex = 0;
@@ -48,7 +53,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32), topRight: Radius.circular(32)),
         child: SizedBox(
-          height: 110,
+          height: Platform.isAndroid ? 90 : 110,
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             backgroundColor: ColorTheme.white,

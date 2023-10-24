@@ -14,11 +14,24 @@ import '../model/login/login_res_model.dart';
 import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
+  static sendResetpassword(String email, context) async {
+    AlertDialogselect.loadingDialog(context);
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((_) {
+      Navigator.pushReplacementNamed(context, '/forgetsuccess');
+    }).catchError(
+      (e) async {
+        await AlertDialogselect.alertcation(
+            context, 'ไม่พบอีเมลนี้ในระบบ', 'กรุณาตรวจสอบใหม่อีกครั้ง');
+        Navigator.pop(context);
+      },
+    );
+  }
+
   static fetchToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
-    await prefs.setString('token', newtoken ?? '');
-    print(newtoken);
+    newtoken != null ? await prefs.setString('token', newtoken) : {};
+    print('fetchNewtoken: ${prefs.get('token')}');
   }
 
   static signInWithGoogle(BuildContext context) async {
@@ -60,7 +73,7 @@ class AuthService {
     }).catchError((e) => null);
   }
 
-  static signInWithEmail(PostEmailLogin? data, context) async {
+  static signInWithEmail(PostEmailLogin data, context) async {
     AlertDialogselect.loadingDialog(context);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -70,10 +83,13 @@ class AuthService {
       //for dev
       (Platform.isAndroid) ? Serverinfo.loginAndroid : Serverinfo.login,
       data: {
-        'email': data?.email,
-        'password': data?.password,
+        'email': data.email,
+        'password': data.password,
       },
     );
+    //signin email
+
+    //signin api
     ResEmailLogin result = ResEmailLogin(
         message: response.data['message'], result: response.data['result']);
     if (result.result == '') {
@@ -81,6 +97,8 @@ class AuthService {
           context, 'อีเมลหรือรหัสผ่านไม่ถูกต้อง', 'กรุณาตรวจสอบใหม่อีกครั้ง');
       Navigator.pop(context);
     } else {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: data.email, password: data.password);
       prefs.setString('token', result.result!);
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
@@ -89,6 +107,12 @@ class AuthService {
 
   static Future<bool> signInCheck(context) async {
     bool isSignIn = false;
+    // (FirebaseAuth.instance.currentUser == null)
+    //     ? isSignIn = false
+    //     : {
+    //         isSignIn = true,
+    //         Navigator.pushReplacementNamed(context, '/navigator')
+    //       };
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
       if (user == null) {
         isSignIn = false;
@@ -107,10 +131,6 @@ class AuthService {
 
   static register(BuildContext context, RegisterModel data) async {
     final dio = Dio();
-    // final post = {
-    //   "email": data.email,
-    //   "avatar": data.avatar,
-    // };
     AlertDialogselect.loadingDialog(context);
     Response response = await dio.post(
       //for dev
