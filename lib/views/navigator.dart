@@ -26,7 +26,9 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
   @override
   void initState() {
     super.initState();
-    userController.fetchUsers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userController.fetchUsers();
+    });
   }
 
   int _selectedindex = 0;

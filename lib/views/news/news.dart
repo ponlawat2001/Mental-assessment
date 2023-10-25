@@ -17,7 +17,9 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   void initState() {
     super.initState();
-    NewsService.fetchNews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NewsService.fetchNews();
+    });
   }
 
   @override

@@ -21,7 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    NewsService.fetchNews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NewsService.fetchNews();
+    });
   }
 
   @override
