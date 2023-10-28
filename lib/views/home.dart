@@ -3,11 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
-import 'package:mentalassessment/controllers/user_controller.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
+import '../controllers/avatar_controller.dart';
+import '../services/auth_service.dart';
 import '../services/news_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      AuthService.fetchToken();
       NewsService.fetchNews();
     });
   }
@@ -46,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GetX<UserController>(
-                        init: UserController(),
+                    GetX<AvatarController>(
+                        init: AvatarController(),
                         builder: (controller) {
                           return controller.users.value.avatar == ''
                               ? Container(

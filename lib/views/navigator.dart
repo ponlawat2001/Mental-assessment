@@ -7,7 +7,7 @@ import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
 
 import '../constants/theme.dart';
-import '../controllers/user_controller.dart';
+import '../controllers/avatar_controller.dart';
 import 'login/forgetpassword.dart';
 import 'home.dart';
 import 'login/register.dart';
@@ -21,7 +21,7 @@ class NavigatorScreen extends StatefulWidget {
 }
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
-  UserController userController = Get.put(UserController());
+  AvatarController userController = Get.put(AvatarController());
 
   @override
   void initState() {
