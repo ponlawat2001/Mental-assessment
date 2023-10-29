@@ -31,7 +31,7 @@ class AuthService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
     newtoken != null ? await prefs.setString('token', newtoken) : {};
-    print('fetchNewtoken: ${prefs.get('token')}');
+    print('fetchNewtoken');
   }
 
   static signInWithGoogle(BuildContext context) async {
