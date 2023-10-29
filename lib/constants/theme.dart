@@ -24,6 +24,8 @@ class ColorTheme {
   static Color lightGray2 = const Color(0xff939393);
   static Color dartGray = const Color(0xff636363);
   static Color lightGreen = const Color(0xffE4FDD7);
+  static Color blue = const Color(0xff5177FF);
+
   //emojicard
   static Color nodataEmoji = const Color(0xffECEDFF);
   static Color sosoEmoji = const Color(0xff88899B);
