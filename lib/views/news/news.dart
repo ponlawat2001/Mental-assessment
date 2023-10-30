@@ -29,38 +29,44 @@ class _NewsScreenState extends State<NewsScreen> {
     );
   }
 
-  Layout body(BuildContext context) {
-    return Layout(
-      backgroundAsset: Assets.imageBackground2,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'ข่าวสารและบทความ',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontSize: 24),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'รวบรวมข่าวสารและบทความที่มีประโยชน์รอให้คุณค้นพบ',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontSize: 16, color: ColorTheme.main5),
-              ),
-              const SizedBox(height: 8),
-              const Flexible(
-                child: NewlistWidget(
-                  axis: Axis.vertical,
+  RefreshIndicator body(BuildContext context) {
+    return RefreshIndicator(
+      color: ColorTheme.main10,
+      onRefresh: () {
+        return NewsService.fetchNews();
+      },
+      child: Layout(
+        backgroundAsset: Assets.imageBackground2,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'ข่าวสารและบทความ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontSize: 24),
                 ),
-              )
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  'รวบรวมข่าวสารและบทความที่มีประโยชน์รอให้คุณค้นพบ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(fontSize: 16, color: ColorTheme.main5),
+                ),
+                const SizedBox(height: 8),
+                const Flexible(
+                  child: NewlistWidget(
+                    axis: Axis.vertical,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
