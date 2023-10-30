@@ -16,12 +16,14 @@ class VentScreen extends StatefulWidget {
 class _VentScreenState extends State<VentScreen> {
   @override
   Widget build(BuildContext context) {
-    return body();
+    return Scaffold(
+      body: body(),
+    );
   }
 
-  Scaffold body() => Scaffold(
-        body: Layout(
-          backgroundAsset: Assets.imageBackground3,
+  Layout body() => Layout(
+        backgroundAsset: Assets.imageBackground3,
+        child: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(24),
@@ -67,39 +69,51 @@ class _VentScreenState extends State<VentScreen> {
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
-                    height: 150,
+                    height: 125,
                     child: GetX<AvatarController>(
-                        init: AvatarController(),
-                        builder: (controller) {
-                          return controller.users.value != null
-                              ? ListView.separated(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  separatorBuilder:
-                                      (BuildContext context, int index) =>
-                                          const SizedBox(width: 16),
-                                  itemCount: 5,
-                                  itemBuilder:
-                                      (BuildContext context, int index) =>
-                                          InkWell(
+                      init: AvatarController(),
+                      builder: (controller) {
+                        return controller.users.value != null
+                            ? GridView.builder(
+                                padding: const EdgeInsets.all(8),
+                                scrollDirection: Axis.vertical,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 8,
+                                  crossAxisCount: 4,
+                                  mainAxisSpacing: 16,
+                                  mainAxisExtent: 45,
+                                ),
+                                itemCount: 15,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return InkWell(
                                     onTap: () {},
                                     child: Container(
-                                      padding: const EdgeInsets.all(8),
+                                      alignment: Alignment.center,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ColorTheme.lightGray2,
+                                            offset: const Offset(2, 2),
+                                            blurRadius: 2,
+                                          ),
+                                        ],
                                         color: ColorTheme.white,
                                         borderRadius: BorderRadius.circular(16),
                                       ),
-                                      child: const Text('sdfdsfssfsf'),
+                                      child: const Text('Hello'),
                                     ),
-                                  ),
-                                )
-                              : Container();
-                        }),
+                                  );
+                                })
+                            : Container();
+                      },
+                    ),
                   ),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Flexible(
+                      Expanded(
                         child: ElevatedButton(
                           onPressed: () async {},
                           style: ElevatedButton.styleFrom(
@@ -115,7 +129,7 @@ class _VentScreenState extends State<VentScreen> {
                         ),
                       ),
                       const SizedBox(width: 16),
-                      Flexible(
+                      Expanded(
                         child: ElevatedButton(
                           onPressed: () async {},
                           style: ElevatedButton.styleFrom(
@@ -134,20 +148,18 @@ class _VentScreenState extends State<VentScreen> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () async {},
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(4),
-                        backgroundColor: ColorTheme.badScore,
-                      ),
-                      child: Text(
-                        'คลังความรู้สึก',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: ColorTheme.white),
-                      ),
+                  ElevatedButton(
+                    onPressed: () async {},
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(4),
+                      backgroundColor: ColorTheme.badScore,
+                    ),
+                    child: Text(
+                      'คลังความรู้สึก',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: ColorTheme.white),
                     ),
                   ),
                 ],
