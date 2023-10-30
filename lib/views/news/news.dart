@@ -17,13 +17,25 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   void initState() {
     super.initState();
-    NewsService.fetchNews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NewsService.fetchNews();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Layout(
+      body: body(context),
+    );
+  }
+
+  RefreshIndicator body(BuildContext context) {
+    return RefreshIndicator(
+      color: ColorTheme.main10,
+      onRefresh: () {
+        return NewsService.fetchNews();
+      },
+      child: Layout(
         backgroundAsset: Assets.imageBackground2,
         child: SafeArea(
           child: Padding(

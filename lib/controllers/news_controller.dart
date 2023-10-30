@@ -6,5 +6,6 @@ class NewsController extends GetxController {
 
   setNewslist(NewsModel data) {
     newslist.value = data;
+    update();
   }
 }

@@ -5,10 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
+import 'package:mentalassessment/views/vent/vent.dart';
 
 import '../constants/theme.dart';
-import '../controllers/user_controller.dart';
-import 'login/forgetpassword.dart';
+import '../controllers/avatar_controller.dart';
 import 'home.dart';
 import 'login/register.dart';
 import 'news/news.dart';
@@ -21,18 +21,20 @@ class NavigatorScreen extends StatefulWidget {
 }
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
-  UserController userController = Get.put(UserController());
+  AvatarController userController = Get.put(AvatarController());
 
   @override
   void initState() {
     super.initState();
-    userController.fetchUsers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userController.fetchUsers();
+    });
   }
 
-  int _selectedindex = 0;
+  int _selectedindex = 1;
   final List<Widget> _pageName = [
     const HomeScreen(),
-    const ForgetPasswordScreen(),
+    const VentScreen(),
     const RegisterScreen(),
     const NewsScreen(),
     const ProfileScreen(),

@@ -9,11 +9,11 @@ class Serverinfo {
   static String loginAndroid = '$authAndroid/email/login';
 
   //register
-  static String usersAndroid = '$serverAndroid/users';
-  static String registeAndroid = '$usersAndroid/create';
+  static String avatarAndroid = '$serverAndroid/avatars';
+  static String registeAndroid = '$avatarAndroid/create';
 
   //user
-  static String usersAvatar = '$usersAndroid/findOneAvatar';
+  static String avatar = '$avatarAndroid/findOne';
 
   //news
   static String newsAndroid = '$serverAndroid/news';
