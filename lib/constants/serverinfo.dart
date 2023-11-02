@@ -13,6 +13,9 @@ class Serverinfo {
   static String registeAndroid = '$avatarAndroid/create';
 
   //user
+  static String userAndroid = '$serverAndroid/users';
+  static String userupdate = '$userAndroid/update';
+
   static String avatar = '$avatarAndroid/findOne';
 
   //news
