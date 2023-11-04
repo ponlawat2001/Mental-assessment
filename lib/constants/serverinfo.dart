@@ -10,13 +10,14 @@ class Serverinfo {
 
   //register
   static String avatarAndroid = '$serverAndroid/avatars';
-  static String registeAndroid = '$avatarAndroid/create';
+  static String registeAndroid = '$userAndroid/create';
 
   //user
   static String userAndroid = '$serverAndroid/users';
   static String userupdate = '$userAndroid/update';
 
-  static String avatar = '$avatarAndroid/findOne';
+  static String avatarfindOne = '$avatarAndroid/findOne';
+  static String avatarcreate = '$avatarAndroid/create';
 
   //news
   static String newsAndroid = '$serverAndroid/news';
