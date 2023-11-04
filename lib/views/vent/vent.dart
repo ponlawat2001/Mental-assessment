@@ -73,7 +73,7 @@ class _VentScreenState extends State<VentScreen> {
                     child: GetX<AvatarController>(
                       init: AvatarController(),
                       builder: (controller) {
-                        return controller.users.value != null
+                        return controller.avatar.value != null
                             ? GridView.builder(
                                 padding: const EdgeInsets.all(8),
                                 scrollDirection: Axis.vertical,

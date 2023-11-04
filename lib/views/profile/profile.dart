@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         Text(
-                          FirebaseAuth.instance.currentUser?.displayName ??
+                          FirebaseAuth.instance.currentUser!.displayName ??
                               'Unknown',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
@@ -72,10 +72,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .labelMedium!
                               .copyWith(color: ColorTheme.main5, fontSize: 16),
                         ),
-                        FirebaseAuth.instance.currentUser?.phoneNumber == ''
+                        FirebaseAuth.instance.currentUser?.phoneNumber == null
                             ? const SizedBox()
                             : const SizedBox(height: 8),
-                        FirebaseAuth.instance.currentUser?.phoneNumber == ''
+                        FirebaseAuth.instance.currentUser?.phoneNumber == null
                             ? const SizedBox()
                             : Text(
                                 'เบอร์โทร: ${FirebaseAuth.instance.currentUser?.phoneNumber}',

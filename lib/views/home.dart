@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       GetX<AvatarController>(
                           init: AvatarController(),
                           builder: (controller) {
-                            return controller.users.value.avatar == ''
+                            return controller.avatar.value.avatar == ''
                                 ? Container(
                                     padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
