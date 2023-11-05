@@ -160,8 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  navMenu(context),
-                  const SizedBox(height: 24),
                   Text(
                     'ข่าวสารและบทความ',
                     style: Theme.of(context).textTheme.titleLarge,
@@ -175,51 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  SizedBox navMenu(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      child: ShaderMask(
-        blendMode: BlendMode.dstOut,
-        shaderCallback: (Rect rect) {
-          return const LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Colors.purple,
-              Colors.transparent,
-              Colors.transparent,
-              Colors.purple
-            ],
-            stops: [0.0, 0.01, 0.99, 1.0],
-          ).createShader(rect);
-        },
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            buttonNav(
-              context,
-              Assets.iconClipboard,
-              'ทำแบบประเมิน',
-              '/',
-            ),
-            buttonNav(
-              context,
-              Assets.iconEdit,
-              'เขียนระบาย',
-              '/',
-            ),
-            buttonNav(
-              context,
-              Assets.iconPerson,
-              'โปรไฟล์',
-              '/',
-            ),
-          ],
         ),
       ),
     );

@@ -72,10 +72,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .labelMedium!
                               .copyWith(color: ColorTheme.main5, fontSize: 16),
                         ),
-                        FirebaseAuth.instance.currentUser?.phoneNumber == null
+                        FirebaseAuth.instance.currentUser?.phoneNumber == ''
                             ? const SizedBox()
                             : const SizedBox(height: 8),
-                        FirebaseAuth.instance.currentUser?.phoneNumber == null
+                        FirebaseAuth.instance.currentUser?.phoneNumber == ''
                             ? const SizedBox()
                             : Text(
                                 'เบอร์โทร: ${FirebaseAuth.instance.currentUser?.phoneNumber}',
