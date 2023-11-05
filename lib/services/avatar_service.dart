@@ -12,10 +12,10 @@ class AvatarService {
   static fetchAvatar() async {
     final avatarController = Get.put(AvatarController());
     String email = FirebaseAuth.instance.currentUser?.email ?? ':email';
-    await AuthService.fetchToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final dio = Dio();
-    Response response = await dio.get(
+    Response response = await dio
+        .get(
       //for dev
       (Platform.isAndroid)
           ? "${Serverinfo.avatarfindOne}/$email"
@@ -23,7 +23,11 @@ class AvatarService {
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
-    );
+    )
+        .catchError((e) async {
+      await AuthService.fetchToken();
+      return fetchAvatar();
+    });
     avatarController.setAvatars(AvatarResult(
       id: response.data['result'].first['id'] ?? '',
       email: response.data['result'].first['email'] ?? '',

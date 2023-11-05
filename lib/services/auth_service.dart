@@ -9,11 +9,8 @@ import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
 import 'package:mentalassessment/model/register/register_post_model.dart';
 import 'package:mentalassessment/services/avatar_service.dart';
-import 'package:mentalassessment/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/login/login_res_model.dart';
-import '../model/user/user_model.dart';
 import '../views/widgets/alert_dialog.dart';
 
 class AuthService {
@@ -33,7 +30,7 @@ class AuthService {
   static fetchToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
-    newtoken != null ? await prefs.setString('token', newtoken) : {};
+    await prefs.setString('token', newtoken ?? '');
     print('fetchNewtoken');
   }
 

@@ -3,12 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
-import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/avatar_controller.dart';
-import '../services/auth_service.dart';
 import '../services/news_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      AuthService.fetchToken();
       NewsService.fetchNews();
     });
   }
@@ -128,8 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         maximumSize: const Size.fromWidth(210),
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 16)),
-                    onPressed: () {
-                      AlertDialogselect.loadingDialog(context);
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('token', '');
+                      print(prefs.get('token'));
                     },
                     child: Row(
                       children: [
