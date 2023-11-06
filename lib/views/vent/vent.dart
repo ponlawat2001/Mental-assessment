@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
-import 'package:mentalassessment/controllers/avatar_controller.dart';
+import 'package:mentalassessment/controllers/vent_controller.dart';
+import 'package:mentalassessment/services/vent_service.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
 import '../../constants/theme.dart';
@@ -14,6 +15,14 @@ class VentScreen extends StatefulWidget {
 }
 
 class _VentScreenState extends State<VentScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      VentService.fetchVentChoice();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,42 +78,47 @@ class _VentScreenState extends State<VentScreen> {
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
-                    height: 125,
-                    child: GetX<AvatarController>(
-                      init: AvatarController(),
+                    height: 50,
+                    child: GetX<VentController>(
+                      init: VentController(),
                       builder: (controller) {
-                        return controller.avatar.value != null
-                            ? GridView.builder(
-                                padding: const EdgeInsets.all(8),
-                                scrollDirection: Axis.vertical,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 8,
-                                  crossAxisCount: 4,
-                                  mainAxisSpacing: 16,
-                                  mainAxisExtent: 45,
-                                ),
-                                itemCount: 15,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ColorTheme.lightGray2,
-                                            offset: const Offset(2, 2),
-                                            blurRadius: 2,
-                                          ),
-                                        ],
-                                        color: ColorTheme.white,
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      child: const Text('Hello'),
+                        return controller.ventChoicelist?.value != null
+                            ? ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: controller
+                                        .ventChoicelist?.value.result?.length ??
+                                    0,
+                                itemBuilder:
+                                    (BuildContext context, int index) =>
+                                        InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    margin: const EdgeInsets.only(
+                                        top: 4, bottom: 4, right: 8, left: 8),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorTheme.lightGray2,
+                                          offset: const Offset(2, 2),
+                                          blurRadius: 2,
+                                        ),
+                                      ],
+                                      color: ColorTheme.white,
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                  );
-                                })
+                                    child: Text(
+                                      controller.ventChoicelist?.value
+                                              .result?[index].choice ??
+                                          '',
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ),
+                              )
                             : Container();
                       },
                     ),

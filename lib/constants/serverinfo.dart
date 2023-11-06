@@ -22,4 +22,12 @@ class Serverinfo {
   //news
   static String newsAndroid = '$serverAndroid/news';
   static String newsfind = '$newsAndroid/findAll';
+
+  //vent
+  static String ventAndroid = '$serverAndroid/vent';
+  static String ventfind = '$ventAndroid/findAll';
+
+  //vent_chocie
+  static String ventchoiceAndroid = '$serverAndroid/ventchoice';
+  static String ventchiocefind = '$ventchoiceAndroid/findAll';
 }
