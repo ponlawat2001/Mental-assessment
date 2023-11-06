@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/services/avatar_service.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
 import 'package:mentalassessment/views/vent/vent.dart';
 
 import '../constants/theme.dart';
-import '../controllers/avatar_controller.dart';
 import 'home.dart';
 import 'login/register.dart';
 import 'news/news.dart';
@@ -21,17 +20,15 @@ class NavigatorScreen extends StatefulWidget {
 }
 
 class _NavigatorScreenState extends State<NavigatorScreen> {
-  AvatarController userController = Get.put(AvatarController());
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      userController.fetchUsers();
+      AvatarService.fetchAvatar();
     });
   }
 
-  int _selectedindex = 1;
+  int _selectedindex = 0;
   final List<Widget> _pageName = [
     const HomeScreen(),
     const VentScreen(),

@@ -8,8 +8,8 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/model/login/login_post_model.dart';
 import 'package:mentalassessment/model/register/register_post_model.dart';
+import 'package:mentalassessment/services/avatar_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../model/login/login_res_model.dart';
 import '../views/widgets/alert_dialog.dart';
 
@@ -30,7 +30,7 @@ class AuthService {
   static fetchToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final newtoken = await FirebaseAuth.instance.currentUser?.getIdToken();
-    newtoken != null ? await prefs.setString('token', newtoken) : {};
+    await prefs.setString('token', newtoken ?? '');
     print('fetchNewtoken');
   }
 
@@ -107,12 +107,6 @@ class AuthService {
 
   static Future<bool> signInCheck(context) async {
     bool isSignIn = false;
-    // (FirebaseAuth.instance.currentUser == null)
-    //     ? isSignIn = false
-    //     : {
-    //         isSignIn = true,
-    //         Navigator.pushReplacementNamed(context, '/navigator')
-    //       };
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
       if (user == null) {
         isSignIn = false;
@@ -142,6 +136,7 @@ class AuthService {
         'password': data.password,
       },
     );
+
     if (!context.mounted) return;
     Navigator.pop(context);
 
@@ -150,8 +145,11 @@ class AuthService {
       AlertDialogselect.alertcation(
           context, 'บัญชีนี้ถูกใช้แล้ว', 'กรุณาลองใหม่อีกครั้ง');
     } else {
-      signInWithEmail(
+      await signInWithEmail(
           PostEmailLogin(email: data.email, password: data.password), context);
+      if (!context.mounted) return;
+      await FirebaseAuth.instance.currentUser!.updateDisplayName('Noname');
+      await AvatarService.createAvatar();
     }
   }
 }
