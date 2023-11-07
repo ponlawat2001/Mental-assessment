@@ -163,7 +163,9 @@ class _VentScreenState extends State<VentScreen> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () async {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/ventinventory');
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(4),
                       backgroundColor: ColorTheme.badScore,
