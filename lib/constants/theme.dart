@@ -22,7 +22,7 @@ class ColorTheme {
   static Color white = Colors.white;
   static Color lightGray = const Color(0xff636363);
   static Color lightGray2 = const Color(0xff939393);
-  static Color dartGray = const Color(0xff636363);
+  static Color darkGray = const Color(0xff636363);
   static Color lightGreen = const Color(0xffE4FDD7);
   static Color blue = const Color(0xff5177FF);
 

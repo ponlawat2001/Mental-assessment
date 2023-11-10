@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/controllers/vent_controller.dart';
+import 'package:mentalassessment/services/vent_service.dart';
 import '../widgets/widgetLayout/layout.dart';
 
 class VentInventoryScreen extends StatefulWidget {
@@ -10,6 +14,14 @@ class VentInventoryScreen extends StatefulWidget {
 }
 
 class _VentInventoryScreenState extends State<VentInventoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      VentService.fetchVent();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +42,10 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                 icon: const Icon(Icons.arrow_back_rounded),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 52,
+                    height: 48,
                   ),
                   Text(
                     'คลังความรู้สึก',
@@ -41,6 +54,45 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                         .displaySmall!
                         .copyWith(fontWeight: FontWeight.w400),
                   ),
+                  const SizedBox(height: 16),
+                  Flexible(
+                    child: GetX<VentController>(
+                      init: VentController(),
+                      builder: (VentController controller) {
+                        return (controller.ventlist?.value != null)
+                            ? ListView.separated(
+                                itemCount:
+                                    controller.ventlist?.value.result?.length ??
+                                        0,
+                                itemBuilder: (context, index) => Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  offset: const Offset(0, 4),
+                                                  blurRadius: 4,
+                                                  color: ColorTheme.lightGray2)
+                                            ]),
+                                        child: Text(controller.ventlist?.value
+                                                .result?[index].ventContent ??
+                                            'vent_inventory.dart'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 16),
+                              )
+                            : Container();
+                      },
+                    ),
+                  )
                 ],
               ),
             ],

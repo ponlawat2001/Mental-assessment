@@ -15,7 +15,7 @@ class VentService {
     Dio dio = Dio();
     Response res = await dio
         .get(
-      Serverinfo.ventfind,
+      Serverinfo.ventfindemail,
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
