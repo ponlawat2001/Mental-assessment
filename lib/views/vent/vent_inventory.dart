@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
@@ -18,7 +19,7 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      VentService.fetchVent();
+      VentService.fetchVent(FirebaseAuth.instance.currentUser?.email ?? '');
     });
   }
 
@@ -59,7 +60,7 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                     child: GetX<VentController>(
                       init: VentController(),
                       builder: (VentController controller) {
-                        return (controller.ventlist?.value != null)
+                        return (controller.ventlist!.value.result!.isNotEmpty)
                             ? ListView.separated(
                                 itemCount:
                                     controller.ventlist?.value.result?.length ??
@@ -89,7 +90,14 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(height: 16),
                               )
-                            : Container();
+                            : Align(
+                                alignment: Alignment.center,
+                                child: Text('ไม่มีข้อมูล',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: ColorTheme.main5)),
+                              );
                       },
                     ),
                   )

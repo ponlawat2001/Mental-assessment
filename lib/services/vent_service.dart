@@ -9,13 +9,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_service.dart';
 
 class VentService {
-  static fetchVent() async {
+  static fetchVent(String? email) async {
     final ventController = Get.put(VentController());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     Response res = await dio
         .get(
-      Serverinfo.ventfindemail,
+      '${Serverinfo.ventfindemail}/$email',
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
@@ -23,7 +23,7 @@ class VentService {
         .catchError((e) async {
       print(e);
       await AuthService.fetchToken();
-      return await fetchVent();
+      return await fetchVent(email);
     });
     ventController.setVentlist(
       VentModel(
@@ -49,7 +49,7 @@ class VentService {
         .catchError((e) async {
       print(e);
       await AuthService.fetchToken();
-      return await fetchVent();
+      return await fetchVentChoice();
     });
     ventChoiceController.setVentChoicelist(
       VentChoiceModel(
