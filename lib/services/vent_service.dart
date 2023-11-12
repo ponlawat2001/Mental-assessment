@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/controllers/vent_controller.dart';
@@ -6,6 +8,7 @@ import 'package:mentalassessment/model/vent/vent_%20model.dart';
 import 'package:mentalassessment/model/vent/ventchoice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../views/widgets/alert_dialog.dart';
 import 'auth_service.dart';
 
 class VentService {
@@ -21,7 +24,6 @@ class VentService {
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
     )
         .catchError((e) async {
-      print(e);
       await AuthService.fetchToken();
       return await fetchVent(email);
     });
@@ -33,6 +35,26 @@ class VentService {
             .toList(),
       ),
     );
+  }
+
+  static createVent(String data, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    AlertDialogselect.loadingDialog(context);
+    await dio.post(Serverinfo.ventcreate,
+        options: Options(
+            contentType: 'application/json',
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+        data: {
+          "vent_content": data,
+          "owner": FirebaseAuth.instance.currentUser!.email
+        }).catchError(
+      (e) async {
+        await AuthService.fetchToken();
+        return await createVent(data, context);
+      },
+    );
+    Navigator.pop(context);
   }
 
   static fetchVentChoice() async {
