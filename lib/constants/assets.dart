@@ -38,6 +38,7 @@ class Assets {
   static const iconImage = '$iconDir/image.png';
   static const iconHeart = '$iconDir/heart.svg';
   static const iconInfo = '$iconDir/info.svg';
+  static const iconDelete = '$iconDir/delete.svg';
 
   //navigation
   static const iconDirNavigation = 'assets/icons/navigation';

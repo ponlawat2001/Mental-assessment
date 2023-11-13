@@ -3,8 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/model/vent/vent_%20model.dart';
+import 'package:mentalassessment/views/vent/vent_detail.dart';
 
 class AlertDialogselect {
+  static ventDetail(BuildContext context, VentResult data) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            child: VentDetailScreen(
+              ventdata: data,
+            ),
+          );
+        });
+  }
+
   static alertlogout(BuildContext context) {
     return showDialog<void>(
         context: context,

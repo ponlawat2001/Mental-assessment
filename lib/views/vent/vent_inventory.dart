@@ -5,6 +5,7 @@ import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/controllers/vent_controller.dart';
 import 'package:mentalassessment/services/vent_service.dart';
+import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import '../widgets/widgetLayout/layout.dart';
 
 class VentInventoryScreen extends StatefulWidget {
@@ -66,46 +67,42 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                       child: GetX<VentController>(
                         init: VentController(),
                         builder: (VentController controller) {
-                          return (controller.ventlist?.value != null &&
-                                  controller.ventlist!.value.result!.isNotEmpty)
-                              ? ListView.separated(
-                                  itemCount: controller
-                                          .ventlist?.value.result?.length ??
-                                      0,
-                                  itemBuilder: (context, index) => Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(16),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              color: Colors.white,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    offset: const Offset(0, 4),
-                                                    blurRadius: 4,
-                                                    color:
-                                                        ColorTheme.lightGray2)
-                                              ]),
-                                          child: Text(controller.ventlist?.value
-                                                  .result?[index].ventContent ??
-                                              'vent_inventory.dart'),
-                                        ),
-                                      ),
-                                    ],
+                          return ListView.separated(
+                            itemCount:
+                                controller.ventlist?.value.result?.length ?? 0,
+                            itemBuilder: (context, index) => Row(
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      AlertDialogselect.ventDetail(
+                                          context,
+                                          controller
+                                              .ventlist!.value.result![index]);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                offset: const Offset(0, 4),
+                                                blurRadius: 4,
+                                                color: ColorTheme.lightGray2)
+                                          ]),
+                                      child: Text(controller.ventlist?.value
+                                              .result?[index].ventContent ??
+                                          'vent_inventory.dart'),
+                                    ),
                                   ),
-                                  separatorBuilder: (context, index) =>
-                                      const SizedBox(height: 16),
-                                )
-                              : Align(
-                                  alignment: Alignment.center,
-                                  child: Text('ไม่มีข้อมูล',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(color: ColorTheme.main5)),
-                                );
+                                ),
+                              ],
+                            ),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 16),
+                          );
                         },
                       ),
                     )
