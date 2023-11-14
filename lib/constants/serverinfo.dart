@@ -27,6 +27,7 @@ class Serverinfo {
   static String ventAndroid = '$serverAndroid/vent';
   static String ventfindemail = '$ventAndroid/findOwner';
   static String ventcreate = '$ventAndroid/create';
+  static String ventupdate = '$ventAndroid/update';
 
   //vent_chocie
   static String ventchoiceAndroid = '$serverAndroid/ventchoice';

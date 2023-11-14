@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/model/vent/vent_%20model.dart';
+import 'package:mentalassessment/services/vent_service.dart';
 
 import '../../constants/formvalidate.dart';
 
@@ -26,7 +28,7 @@ class _VentDetailScreenState extends State<VentDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350,
+      height: 380,
       padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,6 +48,12 @@ class _VentDetailScreenState extends State<VentDetailScreen> {
             ],
           ),
           const SizedBox(height: 16),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+                'เขียนเมื่อ: ${DateFormat.Hms().add_yMMMd().format(DateTime.fromMillisecondsSinceEpoch(widget.ventdata.updateAt['_seconds'] * 1000))}'),
+          ),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _ventdetailController,
             validator: (value) {
@@ -61,7 +69,6 @@ class _VentDetailScreenState extends State<VentDetailScreen> {
                 borderRadius: BorderRadius.circular(16),
               ),
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: ColorTheme.stroke),
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
@@ -71,10 +78,15 @@ class _VentDetailScreenState extends State<VentDetailScreen> {
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                if (_ventdetailController.text != widget.ventdata.ventContent) {
+                  await VentService.updateVent(widget.ventdata.id ?? '',
+                      _ventdetailController.text, context);
+                }
+                if (!context.mounted) return;
                 Navigator.pop(context);
               },
-              child: const Text('Close'))
+              child: const Text('บันทึก'))
         ],
       ),
     );

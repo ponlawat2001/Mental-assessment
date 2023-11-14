@@ -57,6 +57,27 @@ class VentService {
     Navigator.pop(context);
   }
 
+  static updateVent(String id, String ventcontent, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    AlertDialogselect.loadingDialog(context);
+    print('${Serverinfo.ventupdate}/$id');
+    await dio.put('${Serverinfo.ventupdate}/$id',
+        options: Options(
+            contentType: 'application/json',
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+        data: {
+          "vent_content": ventcontent,
+        }).catchError(
+      (e) async {
+        await AuthService.fetchToken();
+        return await updateVent(id, ventcontent, context);
+      },
+    );
+    VentService.fetchVent(FirebaseAuth.instance.currentUser!.email);
+    Navigator.pop(context);
+  }
+
   static fetchVentChoice() async {
     final ventChoiceController = Get.put(VentController());
     SharedPreferences prefs = await SharedPreferences.getInstance();
