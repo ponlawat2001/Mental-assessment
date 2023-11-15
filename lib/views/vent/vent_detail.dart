@@ -5,6 +5,7 @@ import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/model/vent/vent_%20model.dart';
 import 'package:mentalassessment/services/vent_service.dart';
+import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 
 import '../../constants/formvalidate.dart';
 
@@ -40,10 +41,16 @@ class _VentDetailScreenState extends State<VentDetailScreen> {
                 'แก้ไขข้อความ',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              SvgPicture.asset(
-                Assets.iconDelete,
-                width: 24,
-                height: 24,
+              InkWell(
+                onTap: () async {
+                  AlertDialogselect.deleteConfirmDialog(
+                      context, widget.ventdata.id ?? '');
+                },
+                child: SvgPicture.asset(
+                  Assets.iconDelete,
+                  width: 24,
+                  height: 24,
+                ),
               )
             ],
           ),

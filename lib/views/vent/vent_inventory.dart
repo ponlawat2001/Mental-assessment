@@ -75,7 +75,7 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      AlertDialogselect.ventDetail(
+                                      AlertDialogselect.ventDetailDialog(
                                           context,
                                           controller
                                               .ventlist!.value.result![index]);

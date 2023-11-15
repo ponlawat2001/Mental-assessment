@@ -55,13 +55,13 @@ class VentService {
       },
     );
     Navigator.pop(context);
+    AlertDialogselect.ventThankDialog(context);
   }
 
   static updateVent(String id, String ventcontent, context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     AlertDialogselect.loadingDialog(context);
-    print('${Serverinfo.ventupdate}/$id');
     await dio.put('${Serverinfo.ventupdate}/$id',
         options: Options(
             contentType: 'application/json',
@@ -72,6 +72,26 @@ class VentService {
       (e) async {
         await AuthService.fetchToken();
         return await updateVent(id, ventcontent, context);
+      },
+    );
+    VentService.fetchVent(FirebaseAuth.instance.currentUser!.email);
+    Navigator.pop(context);
+  }
+
+  static deleteVent(String id, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    AlertDialogselect.loadingDialog(context);
+    await dio.put('${Serverinfo.ventdelete}/$id',
+        options: Options(
+            contentType: 'application/json',
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+        data: {
+          "is_delete": true,
+        }).catchError(
+      (e) async {
+        await AuthService.fetchToken();
+        return await deleteVent(id, context);
       },
     );
     VentService.fetchVent(FirebaseAuth.instance.currentUser!.email);
