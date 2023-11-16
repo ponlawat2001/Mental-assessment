@@ -77,7 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                           }),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/contact');
+                        },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 16),

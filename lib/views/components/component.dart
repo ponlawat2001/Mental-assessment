@@ -10,7 +10,10 @@ class Component {
     return IconButton(
       visualDensity: VisualDensity.compact,
       onPressed: () => Navigator.pop(context),
-      icon: const Icon(Icons.arrow_back_rounded),
+      icon: Icon(
+        Icons.arrow_back_rounded,
+        color: ColorTheme.main5,
+      ),
     );
   }
 

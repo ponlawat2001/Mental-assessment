@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentalassessment/views/contact/contact.dart';
 import 'package:mentalassessment/views/navigator.dart';
 import 'package:mentalassessment/views/news/news.dart';
 import 'package:mentalassessment/views/news/news_detail.dart';
@@ -25,6 +26,7 @@ class RouteData {
     '/newsdetail': (context) => const NewsDetailScreen(),
     '/vent': (context) => const VentScreen(),
     '/ventinventory': (context) => const VentInventoryScreen(),
+    '/contact': (context) => const ContactScreen(),
 
     //Navigator here
     '/navigator': (context) => const NavigatorScreen(),
