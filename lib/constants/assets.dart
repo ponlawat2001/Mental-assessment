@@ -6,6 +6,9 @@ class Assets {
   static const imageBackground2 = '$imageDir/background2.png';
   static const imageBackground3 = '$imageDir/background3.png';
   static const imageBackground3_1 = '$imageDir/background3-1.png';
+  static const imageLinelogo = '$imageDir/linelogo.png';
+  static const imageFacebooklogo = '$imageDir/facebooklogo.png';
+  static const imageGmaillogo = '$imageDir/gmaillogo.png';
 
   //avatar
   static const imageDirAvatar = '$imageDir/avatar';
@@ -39,6 +42,8 @@ class Assets {
   static const iconHeart = '$iconDir/heart.svg';
   static const iconInfo = '$iconDir/info.svg';
   static const iconDelete = '$iconDir/delete.svg';
+  static const iconClock = '$iconDir/clock.svg';
+  static const iconPhone = '$iconDir/phone.svg';
 
   //navigation
   static const iconDirNavigation = 'assets/icons/navigation';
