@@ -33,4 +33,9 @@ class Serverinfo {
   //vent_chocie
   static String ventchoiceAndroid = '$serverAndroid/ventchoice';
   static String ventchiocefind = '$ventchoiceAndroid/findAll';
+
+  //contact
+  static String contactAndroid = '$serverAndroid/contact';
+  static String contactfindAll = '$contactAndroid/findAll';
+  static String contactupdate = '$contactAndroid/update';
 }
