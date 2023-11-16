@@ -6,6 +6,14 @@ import 'package:shadow_overlay/shadow_overlay.dart';
 import '../../constants/theme.dart';
 
 class Component {
+  static IconButton backButton(context) {
+    return IconButton(
+      visualDensity: VisualDensity.compact,
+      onPressed: () => Navigator.pop(context),
+      icon: const Icon(Icons.arrow_back_rounded),
+    );
+  }
+
   static Widget newsCard(
     BuildContext context,
     String? imagePath,

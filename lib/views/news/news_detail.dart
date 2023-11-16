@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/model/news/news_model.dart';
+import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
 class NewsDetailScreen extends StatelessWidget {
@@ -26,11 +27,7 @@ class NewsDetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                visualDensity: VisualDensity.compact,
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back_rounded),
-              ),
+              Component.backButton(context),
               const SizedBox(height: 16),
               Flexible(
                 child: Container(

@@ -3,6 +3,7 @@ import 'package:mentalassessment/services/auth_service.dart';
 import '../../constants/assets.dart';
 import '../../constants/formvalidate.dart';
 import '../../constants/theme.dart';
+import '../components/component.dart';
 import '../widgets/widgetLayout/layout.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -32,11 +33,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),
           child: Stack(
             children: [
-              IconButton(
-                visualDensity: VisualDensity.compact,
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back_rounded),
-              ),
+              Component.backButton(context),
               Form(
                 key: formKey,
                 child: Column(

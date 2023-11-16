@@ -6,6 +6,7 @@ import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/controllers/vent_controller.dart';
 import 'package:mentalassessment/services/vent_service.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
+import '../components/component.dart';
 import '../widgets/widgetLayout/layout.dart';
 
 class VentInventoryScreen extends StatefulWidget {
@@ -44,11 +45,7 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
             padding: const EdgeInsets.all(24),
             child: Stack(
               children: [
-                IconButton(
-                  visualDensity: VisualDensity.compact,
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back_rounded),
-                ),
+                Component.backButton(context),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
