@@ -22,4 +22,20 @@ class Serverinfo {
   //news
   static String newsAndroid = '$serverAndroid/news';
   static String newsfind = '$newsAndroid/findAll';
+
+  //vent
+  static String ventAndroid = '$serverAndroid/vent';
+  static String ventfindemail = '$ventAndroid/findOwner';
+  static String ventcreate = '$ventAndroid/create';
+  static String ventupdate = '$ventAndroid/update';
+  static String ventdelete = '$ventAndroid/delete';
+
+  //vent_chocie
+  static String ventchoiceAndroid = '$serverAndroid/ventchoice';
+  static String ventchiocefind = '$ventchoiceAndroid/findAll';
+
+  //contact
+  static String contactAndroid = '$serverAndroid/contact';
+  static String contactfindAll = '$contactAndroid/findAll';
+  static String contactupdate = '$contactAndroid/update';
 }

@@ -1,4 +1,3 @@
-import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/model/register/register_post_model.dart';
 import 'package:mentalassessment/services/auth_service.dart';
@@ -161,8 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if (_formKey.currentState!.validate()) {
                           RegisterModel data = RegisterModel(
                               email: _emailField.text,
-                              password:
-                                  Crypt.sha256(_passwordField.text).toString(),
+                              password: _passwordField.text,
                               avatar: 'avatarfemale01');
                           await AuthService.register(context, data);
                         }
