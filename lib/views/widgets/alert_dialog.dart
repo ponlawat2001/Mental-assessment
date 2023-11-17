@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/model/user/user_model.dart';
 import 'package:mentalassessment/model/vent/vent_%20model.dart';
+import 'package:mentalassessment/views/profile/profile_edit.dart';
+import 'package:mentalassessment/views/profile/profile_edit_avatar.dart';
 import 'package:mentalassessment/views/vent/vent_deletConfirm.dart';
 import 'package:mentalassessment/views/vent/vent_detail.dart';
 
@@ -117,6 +120,36 @@ class AlertDialogselect {
                 borderRadius: BorderRadius.all(Radius.circular(16))),
             child: VentDeleteConfirm(
               id: id,
+            ),
+          );
+        });
+  }
+
+  static profileEditDialog(BuildContext context, UserResult data) {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            child: ProfileEditScreen(
+              userdata: data,
+            ),
+          );
+        });
+  }
+
+  static avatarEditDialog(BuildContext context, String avatar) {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            child: ProfileEditAvatarScreen(
+              avatarname: avatar,
             ),
           );
         });
