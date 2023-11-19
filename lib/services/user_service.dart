@@ -6,9 +6,10 @@ import 'package:mentalassessment/model/user/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/serverinfo.dart';
 import '../views/widgets/alert_dialog.dart';
+import 'auth_service.dart';
 
 class UserService {
-  static update(BuildContext context, UserResult data) async {
+  static update(context, UserResult data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final dio = Dio();
     if (!context.mounted) return;
@@ -25,9 +26,12 @@ class UserService {
         'phone': data.phone,
         'displayname': data.displayname,
       },
-    );
-    print(FirebaseAuth.instance.currentUser!.displayName);
-    if (!context.mounted) return;
+    ).catchError((e) async {
+      await AuthService.fetchToken();
+      return await update(context, data);
+    });
+    FirebaseAuth.instance.currentUser!.reload();
+
     Navigator.pop(context);
   }
 }

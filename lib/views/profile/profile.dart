@@ -21,7 +21,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    AvatarService.fetchAvatar();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AvatarService.fetchAvatar();
+    });
+  }
+
+  phoneconverter() {
+    if (FirebaseAuth.instance.currentUser!.phoneNumber == null) return null;
+    String phoneNumber =
+        '0${FirebaseAuth.instance.currentUser!.phoneNumber?.substring(3, 12)}';
+    return phoneNumber;
   }
 
   @override
@@ -76,9 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 displayname: FirebaseAuth
                                         .instance.currentUser!.displayName ??
                                     'Unknown',
-                                phone: FirebaseAuth
-                                        .instance.currentUser!.phoneNumber ??
-                                    '',
+                                phone: phoneconverter(),
                                 avatar: controller.avatar.value.avatar));
                       },
                       child: Text(
@@ -144,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       null
                               ? const SizedBox()
                               : Text(
-                                  'เบอร์โทร: ${FirebaseAuth.instance.currentUser?.phoneNumber}',
+                                  'เบอร์โทร: ${phoneconverter()}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .labelMedium!

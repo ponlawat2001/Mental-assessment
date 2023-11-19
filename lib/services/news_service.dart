@@ -20,7 +20,6 @@ class NewsService {
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
     )
         .catchError((e) async {
-      print(e);
       await AuthService.fetchToken();
       return await fetchNews();
     });
