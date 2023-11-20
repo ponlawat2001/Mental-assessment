@@ -5,14 +5,80 @@ import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/model/user/user_model.dart';
 import 'package:mentalassessment/model/vent/vent_%20model.dart';
+import 'package:mentalassessment/services/user_service.dart';
 import 'package:mentalassessment/views/profile/profile_edit.dart';
 import 'package:mentalassessment/views/profile/profile_edit_avatar.dart';
 import 'package:mentalassessment/views/vent/vent_deletConfirm.dart';
 import 'package:mentalassessment/views/vent/vent_detail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/vent_service.dart';
 
 class AlertDialogselect {
+  static userDeleteDialog(context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: SizedBox(
+                height: 200,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.iconInfo,
+                        width: 36,
+                        height: 36,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'ยืนยันที่จะทำรายการลบบัญชี',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'บัญชีจะไม่สามารถนำกลับได้อีก',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    await UserService.delete(context);
+                                    await FirebaseAuth.instance
+                                        .signOut()
+                                        .then((e) {
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          '/', ModalRoute.withName('/'));
+                                    });
+                                  },
+                                  child: const Text('ยืนยัน'))),
+                          const SizedBox(width: 16),
+                          Expanded(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    alignment: Alignment.center,
+                                    backgroundColor: ColorTheme.validation,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('ยกเลิก'))),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ));
+        });
+  }
+
   static ventThankDialog(context) {
     showDialog(
         context: context,
@@ -193,7 +259,10 @@ class AlertDialogselect {
                     padding: const EdgeInsets.all(4),
                   ),
                   onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     await FirebaseAuth.instance.signOut().then((e) {
+                      prefs.remove('token');
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/', ModalRoute.withName('/'));
                     });

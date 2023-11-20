@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/constants/helper.dart';
 import 'package:mentalassessment/controllers/avatar_controller.dart';
+import 'package:mentalassessment/controllers/profile_controller.dart';
 import 'package:mentalassessment/model/user/user_model.dart';
 import 'package:mentalassessment/services/auth_service.dart';
 import 'package:mentalassessment/services/avatar_service.dart';
@@ -18,19 +20,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final profileController = Get.put(ProfileController());
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       AvatarService.fetchAvatar();
+      profileController.setupProfile();
     });
-  }
-
-  phoneconverter() {
-    if (FirebaseAuth.instance.currentUser!.phoneNumber == null) return null;
-    String phoneNumber =
-        '0${FirebaseAuth.instance.currentUser!.phoneNumber?.substring(3, 12)}';
-    return phoneNumber;
   }
 
   @override
@@ -85,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 displayname: FirebaseAuth
                                         .instance.currentUser!.displayName ??
                                     'Unknown',
-                                phone: phoneconverter(),
+                                phone: Helper.phoneconverter(),
                                 avatar: controller.avatar.value.avatar));
                       },
                       child: Text(
@@ -94,7 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     PopupMenuItem(
-                      onTap: () {},
+                      onTap: () async {
+                        await AlertDialogselect.userDeleteDialog(context);
+                      },
                       child: Text(
                         'Delete profile',
                         style: TextStyle(color: ColorTheme.validation),
@@ -104,122 +104,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                const SizedBox(
-                  height: 200,
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 80, horizontal: 16),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(32),
-                            topRight: Radius.circular(32)),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(Assets.imageBackground3))),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Text(
-                            FirebaseAuth.instance.currentUser!.displayName ??
-                                'Unknown',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            FirebaseAuth.instance.currentUser?.email ?? '',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(
-                                    color: ColorTheme.main5, fontSize: 16),
-                          ),
-                          FirebaseAuth.instance.currentUser?.phoneNumber ==
-                                      '' ||
-                                  FirebaseAuth
-                                          .instance.currentUser?.phoneNumber ==
-                                      null
-                              ? const SizedBox()
-                              : const SizedBox(height: 8),
-                          FirebaseAuth.instance.currentUser?.phoneNumber ==
-                                      '' ||
-                                  FirebaseAuth
-                                          .instance.currentUser?.phoneNumber ==
-                                      null
-                              ? const SizedBox()
-                              : Text(
-                                  'เบอร์โทร: ${phoneconverter()}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(
-                                          color: ColorTheme.main5,
-                                          fontSize: 16),
-                                ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 8),
-                            child: Divider(
-                              color: ColorTheme.stroke,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Container(
-                            width: 100,
-                            height: 100,
-                            color: Colors.amber,
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'สภาพจิตใจในอาทิตย์นี้',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'ประเมินไปทั้งหมด: 7 ครั้ง',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(
-                                    color: ColorTheme.main5, fontSize: 16),
-                          ),
-                          const SizedBox(height: 32),
-                          SizedBox(
-                            width: 200,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorTheme.validation,
-                                  textStyle: TextStyle(
-                                      fontFamily: 'Prompt',
-                                      color: ColorTheme.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 8),
-                                ),
-                                onPressed: () {
-                                  AuthService.signOut(context);
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.logout_rounded,
+            GetX<ProfileController>(
+              init: ProfileController(),
+              builder: (ProfileController controller) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 200,
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 80, horizontal: 16),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(32),
+                                topRight: Radius.circular(32)),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(Assets.imageBackground3))),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(
+                                FirebaseAuth
+                                        .instance.currentUser!.displayName ??
+                                    'Unknown',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                controller.profile.value.email ?? '',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                        color: ColorTheme.main5, fontSize: 16),
+                              ),
+                              controller.profile.value.phone == null
+                                  ? const SizedBox()
+                                  : const SizedBox(height: 8),
+                              controller.profile.value.phone == null
+                                  ? const SizedBox()
+                                  : Text(
+                                      'เบอร์โทร: ${controller.profile.value.phone}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(
+                                              color: ColorTheme.main5,
+                                              fontSize: 16),
                                     ),
-                                    SizedBox(width: 8),
-                                    Text('Sign out'),
-                                  ],
-                                )),
-                          )
-                        ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 8),
+                                child: Divider(
+                                  color: ColorTheme.stroke,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                width: 100,
+                                height: 100,
+                                color: Colors.amber,
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                'สภาพจิตใจในอาทิตย์นี้',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'ประเมินไปทั้งหมด: 7 ครั้ง',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                        color: ColorTheme.main5, fontSize: 16),
+                              ),
+                              const SizedBox(height: 32),
+                              SizedBox(
+                                width: 200,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ColorTheme.validation,
+                                      textStyle: TextStyle(
+                                          fontFamily: 'Prompt',
+                                          color: ColorTheme.white,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 8),
+                                    ),
+                                    onPressed: () {
+                                      AuthService.signOut(context);
+                                    },
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.logout_rounded,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text('Sign out'),
+                                      ],
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
             Positioned(
               top: 140,

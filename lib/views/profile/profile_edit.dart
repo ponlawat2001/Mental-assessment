@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/instance_manager.dart';
 import 'package:mentalassessment/controllers/avatar_controller.dart';
+import 'package:mentalassessment/model/avatar/avatar_model.dart';
 import 'package:mentalassessment/model/user/user_model.dart';
+import 'package:mentalassessment/services/avatar_service.dart';
 import 'package:mentalassessment/services/user_service.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 
 import '../../constants/assets.dart';
 import '../../constants/formvalidate.dart';
+import '../../constants/helper.dart';
 import '../../constants/theme.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -139,8 +141,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       FirebaseAuth
                                           .instance.currentUser!.displayName ||
                                   phoneController.text !=
-                                      FirebaseAuth
-                                          .instance.currentUser!.phoneNumber) {
+                                      Helper.phoneconverter()) {
                                 await UserService.update(
                                     context,
                                     UserResult(
@@ -150,6 +151,16 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                     .currentUser!.phoneNumber
                                             ? null
                                             : phoneController.text));
+                              }
+                              if (avatarcontroller.avatar.value.avatar !=
+                                      _avatarseleted &&
+                                  _avatarseleted.isNotEmpty) {
+                                if (!context.mounted) return;
+                                await AvatarService.updateAvatar(
+                                    context,
+                                    AvatarResult(
+                                        id: avatarcontroller.avatar.value.id,
+                                        avatar: _avatarseleted));
                               }
                               if (!context.mounted) return;
                               Navigator.pop(context);
