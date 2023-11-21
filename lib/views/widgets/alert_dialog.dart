@@ -10,6 +10,7 @@ import 'package:mentalassessment/views/profile/profile_edit.dart';
 import 'package:mentalassessment/views/profile/profile_edit_avatar.dart';
 import 'package:mentalassessment/views/vent/vent_deletConfirm.dart';
 import 'package:mentalassessment/views/vent/vent_detail.dart';
+import 'package:mentalassessment/views/vent/vent_voiceRecord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/vent_service.dart';
@@ -76,6 +77,17 @@ class AlertDialogselect {
                   ),
                 ),
               ));
+        });
+  }
+
+  static ventVoiceRecord(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: VentVoiceRecordScreen());
         });
   }
 
