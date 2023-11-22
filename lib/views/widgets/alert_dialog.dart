@@ -8,9 +8,9 @@ import 'package:mentalassessment/model/vent/vent_%20model.dart';
 import 'package:mentalassessment/services/user_service.dart';
 import 'package:mentalassessment/views/profile/profile_edit.dart';
 import 'package:mentalassessment/views/profile/profile_edit_avatar.dart';
-import 'package:mentalassessment/views/vent/vent_deletConfirm.dart';
-import 'package:mentalassessment/views/vent/vent_detail.dart';
-import 'package:mentalassessment/views/vent/vent_voiceRecord.dart';
+import 'package:mentalassessment/views/vent/ventdeleteconfirm.dart';
+import 'package:mentalassessment/views/vent/ventdetail.dart';
+import 'package:mentalassessment/views/vent/ventvoicerecord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/vent_service.dart';
