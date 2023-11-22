@@ -4,7 +4,7 @@ import 'package:mentalassessment/views/navigator.dart';
 import 'package:mentalassessment/views/news/news.dart';
 import 'package:mentalassessment/views/news/news_detail.dart';
 import 'package:mentalassessment/views/vent/vent.dart';
-import 'package:mentalassessment/views/vent/vent_inventory.dart';
+import 'package:mentalassessment/views/vent/ventinventory.dart';
 import 'package:mentalassessment/views/welcome.dart';
 
 import '../views/login/forgetpassword.dart';
