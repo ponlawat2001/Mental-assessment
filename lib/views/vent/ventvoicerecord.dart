@@ -18,12 +18,38 @@ class VentVoiceRecordScreen extends StatefulWidget {
 class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
   final record = AudioRecorder();
   final player = AudioPlayer();
-  bool isPlay = true;
+  bool playing = false;
+  bool isPlay = false;
   bool pause = true;
   bool deleteButton = true;
-  String? path;
+  String? audiopath;
   bool isRecord = false;
   double gap = 16;
+  Duration duration = const Duration();
+  Duration position = const Duration();
+
+  @override
+  void dispose() {
+    record.dispose();
+    player.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    player.onDurationChanged.listen((Duration d) {
+      print('Max duration: $d');
+      setState(() => duration = d);
+    });
+    player.onPositionChanged.listen((Duration p) {
+      print('Current position: $p');
+      setState(() => position = p);
+    });
+    player.onPlayerComplete.listen((_) {
+      playerstop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +72,13 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
               ),
             //condition
             if (isRecord) SizedBox(height: gap),
-            Text(
-              '00:00',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+            if (audiopath != null)
+              Text(
+                ' ${_printDuration(position)} -- ${_printDuration(duration)}',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             SizedBox(height: gap),
-            path == null ? recordandstop() : afterRecord()
+            audiopath == null ? recordandstop() : afterRecord()
           ],
         ),
       ),
@@ -69,7 +96,26 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                     color: ColorTheme.main10,
                     borderRadius: BorderRadius.circular(32)),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (!isPlay && playing == false) {
+                        Source urlSource = UrlSource(audiopath ?? '');
+                        await player.play(urlSource).catchError((e) {
+                          return e;
+                        });
+                        isPlay = true;
+                        playing = true;
+                        print('play');
+                      } else if (playing == true && pause == false) {
+                        await player.pause();
+                        print('pause');
+                      } else {
+                        await player.resume();
+                        print('resume');
+                      }
+                      setState(() {
+                        pause = !pause;
+                      });
+                    },
                     icon:
                         // condition
                         !isPlay || pause
@@ -90,7 +136,9 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                       color: ColorTheme.main10,
                       borderRadius: BorderRadius.circular(32)),
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await playerstop();
+                      },
                       icon: Icon(
                         Icons.stop,
                         color: ColorTheme.white,
@@ -104,7 +152,9 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                 children: [
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ColorTheme.main10,
                         padding: const EdgeInsets.all(8)),
@@ -115,7 +165,9 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                   ),
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ColorTheme.validation,
                         padding: const EdgeInsets.all(8)),
@@ -124,7 +176,9 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                 ],
               )
             : ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorTheme.validation,
                     padding: const EdgeInsets.all(8)),
@@ -145,6 +199,17 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
     );
   }
 
+  Future<void> playerstop() async {
+    await player.stop();
+    print('stop');
+    setState(() {
+      position = duration;
+      isPlay = false;
+      pause = true;
+      playing = false;
+    });
+  }
+
   Container recordandstop() {
     return Container(
         decoration: BoxDecoration(
@@ -156,16 +221,16 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
 
               if (await record.hasPermission()) {
                 if (isRecord == false) {
-                  await record.start(const RecordConfig(),
-                      path: '${tempDirectory.path}/myfile.m4a');
+                  await record.start(
+                      const RecordConfig(encoder: AudioEncoder.wav),
+                      path: '${tempDirectory.path}/myfile.wav');
                 } else {
-                  path = await record.stop();
-                  print(path);
-                  record.dispose();
+                  audiopath = await record.stop();
+                  print(audiopath);
                 }
               }
               setState(() {
-                isRecord = false;
+                isRecord = !isRecord;
               });
             },
             icon:
@@ -181,5 +246,12 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                         color: ColorTheme.white,
                         size: 24,
                       )));
+  }
+
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60).abs());
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60).abs());
+    return "$twoDigitMinutes:$twoDigitSeconds";
   }
 }
