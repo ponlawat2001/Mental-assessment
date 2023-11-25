@@ -50,6 +50,7 @@ class VentService {
           "owner": FirebaseAuth.instance.currentUser!.email
         }).catchError(
       (e) async {
+        Navigator.pop(context);
         await AuthService.fetchToken();
         return await createVent(data, context);
       },
@@ -70,6 +71,7 @@ class VentService {
           "vent_content": ventcontent,
         }).catchError(
       (e) async {
+        Navigator.pop(context);
         await AuthService.fetchToken();
         return await updateVent(id, ventcontent, context);
       },
@@ -90,6 +92,7 @@ class VentService {
           "is_delete": true,
         }).catchError(
       (e) async {
+        Navigator.pop(context);
         await AuthService.fetchToken();
         return await deleteVent(id, context);
       },

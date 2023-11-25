@@ -10,6 +10,8 @@
 		<key>FacebookDisplayName</key>
 		<string>Mental Assessment</string>
 
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Some message to describe why you need this permission</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>CFBundleDevelopmentRegion</key>

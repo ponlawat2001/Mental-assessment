@@ -15,9 +15,11 @@ class Serverinfo {
   //user
   static String userAndroid = '$serverAndroid/users';
   static String userupdate = '$userAndroid/update';
+  static String userdelete = '$userAndroid/delete';
 
   static String avatarfindOne = '$avatarAndroid/findOne';
   static String avatarcreate = '$avatarAndroid/create';
+  static String avatarupdate = '$avatarAndroid/update';
 
   //news
   static String newsAndroid = '$serverAndroid/news';

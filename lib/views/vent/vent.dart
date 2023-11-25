@@ -188,7 +188,9 @@ class _VentScreenState extends State<VentScreen> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () async {},
+                              onPressed: () async {
+                                AlertDialogselect.ventVoiceRecord(context);
+                              },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.all(4),
                                 backgroundColor: ColorTheme.blue,
