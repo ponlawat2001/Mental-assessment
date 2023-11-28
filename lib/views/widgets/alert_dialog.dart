@@ -10,9 +10,11 @@ import 'package:mentalassessment/views/profile/profile_edit.dart';
 import 'package:mentalassessment/views/profile/profile_edit_avatar.dart';
 import 'package:mentalassessment/views/vent/ventdeleteconfirm.dart';
 import 'package:mentalassessment/views/vent/ventdetail.dart';
+import 'package:mentalassessment/views/vent/ventplayer.dart';
 import 'package:mentalassessment/views/vent/ventvoicerecord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/vent/ventaudio_model.dart';
 import '../../services/vent_service.dart';
 
 class AlertDialogselect {
@@ -88,6 +90,19 @@ class AlertDialogselect {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(16))),
               child: VentVoiceRecordScreen());
+        });
+  }
+
+  static ventPlayer(context, VentAudioResult data) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: VentPlayerScreen(
+                ventdata: data,
+              ));
         });
   }
 

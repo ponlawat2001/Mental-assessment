@@ -8,6 +8,7 @@ import 'package:mentalassessment/model/vent/vent_%20model.dart';
 import 'package:mentalassessment/model/vent/ventchoice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/vent/ventaudio_model.dart';
 import '../views/widgets/alert_dialog.dart';
 import 'auth_service.dart';
 
@@ -32,6 +33,31 @@ class VentService {
         message: res.data['message'],
         result: res.data['result']
             .map<VentResult>((e) => VentResult.fromJson(e))
+            .toList(),
+      ),
+    );
+  }
+
+  static fetchVentaudio(String? email) async {
+    final ventController = Get.put(VentController());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    Response res = await dio
+        .get(
+      '${Serverinfo.audiofindOwner}/$email',
+      options: Options(
+          contentType: 'application/json',
+          headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+    )
+        .catchError((e) async {
+      await AuthService.fetchToken();
+      return await fetchVentaudio(email);
+    });
+    ventController.setVentAudiolist(
+      VentAudioModel(
+        message: res.data['message'],
+        result: res.data['result']
+            .map<VentAudioResult>((e) => VentAudioResult.fromJson(e))
             .toList(),
       ),
     );

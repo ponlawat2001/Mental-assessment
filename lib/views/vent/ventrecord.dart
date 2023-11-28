@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/controllers/vent_controller.dart';
@@ -9,19 +10,19 @@ import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import '../components/component.dart';
 import '../widgets/widgetLayout/layout.dart';
 
-class VentInventoryScreen extends StatefulWidget {
-  const VentInventoryScreen({super.key});
+class VentRecordScreen extends StatefulWidget {
+  const VentRecordScreen({super.key});
 
   @override
-  State<VentInventoryScreen> createState() => _VentInventoryScreenState();
+  State<VentRecordScreen> createState() => _VentRecordScreenState();
 }
 
-class _VentInventoryScreenState extends State<VentInventoryScreen> {
+class _VentRecordScreenState extends State<VentRecordScreen> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      VentService.fetchVent(FirebaseAuth.instance.currentUser?.email ?? '');
+      VentService.fetchVentaudio(FirebaseAuth.instance.currentUser!.email);
     });
   }
 
@@ -52,32 +53,12 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                     const SizedBox(
                       height: 48,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'คลังความรู้สึก',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall!
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(
-                          width: 100,
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/ventrecord');
-                            },
-                            style: ElevatedButton.styleFrom(
-                                alignment: Alignment.center,
-                                backgroundColor: ColorTheme.worseEmoji,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 4)),
-                            child: const Text('เสียงบันทึก'),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'คลังเสียงบันทึก',
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(height: 16),
                     Flexible(
@@ -85,17 +66,18 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                         init: VentController(),
                         builder: (VentController controller) {
                           return ListView.separated(
-                            itemCount:
-                                controller.ventlist?.value.result?.length ?? 0,
+                            itemCount: controller
+                                    .ventAudiolist?.value.result?.length ??
+                                0,
                             itemBuilder: (context, index) => Row(
                               children: [
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      AlertDialogselect.ventDetailDialog(
+                                      AlertDialogselect.ventPlayer(
                                           context,
-                                          controller
-                                              .ventlist!.value.result![index]);
+                                          controller.ventAudiolist!.value
+                                              .result![index]);
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(16),
@@ -109,9 +91,23 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                                                 blurRadius: 4,
                                                 color: ColorTheme.lightGray2)
                                           ]),
-                                      child: Text(controller.ventlist?.value
-                                              .result?[index].ventContent ??
-                                          'vent_inventory.dart'),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.play_arrow),
+                                          const SizedBox(width: 16),
+                                          Text(DateFormat.Hms()
+                                              .add_yMMMd()
+                                              .format(DateTime
+                                                  .fromMillisecondsSinceEpoch(
+                                                      controller
+                                                                  .ventAudiolist
+                                                                  ?.value
+                                                                  .result?[index]
+                                                                  .updateAt[
+                                                              '_seconds'] *
+                                                          1000))),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

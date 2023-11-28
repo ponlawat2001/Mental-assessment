@@ -32,6 +32,10 @@ class Serverinfo {
   static String ventupdate = '$ventAndroid/update';
   static String ventdelete = '$ventAndroid/delete';
 
+  //audio
+  static String audioAndroid = '$serverAndroid/audio';
+  static String audiofindOwner = '$audioAndroid/findOwner';
+
   //vent_chocie
   static String ventchoiceAndroid = '$serverAndroid/ventchoice';
   static String ventchiocefind = '$ventchoiceAndroid/findAll';

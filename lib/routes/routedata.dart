@@ -5,6 +5,7 @@ import 'package:mentalassessment/views/news/news.dart';
 import 'package:mentalassessment/views/news/news_detail.dart';
 import 'package:mentalassessment/views/vent/vent.dart';
 import 'package:mentalassessment/views/vent/ventinventory.dart';
+import 'package:mentalassessment/views/vent/ventrecord.dart';
 import 'package:mentalassessment/views/welcome.dart';
 
 import '../views/login/forgetpassword.dart';
@@ -26,6 +27,7 @@ class RouteData {
     '/newsdetail': (context) => const NewsDetailScreen(),
     '/vent': (context) => const VentScreen(),
     '/ventinventory': (context) => const VentInventoryScreen(),
+    '/ventrecord': (context) => const VentRecordScreen(),
     '/contact': (context) => const ContactScreen(),
 
     //Navigator here

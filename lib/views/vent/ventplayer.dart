@@ -1,35 +1,31 @@
-import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
+import 'package:mentalassessment/model/vent/ventaudio_model.dart';
 
-class VentVoiceRecordScreen extends StatefulWidget {
-  const VentVoiceRecordScreen({super.key});
+class VentPlayerScreen extends StatefulWidget {
+  const VentPlayerScreen({super.key, required this.ventdata});
+  final VentAudioResult ventdata;
 
   @override
-  State<VentVoiceRecordScreen> createState() => _VentVoiceRecordScreenState();
+  State<VentPlayerScreen> createState() => _VentPlayerScreenState();
 }
 
-class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
-  final record = AudioRecorder();
+class _VentPlayerScreenState extends State<VentPlayerScreen> {
   final player = AudioPlayer();
   bool playing = false;
   bool isPlay = false;
   bool pause = true;
   bool deleteButton = true;
   String? audiopath;
-  bool isRecord = false;
   double gap = 16;
   Duration duration = const Duration();
   Duration position = const Duration();
 
   @override
   void dispose() {
-    record.dispose();
     player.dispose();
     super.dispose();
   }
@@ -37,6 +33,8 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
   @override
   void initState() {
     super.initState();
+    audiopath = widget.ventdata.audioUrl;
+    player.setSourceUrl(audiopath ?? '');
     player.onDurationChanged.listen((Duration d) {
       print('Max duration: $d');
       setState(() => duration = d);
@@ -59,16 +57,9 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'บันทึกเสียง',
+              'เสียงบันทึก',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
-            if (isRecord) SizedBox(height: gap),
-            //condition
-            if (isRecord)
-              Icon(
-                Icons.fiber_manual_record,
-                color: ColorTheme.deleteMode,
-              ),
             //condition
             if (audiopath != null) SizedBox(height: gap),
             if (audiopath != null)
@@ -77,7 +68,7 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             SizedBox(height: gap),
-            audiopath == null ? recordandstop() : afterRecord()
+            afterRecord()
           ],
         ),
       ),
@@ -155,22 +146,9 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorTheme.main10,
-                        padding: const EdgeInsets.all(8)),
-                    child: const Text('บันทึก'),
-                  )),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                      child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
                         backgroundColor: ColorTheme.validation,
                         padding: const EdgeInsets.all(8)),
-                    child: const Text('ยกเลิก'),
+                    child: const Text('ลบ'),
                   )),
                 ],
               )
@@ -207,44 +185,6 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
       pause = true;
       playing = false;
     });
-  }
-
-  Container recordandstop() {
-    return Container(
-        decoration: BoxDecoration(
-            color: ColorTheme.validation,
-            borderRadius: BorderRadius.circular(32)),
-        child: IconButton(
-            onPressed: () async {
-              final Directory tempDirectory = await getTemporaryDirectory();
-
-              if (await record.hasPermission()) {
-                if (isRecord == false) {
-                  await record.start(
-                      const RecordConfig(encoder: AudioEncoder.wav),
-                      path: '${tempDirectory.path}/myfile.wav');
-                } else {
-                  audiopath = await record.stop();
-                  print(audiopath);
-                }
-              }
-              setState(() {
-                isRecord = !isRecord;
-              });
-            },
-            icon:
-                //condition
-                isRecord
-                    ? Icon(
-                        Icons.stop,
-                        color: ColorTheme.white,
-                        size: 32,
-                      )
-                    : Icon(
-                        Icons.keyboard_voice_outlined,
-                        color: ColorTheme.white,
-                        size: 24,
-                      )));
   }
 
   String _printDuration(Duration duration) {
