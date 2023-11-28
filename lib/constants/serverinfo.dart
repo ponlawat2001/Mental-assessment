@@ -35,6 +35,7 @@ class Serverinfo {
   //audio
   static String audioAndroid = '$serverAndroid/audio';
   static String audiofindOwner = '$audioAndroid/findOwner';
+  static String audiodelete = '$audioAndroid/delete';
 
   //vent_chocie
   static String ventchoiceAndroid = '$serverAndroid/ventchoice';

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/model/vent/ventaudio_model.dart';
+import 'package:mentalassessment/services/vent_service.dart';
 
 class VentPlayerScreen extends StatefulWidget {
   const VentPlayerScreen({super.key, required this.ventdata});
@@ -142,8 +143,9 @@ class _VentPlayerScreenState extends State<VentPlayerScreen> {
                 children: [
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      await VentService.deleteVentRecord(
+                          widget.ventdata.id!, context);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ColorTheme.validation,
@@ -153,8 +155,9 @@ class _VentPlayerScreenState extends State<VentPlayerScreen> {
                 ],
               )
             : ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
+                onPressed: () async {
+                  await VentService.deleteVentRecord(
+                      widget.ventdata.id!, context);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorTheme.validation,

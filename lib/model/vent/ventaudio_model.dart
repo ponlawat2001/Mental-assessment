@@ -36,6 +36,7 @@ class VentAudioResult {
   String? audioUrl;
   dynamic createAt;
   dynamic updateAt;
+  bool? isDelete;
 
   VentAudioResult({
     this.id,
@@ -43,6 +44,7 @@ class VentAudioResult {
     this.audioUrl,
     this.createAt,
     this.updateAt,
+    this.isDelete,
   });
 
   factory VentAudioResult.fromJson(Map<String, dynamic> json) =>
@@ -52,6 +54,7 @@ class VentAudioResult {
         audioUrl: json["audioUrl"],
         createAt: json["create_at"],
         updateAt: json["update_at"],
+        isDelete: json["is_delete"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,5 +63,6 @@ class VentAudioResult {
         "audioUrl": audioUrl,
         "create_at": createAt,
         "update_at": updateAt,
+        "is_delete": isDelete,
       };
 }

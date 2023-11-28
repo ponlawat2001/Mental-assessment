@@ -127,6 +127,28 @@ class VentService {
     Navigator.pop(context);
   }
 
+  static deleteVentRecord(String id, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    AlertDialogselect.loadingDialog(context);
+    await dio.put('${Serverinfo.audiodelete}/$id',
+        options: Options(
+            contentType: 'application/json',
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+        data: {
+          "is_delete": true,
+        }).catchError(
+      (e) async {
+        Navigator.pop(context);
+        await AuthService.fetchToken();
+        return await deleteVent(id, context);
+      },
+    );
+    VentService.fetchVentaudio(FirebaseAuth.instance.currentUser!.email);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
+
   static fetchVentChoice() async {
     final ventChoiceController = Get.put(VentController());
     SharedPreferences prefs = await SharedPreferences.getInstance();
