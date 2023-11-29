@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +63,44 @@ class VentService {
             .toList(),
       ),
     );
+  }
+
+  static upload(String filePath, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    AlertDialogselect.loadingDialog(context);
+    print(filePath);
+    String fileName = filePath.split('/').last;
+
+    try {
+      FormData formData = FormData.fromMap({
+        'audio': await MultipartFile.fromFile(filePath, filename: fileName),
+      });
+      // uploadaudio
+      Response res = await dio.post(
+        Serverinfo.storageaudio,
+        data: formData,
+        options: Options(
+            contentType: "multipart/form-data",
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+      );
+      print('File Upload Response: ${res.data['result'][0]}');
+      Response finalres = await dio.post(
+        Serverinfo.audiocreate,
+        data: VentAudioResult(
+            owner: FirebaseAuth.instance.currentUser!.email,
+            audioUrl: res.data['result'][0]),
+        options: Options(
+            contentType: 'application/json',
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+      );
+      print('Final Response: ${finalres.data}');
+    } catch (error) {
+      print('Error uploading file: $error');
+    }
+    Navigator.pop(context);
+    Navigator.pop(context);
+    AlertDialogselect.ventThankDialog(context);
   }
 
   static createVent(String data, context) async {

@@ -4,7 +4,6 @@ import 'package:mentalassessment/constants/serverinfo.dart';
 import 'package:mentalassessment/controllers/news_controller.dart';
 import 'package:mentalassessment/model/news/news_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'auth_service.dart';
 
 class NewsService {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/services/vent_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
@@ -151,8 +152,8 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
                 children: [
                   Expanded(
                       child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      await VentService.upload(audiopath ?? '', context);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ColorTheme.main10,
@@ -221,8 +222,8 @@ class _VentVoiceRecordScreenState extends State<VentVoiceRecordScreen> {
               if (await record.hasPermission()) {
                 if (isRecord == false) {
                   await record.start(
-                      const RecordConfig(encoder: AudioEncoder.wav),
-                      path: '${tempDirectory.path}/myfile.wav');
+                      const RecordConfig(encoder: AudioEncoder.aacLc),
+                      path: '${tempDirectory.path}/myrecord.m4a');
                 } else {
                   audiopath = await record.stop();
                   print(audiopath);

@@ -95,8 +95,8 @@ class _VentRecordScreenState extends State<VentRecordScreen> {
                                         children: [
                                           const Icon(Icons.play_arrow),
                                           const SizedBox(width: 16),
-                                          Text(DateFormat.Hms()
-                                              .add_yMMMd()
+                                          Text(DateFormat.Hm()
+                                              .add_yMMMMd()
                                               .format(DateTime
                                                   .fromMillisecondsSinceEpoch(
                                                       controller
