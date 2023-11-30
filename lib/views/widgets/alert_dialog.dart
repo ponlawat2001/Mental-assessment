@@ -18,6 +18,72 @@ import '../../model/vent/ventaudio_model.dart';
 import '../../services/vent_service.dart';
 
 class AlertDialogselect {
+  static customDialog(context, String title, String subtitle, Widget icon,
+      bool isConfirm, Function function) {
+    showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            alignment: Alignment.center,
+            actionsOverflowButtonSpacing: 0,
+            contentPadding: const EdgeInsets.all(16),
+            buttonPadding: const EdgeInsets.all(16),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    Assets.iconInfo,
+                    width: 48,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(4),
+                      ),
+                      onPressed: () {
+                        function();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('ยืนยัน'),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(4),
+                          backgroundColor: ColorTheme.validation),
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('ยกเลิก'),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
+
   static userDeleteDialog(context) {
     return showDialog(
         context: context,
