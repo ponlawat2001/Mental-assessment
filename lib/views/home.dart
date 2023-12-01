@@ -167,9 +167,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 24),
-                  const SizedBox(
-                    height: 250,
-                    child: NewlistWidget(),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: const SizedBox(
+                      height: 250,
+                      child: NewlistWidget(),
+                    ),
                   ),
                 ],
               ),

@@ -68,7 +68,9 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/assessmentother');
+                        },
                         style: ElevatedButton.styleFrom(
                           alignment: Alignment.center,
                           backgroundColor: ColorTheme.white,
@@ -92,7 +94,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           alignment: Alignment.center,
-                          backgroundColor: ColorTheme.nodataEmoji,
+                          backgroundColor: ColorTheme.main30,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16)),
                         ),

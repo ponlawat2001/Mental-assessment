@@ -60,9 +60,12 @@ class _NewsScreenState extends State<NewsScreen> {
                       .copyWith(fontSize: 16, color: ColorTheme.main5),
                 ),
                 const SizedBox(height: 8),
-                const Flexible(
-                  child: NewlistWidget(
-                    axis: Axis.vertical,
+                Flexible(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: const NewlistWidget(
+                      axis: Axis.vertical,
+                    ),
                   ),
                 )
               ],
