@@ -35,17 +35,19 @@ class _VentPlayerScreenState extends State<VentPlayerScreen> {
   void initState() {
     super.initState();
     audiopath = widget.ventdata.audioUrl;
-    player.setSourceUrl(audiopath ?? '');
-    player.onDurationChanged.listen((Duration d) {
-      print('Max duration: $d');
-      setState(() => duration = d);
-    });
-    player.onPositionChanged.listen((Duration p) {
-      print('Current position: $p');
-      setState(() => position = p);
-    });
-    player.onPlayerComplete.listen((_) {
-      playerstop();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      player.setSourceUrl(audiopath ?? '');
+      player.onDurationChanged.listen((Duration d) {
+        print('Max duration: $d');
+        setState(() => duration = d);
+      });
+      player.onPositionChanged.listen((Duration p) {
+        print('Current position: $p');
+        setState(() => position = p);
+      });
+      player.onPlayerComplete.listen((_) {
+        playerstop();
+      });
     });
   }
 

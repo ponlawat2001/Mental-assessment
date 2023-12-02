@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 import '../../constants/theme.dart';
@@ -49,7 +50,9 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/assessmentmain');
+                        },
                         style: ElevatedButton.styleFrom(
                           alignment: Alignment.center,
                           backgroundColor: ColorTheme.editIcon,
@@ -91,7 +94,9 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/assessmenthistory');
+                        },
                         style: ElevatedButton.styleFrom(
                           alignment: Alignment.center,
                           backgroundColor: ColorTheme.main30,
@@ -120,17 +125,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                          margin: const EdgeInsets.all(8),
-                          child: Divider(
-                            color: ColorTheme.stroke,
-                          )),
-                    ),
-                  ],
-                ),
+                Component.dividerhorizotal(),
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,

@@ -18,6 +18,33 @@ import '../../model/vent/ventaudio_model.dart';
 import '../../services/vent_service.dart';
 
 class AlertDialogselect {
+  static assessmentAdvice(context, String title) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ],
+                ),
+              ));
+        });
+  }
+
   static customDialog(context, String title, String subtitle, Widget icon,
       bool isConfirm, Function function) {
     showDialog<void>(

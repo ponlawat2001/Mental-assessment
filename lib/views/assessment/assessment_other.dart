@@ -49,47 +49,35 @@ class _AssessmentOtherScreenState extends State<AssessmentOtherScreen> {
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           fontWeight: FontWeight.w300, color: ColorTheme.main5),
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              child: Divider(
-                                color: ColorTheme.stroke,
-                              )),
+                    Component.dividerhorizotal(),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: 2,
+                      separatorBuilder: (context, _) =>
+                          const SizedBox(height: 16),
+                      itemBuilder: (context, index) => ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          alignment: Alignment.center,
+                          backgroundColor: (index % 2 == 1)
+                              ? ColorTheme.main30
+                              : ColorTheme.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 200,
-                      child: ListView.separated(
-                        itemCount: 2,
-                        separatorBuilder: (context, _) =>
-                            const SizedBox(height: 16),
-                        itemBuilder: (context, index) => ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            alignment: Alignment.center,
-                            backgroundColor: (index % 2 == 1)
-                                ? ColorTheme.main30
-                                : ColorTheme.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                          ),
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'แบบประเมินความเข็มแข็งทางใจ',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-                                '20 ข้อ',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            ],
-                          ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'แบบประเมินความเข็มแข็งทางใจ',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            const SizedBox(width: 16),
+                            Text(
+                              '20 ข้อ',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
                         ),
                       ),
                     )

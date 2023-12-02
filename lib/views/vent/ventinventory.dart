@@ -84,41 +84,47 @@ class _VentInventoryScreenState extends State<VentInventoryScreen> {
                       child: GetX<VentController>(
                         init: VentController(),
                         builder: (VentController controller) {
-                          return ListView.separated(
-                            itemCount:
-                                controller.ventlist?.value.result?.length ?? 0,
-                            itemBuilder: (context, index) => Row(
-                              children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {
-                                      AlertDialogselect.ventDetailDialog(
-                                          context,
-                                          controller
-                                              .ventlist!.value.result![index]);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                offset: const Offset(0, 4),
-                                                blurRadius: 4,
-                                                color: ColorTheme.lightGray2)
-                                          ]),
-                                      child: Text(controller.ventlist?.value
-                                              .result?[index].ventContent ??
-                                          'vent_inventory.dart'),
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: ListView.separated(
+                              itemCount:
+                                  controller.ventlist?.value.result?.length ??
+                                      0,
+                              itemBuilder: (context, index) => Row(
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        AlertDialogselect.ventDetailDialog(
+                                            context,
+                                            controller.ventlist!.value
+                                                .result![index]);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 4),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  offset: const Offset(0, 4),
+                                                  blurRadius: 4,
+                                                  color: ColorTheme.lightGray2)
+                                            ]),
+                                        child: Text(controller.ventlist?.value
+                                                .result?[index].ventContent ??
+                                            'vent_inventory.dart'),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 16),
                             ),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 16),
                           );
                         },
                       ),
