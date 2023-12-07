@@ -50,4 +50,8 @@ class Serverinfo {
   static String contactAndroid = '$serverAndroid/contact';
   static String contactfindAll = '$contactAndroid/findAll';
   static String contactupdate = '$contactAndroid/update';
+
+  //assessment
+  static String assessmentAndroid = '$serverAndroid/assessment';
+  static String assessmentfindAll = '$assessmentAndroid/findAll';
 }

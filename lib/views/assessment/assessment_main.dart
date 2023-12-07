@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/services/assessment_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
@@ -13,6 +14,14 @@ class AssessmentMainScreen extends StatefulWidget {
 
 class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
   double gap = 16;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AssessmentService.fetchAssessment();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
