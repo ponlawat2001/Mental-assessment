@@ -1,4 +1,14 @@
+// To parse this JSON data, do
+//
+//     final assessmentModel = assessmentModelFromJson(jsonString);
+
 import 'dart:convert';
+
+AssessmentModel assessmentModelFromJson(String str) =>
+    AssessmentModel.fromJson(json.decode(str));
+
+String assessmentModelToJson(AssessmentModel data) =>
+    json.encode(data.toJson());
 
 class AssessmentModel {
   String? message;
@@ -8,11 +18,6 @@ class AssessmentModel {
     this.message,
     this.result,
   });
-
-  factory AssessmentModel.fromRawJson(String str) =>
-      AssessmentModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory AssessmentModel.fromJson(Map<String, dynamic> json) =>
       AssessmentModel(
@@ -31,10 +36,10 @@ class AssessmentResult {
   String? id;
   String? name;
   String? description;
-  Map<String, bool>? questionnaire;
-  Map<String, int>? answer;
-  Map<String, Scorerate>? scorerate;
-  Map<String, Advise>? advise;
+  Questionnaire? questionnaire;
+  List<Answer>? answer;
+  List<Scorerate>? scorerate;
+  List<Advise>? advise;
   AteAt? createAt;
   AteAt? updateAt;
   bool? isDelete;
@@ -52,24 +57,18 @@ class AssessmentResult {
     this.isDelete,
   });
 
-  factory AssessmentResult.fromRawJson(String str) =>
-      AssessmentResult.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory AssessmentResult.fromJson(Map<String, dynamic> json) =>
       AssessmentResult(
         id: json["id"],
         name: json["name"],
         description: json["description"],
-        questionnaire: Map.from(json["questionnaire"])
-            .map((k, v) => MapEntry<String, bool>(k, v)),
+        questionnaire: Questionnaire.fromJson(json["questionnaire"]),
         answer:
-            Map.from(json["answer"]).map((k, v) => MapEntry<String, int>(k, v)),
-        scorerate: Map.from(json["scorerate"]).map(
-            (k, v) => MapEntry<String, Scorerate>(k, Scorerate.fromJson(v))),
-        advise: Map.from(json["advise"])
-            .map((k, v) => MapEntry<String, Advise>(k, Advise.fromJson(v))),
+            List<Answer>.from(json["answer"].map((x) => Answer.fromJson(x))),
+        scorerate: List<Scorerate>.from(
+            json["scorerate"].map((x) => Scorerate.fromJson(x))),
+        advise:
+            List<Advise>.from(json["advise"].map((x) => Advise.fromJson(x))),
         createAt: AteAt.fromJson(json["create_at"]),
         updateAt: AteAt.fromJson(json["update_at"]),
         isDelete: json["is_delete"],
@@ -79,14 +78,10 @@ class AssessmentResult {
         "id": id,
         "name": name,
         "description": description,
-        "questionnaire": Map.from(questionnaire ?? {})
-            .map((k, v) => MapEntry<String, dynamic>(k, v)),
-        "answer": Map.from(answer ?? {})
-            .map((k, v) => MapEntry<String, dynamic>(k, v)),
-        "scorerate": Map.from(scorerate ?? {})
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-        "advise": Map.from(advise ?? {})
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "questionnaire": questionnaire!.toJson(),
+        "answer": List<dynamic>.from(answer!.map((x) => x.toJson())),
+        "scorerate": List<dynamic>.from(scorerate!.map((x) => x.toJson())),
+        "advise": List<dynamic>.from(advise!.map((x) => x.toJson())),
         "create_at": createAt!.toJson(),
         "update_at": updateAt!.toJson(),
         "is_delete": isDelete,
@@ -96,24 +91,44 @@ class AssessmentResult {
 class Advise {
   int? rate;
   String? advise;
+  String? name;
 
   Advise({
     this.rate,
     this.advise,
+    this.name,
   });
-
-  factory Advise.fromRawJson(String str) => Advise.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory Advise.fromJson(Map<String, dynamic> json) => Advise(
         rate: json["rate"],
         advise: json["advise"],
+        name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
         "rate": rate,
         "advise": advise,
+        "name": name,
+      };
+}
+
+class Answer {
+  int? score;
+  String? name;
+
+  Answer({
+    this.score,
+    this.name,
+  });
+
+  factory Answer.fromJson(Map<String, dynamic> json) => Answer(
+        score: json["score"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "score": score,
+        "name": name,
       };
 }
 
@@ -126,10 +141,6 @@ class AteAt {
     this.nanoseconds,
   });
 
-  factory AteAt.fromRawJson(String str) => AteAt.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory AteAt.fromJson(Map<String, dynamic> json) => AteAt(
         seconds: json["_seconds"],
         nanoseconds: json["_nanoseconds"],
@@ -141,29 +152,47 @@ class AteAt {
       };
 }
 
+class Questionnaire {
+  List<String>? question;
+  List<bool>? reversescore;
+
+  Questionnaire({
+    this.question,
+    this.reversescore,
+  });
+
+  factory Questionnaire.fromJson(Map<String, dynamic> json) => Questionnaire(
+        question: List<String>.from(json["question"].map((x) => x)),
+        reversescore: List<bool>.from(json["reversescore"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "question": List<dynamic>.from(question!.map((x) => x)),
+        "reversescore": List<dynamic>.from(reversescore!.map((x) => x)),
+      };
+}
+
 class Scorerate {
-  Map<String, int>? rate;
+  List<Answer>? rate;
+  String? name;
   List<int>? questionnairenumber;
 
   Scorerate({
     this.rate,
+    this.name,
     this.questionnairenumber,
   });
 
-  factory Scorerate.fromRawJson(String str) =>
-      Scorerate.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory Scorerate.fromJson(Map<String, dynamic> json) => Scorerate(
-        rate: Map.from(json["rate"]).map((k, v) => MapEntry<String, int>(k, v)),
+        rate: List<Answer>.from(json["rate"].map((x) => Answer.fromJson(x))),
+        name: json["name"],
         questionnairenumber:
             List<int>.from(json["questionnairenumber"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "rate":
-            Map.from(rate ?? {}).map((k, v) => MapEntry<String, dynamic>(k, v)),
+        "rate": List<dynamic>.from(rate!.map((x) => x.toJson())),
+        "name": name,
         "questionnairenumber":
             List<dynamic>.from(questionnairenumber!.map((x) => x)),
       };

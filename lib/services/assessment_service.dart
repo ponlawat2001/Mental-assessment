@@ -25,6 +25,5 @@ class AssessmentService {
     assessmentController.setcontactlist(res.data['result']
         .map<AssessmentResult>((e) => AssessmentResult.fromJson(e))
         .toList());
-    print(res.data['result']);
   }
 }

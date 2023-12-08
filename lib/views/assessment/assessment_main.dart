@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/controllers/assessment_controller.dart';
 import 'package:mentalassessment/services/assessment_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
@@ -72,38 +74,44 @@ class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
                             .copyWith(color: ColorTheme.main5),
                       ),
                       const SizedBox(height: 16),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: 5,
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: gap),
-                        itemBuilder: (context, index) => Container(
-                          decoration: BoxDecoration(
-                              color: ColorTheme.main30,
-                              borderRadius: BorderRadius.circular(16)),
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'ประเมินความสำเร็จ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(color: ColorTheme.main5),
+                      GetX<AssessmentController>(
+                        init: AssessmentController(),
+                        builder: (AssessmentController controller) {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: controller.assessment.length,
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: gap),
+                            itemBuilder: (context, index) => Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.main30,
+                                  borderRadius: BorderRadius.circular(16)),
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    controller.assessment[index].name ??
+                                        'Unknown',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: ColorTheme.main5),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    '${(controller.assessment[index].questionnaire?.question?.length ?? 0)} ข้อ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: ColorTheme.main10),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                '10 ข้อ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(color: ColorTheme.main10),
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -117,7 +125,8 @@ class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
                         borderRadius: BorderRadius.circular(16)),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/assessmentdescription');
+                    Navigator.pushNamed(context, '/assessmentdescription',
+                        arguments: 0);
                   },
                   child: Text(
                     'เริ่มทำแบบประเมิน',

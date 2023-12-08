@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/controllers/assessment_controller.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
 import '../../constants/theme.dart';
@@ -15,6 +17,8 @@ class AssessmentDescriptionScreen extends StatefulWidget {
 
 class _AssessmentDescriptionScreenState
     extends State<AssessmentDescriptionScreen> {
+  final assessmentController = Get.put(AssessmentController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +27,7 @@ class _AssessmentDescriptionScreenState
   }
 
   Layout body(BuildContext context) {
+    final int args = (ModalRoute.of(context)?.settings.arguments ?? 0) as int;
     return Layout(
       backgroundAsset: Assets.imageBackground2,
       child: SafeArea(
@@ -34,7 +39,7 @@ class _AssessmentDescriptionScreenState
               Component.backButton(context),
               const SizedBox(height: 16),
               Text(
-                'แบบประเมินความเครียด',
+                assessmentController.assessment[args].name ?? 'Unknown',
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
@@ -42,7 +47,7 @@ class _AssessmentDescriptionScreenState
               ),
               Component.dividerhorizotal(),
               Text(
-                'ความเครียดเกิดขึ้นได้กับทุกคน สาเหตุที่ทําให้เกิดความเครียดมีหลายอย่าง เช่น รายได้ที่ไม่เพียงพอ หนี้สิน ภัยพิบัติต่างๆ ที่ทําให้เกิดความสูญเสียความเจ็บป่วยเป็นต้น ความเครียดมีทั้งประโยชน์และโทษ หากมากเกินไปจะเกิดผลเสียต่อร่างกายและจิตใจของท่านได้ขอให้ท่านลองประเมินตนเองเลือกตรงกับความรู้สึกของท่าน',
+                assessmentController.assessment[args].description ?? 'Unknown',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
@@ -57,7 +62,8 @@ class _AssessmentDescriptionScreenState
                         borderRadius: BorderRadius.circular(16)),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/assessmentdetail');
+                    Navigator.pushNamed(context, '/assessmentdetail',
+                        arguments: args);
                   },
                   child: Text(
                     'เริ่มทำแบบประเมิน',
