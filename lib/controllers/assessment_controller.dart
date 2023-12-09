@@ -8,4 +8,8 @@ class AssessmentController extends GetxController {
     assessment.value = data;
     update();
   }
+
+  randomquestionlist(int index) {
+    assessment[index].questionnaire!.question!.shuffle();
+  }
 }

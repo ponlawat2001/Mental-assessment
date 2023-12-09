@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
+import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
 import '../../constants/theme.dart';
@@ -15,9 +18,12 @@ class AssessmentDetailScreen extends StatefulWidget {
 }
 
 class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
+  final assessmentController = Get.put(AssessmentController());
+
   double gap = 16;
   List<String> list = ['1sdfs', 'sdfdsdsfdsfsf', 'sdsdfsfsdf', 'sdfsdfsddfs'];
   int counter = 1;
+  bool isRandom = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,11 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
 
   Layout body(BuildContext context) {
     final int args = (ModalRoute.of(context)?.settings.arguments ?? 0) as int;
-
+    if (!isRandom) {
+      assessmentController.randomquestionlist(args);
+      print(assessmentController.assessment[args].questionnaire!.question);
+    }
+    isRandom = true;
     return Layout(
       backgroundAsset: Assets.imageBackground2,
       child: SafeArea(
@@ -40,7 +50,27 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Component.backButton(context),
+                  IconButton(
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () {
+                      if (counter > 1) {
+                        AlertDialogselect.customDialog(
+                            context,
+                            'แน่ใจที่จะย้อนกลับ',
+                            'หากย้อนกลับรายการประเมินจะไม่ถูกบันทึก',
+                            const Icon(Icons.info),
+                            true, () {
+                          Navigator.pop(context);
+                        });
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: ColorTheme.main5,
+                    ),
+                  ),
                   SizedBox(height: gap),
                   Text(
                     controller.assessment[args].name ?? 'Unknown',
@@ -104,10 +134,19 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     .question!.length) {
                               counter++;
                             } else {
-                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/assessmentdescription',
-                                  arguments: args + 1);
+                              //outofQ
+                              if (assessmentController.assessment.length <=
+                                  args + 1) {
+                                print('Out of Question');
+                                Navigator.pop(context);
+                                Navigator.pushReplacementNamed(
+                                    context, '/assessmenthistorydetail');
+                              } else {
+                                Navigator.pop(context);
+                                Navigator.pushReplacementNamed(
+                                    context, '/assessmentdescription',
+                                    arguments: args + 1);
+                              }
                             }
                           });
                         },
