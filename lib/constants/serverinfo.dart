@@ -32,6 +32,16 @@ class Serverinfo {
   static String ventupdate = '$ventAndroid/update';
   static String ventdelete = '$ventAndroid/delete';
 
+  //audio
+  static String audioAndroid = '$serverAndroid/audio';
+  static String audiofindOwner = '$audioAndroid/findOwner';
+  static String audiocreate = '$audioAndroid/create';
+  static String audiodelete = '$audioAndroid/delete';
+
+  //storage
+  static String storageAndroid = '$serverAndroid/storage';
+  static String storageaudio = '$storageAndroid/uploadAudio';
+
   //vent_chocie
   static String ventchoiceAndroid = '$serverAndroid/ventchoice';
   static String ventchiocefind = '$ventchoiceAndroid/findAll';
@@ -40,4 +50,8 @@ class Serverinfo {
   static String contactAndroid = '$serverAndroid/contact';
   static String contactfindAll = '$contactAndroid/findAll';
   static String contactupdate = '$contactAndroid/update';
+
+  //assessment
+  static String assessmentAndroid = '$serverAndroid/assessment';
+  static String assessmentfindAll = '$assessmentAndroid/findAll';
 }

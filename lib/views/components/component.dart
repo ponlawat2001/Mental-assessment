@@ -153,6 +153,20 @@ class Component {
     );
   }
 
+  static Row dividerhorizotal() {
+    return Row(
+      children: [
+        Expanded(
+            child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Divider(
+            color: ColorTheme.stroke,
+          ),
+        )),
+      ],
+    );
+  }
+
   static Row dividerOr(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

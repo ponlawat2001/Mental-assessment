@@ -84,17 +84,7 @@ class _ContactScreenState extends State<ContactScreen> {
                               .titleLarge!
                               .copyWith(fontWeight: FontWeight.w400),
                         ),
-                        SizedBox(height: gap),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                                child: Divider(
-                              color: ColorTheme.main5,
-                            )),
-                          ],
-                        ),
-                        SizedBox(height: gap),
+                        Component.dividerhorizotal(),
                         Text(
                           controller.contact.value.locationContact ?? 'NoWhere',
                           style: Theme.of(context)

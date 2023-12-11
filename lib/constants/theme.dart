@@ -25,6 +25,7 @@ class ColorTheme {
   static Color darkGray = const Color(0xff636363);
   static Color lightGreen = const Color(0xffE4FDD7);
   static Color blue = const Color(0xff5177FF);
+  static Color lightPurple = const Color(0xffEFEDFF);
 
   //emojicard
   static Color nodataEmoji = const Color(0xffECEDFF);

@@ -10,12 +10,107 @@ import 'package:mentalassessment/views/profile/profile_edit.dart';
 import 'package:mentalassessment/views/profile/profile_edit_avatar.dart';
 import 'package:mentalassessment/views/vent/ventdeleteconfirm.dart';
 import 'package:mentalassessment/views/vent/ventdetail.dart';
+import 'package:mentalassessment/views/vent/ventplayer.dart';
 import 'package:mentalassessment/views/vent/ventvoicerecord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/vent/ventaudio_model.dart';
 import '../../services/vent_service.dart';
 
 class AlertDialogselect {
+  static assessmentAdvice(context, String title) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ],
+                ),
+              ));
+        });
+  }
+
+  static customDialog(context, String title, String subtitle, Widget icon,
+      bool isConfirm, Function function) {
+    showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            alignment: Alignment.center,
+            actionsOverflowButtonSpacing: 0,
+            contentPadding: const EdgeInsets.all(16),
+            buttonPadding: const EdgeInsets.all(16),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    Assets.iconInfo,
+                    width: 48,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(4),
+                      ),
+                      onPressed: () {
+                        function();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('ยืนยัน'),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(4),
+                          backgroundColor: ColorTheme.validation),
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('ยกเลิก'),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
+
   static userDeleteDialog(context) {
     return showDialog(
         context: context,
@@ -88,6 +183,19 @@ class AlertDialogselect {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(16))),
               child: VentVoiceRecordScreen());
+        });
+  }
+
+  static ventPlayer(context, VentAudioResult data) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: VentPlayerScreen(
+                ventdata: data,
+              ));
         });
   }
 

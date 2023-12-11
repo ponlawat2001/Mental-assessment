@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/services/avatar_service.dart';
+import 'package:mentalassessment/views/assessment/assessment.dart';
 import 'package:mentalassessment/views/profile/profile.dart';
 import 'package:mentalassessment/views/vent/vent.dart';
 
 import '../constants/theme.dart';
 import 'home.dart';
-import 'login/register.dart';
 import 'news/news.dart';
 
 class NavigatorScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
   final List<Widget> _pageName = [
     const HomeScreen(),
     const VentScreen(),
-    const RegisterScreen(),
+    const AssessmentScreen(),
     const NewsScreen(),
     const ProfileScreen(),
   ];
