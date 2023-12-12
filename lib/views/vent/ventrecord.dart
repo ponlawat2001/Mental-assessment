@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/constants/helper.dart';
 import 'package:mentalassessment/constants/theme.dart';
 import 'package:mentalassessment/controllers/vent_controller.dart';
 import 'package:mentalassessment/services/vent_service.dart';
@@ -95,17 +95,11 @@ class _VentRecordScreenState extends State<VentRecordScreen> {
                                         children: [
                                           const Icon(Icons.play_arrow),
                                           const SizedBox(width: 16),
-                                          Text(DateFormat.Hm()
-                                              .add_yMMMMd()
-                                              .format(DateTime
-                                                  .fromMillisecondsSinceEpoch(
-                                                      controller
-                                                                  .ventAudiolist
-                                                                  ?.value
-                                                                  .result?[index]
-                                                                  .updateAt[
-                                                              '_seconds'] *
-                                                          1000))),
+                                          Text(Helper.dateconverter(controller
+                                              .ventAudiolist
+                                              ?.value
+                                              .result?[index]
+                                              .updateAt['_seconds'])),
                                         ],
                                       ),
                                     ),
