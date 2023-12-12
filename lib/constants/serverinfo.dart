@@ -54,4 +54,8 @@ class Serverinfo {
   //assessment
   static String assessmentAndroid = '$serverAndroid/assessment';
   static String assessmentfindAll = '$assessmentAndroid/findAll';
+
+  //history
+  static String historyAndroid = '$serverAndroid/history';
+  static String historyfindOwner = '$historyAndroid/findOwner';
 }
