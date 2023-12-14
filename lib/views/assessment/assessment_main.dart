@@ -77,40 +77,73 @@ class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
                       GetX<AssessmentController>(
                         init: AssessmentController(),
                         builder: (AssessmentController controller) {
-                          return ListView.separated(
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            itemCount: controller.assessment.length,
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: gap),
-                            itemBuilder: (context, index) => Container(
-                              decoration: BoxDecoration(
-                                  color: ColorTheme.main30,
-                                  borderRadius: BorderRadius.circular(16)),
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    controller.assessment[index].name ??
-                                        'Unknown',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(color: ColorTheme.main5),
+                          return (controller.assessment.first.id == null)
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: ColorTheme.main30,
+                                            borderRadius:
+                                                BorderRadius.circular(16)),
+                                        padding: const EdgeInsets.all(16),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'รอสักครู่',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                      color: ColorTheme.main5),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: controller.assessment.length,
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(height: gap),
+                                  itemBuilder: (context, index) => Container(
+                                    decoration: BoxDecoration(
+                                        color: ColorTheme.main30,
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          controller.assessment[index].name ??
+                                              'Unknown',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                  color: ColorTheme.main5),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '${(controller.assessment[index].questionnaire?.question?.length ?? 0)} ข้อ',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                  color: ColorTheme.main10),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    '${(controller.assessment[index].questionnaire?.question?.length ?? 0)} ข้อ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(color: ColorTheme.main10),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                                );
                         },
                       ),
                     ],

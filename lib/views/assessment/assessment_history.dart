@@ -100,108 +100,116 @@ class _AssessmentHistoryScreenState extends State<AssessmentHistoryScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                child: ListView.separated(
-                                  itemCount: controller.history.length,
-                                  separatorBuilder: (context, _) =>
-                                      SizedBox(height: gap),
-                                  itemBuilder: (context, index) => Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              offset: const Offset(0, 4),
-                                              spreadRadius: 0,
-                                              blurRadius: 4,
-                                              color: ColorTheme.lightGray2)
-                                        ],
-                                        color: ColorTheme.white,
-                                        borderRadius:
-                                            BorderRadius.circular(16)),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, '/assessmenthistorydetail',
-                                            arguments:
-                                                controller.history[index]);
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                ((controller
-                                                                .history[index]
-                                                                .summary
-                                                                ?.length ??
-                                                            2) ==
-                                                        1)
-                                                    ? controller
-                                                            .history[index]
-                                                            .summary
-                                                            ?.first
-                                                            .name ??
-                                                        'Unknown'
-                                                    : 'แบบประเมินรวม',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                        color:
-                                                            ColorTheme.main5),
-                                              ),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                'ภาพรวม:',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                        color:
-                                                            ColorTheme.main5),
-                                              ),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                controller.history[index]
-                                                        .summaryrate ??
-                                                    '',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                        color: ColorTheme
-                                                            .validation),
-                                              ),
-                                            ],
+                                child: controller.history.isEmpty
+                                    ? const Text('ไม่มีข้อมูล')
+                                    : ListView.separated(
+                                        itemCount: controller.history.length,
+                                        separatorBuilder: (context, _) =>
+                                            SizedBox(height: gap),
+                                        itemBuilder: (context, index) =>
+                                            Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    offset: const Offset(0, 4),
+                                                    spreadRadius: 0,
+                                                    blurRadius: 4,
+                                                    color:
+                                                        ColorTheme.lightGray2)
+                                              ],
+                                              color: ColorTheme.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(16)),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.pushNamed(context,
+                                                  '/assessmenthistorydetail',
+                                                  arguments: controller
+                                                      .history[index]);
+                                            },
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      ((controller
+                                                                      .history[
+                                                                          index]
+                                                                      .summary
+                                                                      ?.length ??
+                                                                  2) ==
+                                                              1)
+                                                          ? controller
+                                                                  .history[
+                                                                      index]
+                                                                  .summary
+                                                                  ?.first
+                                                                  .name ??
+                                                              'Unknown'
+                                                          : 'แบบประเมินรวม',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color: ColorTheme
+                                                                  .main5),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Text(
+                                                      'ภาพรวม:',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color: ColorTheme
+                                                                  .main5),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Text(
+                                                      controller.history[index]
+                                                              .summaryrate ??
+                                                          '',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color: ColorTheme
+                                                                  .validation),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 8),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      Helper.dateconverter(
+                                                          controller
+                                                                  .history[
+                                                                      index]
+                                                                  .createAt
+                                                                  ?.seconds ??
+                                                              1000),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                              color: ColorTheme
+                                                                  .main5),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                Helper.dateconverter(controller
-                                                        .history[index]
-                                                        .createAt
-                                                        ?.seconds ??
-                                                    1000),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                        color:
-                                                            ColorTheme.main5),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
                               ),
                       ),
                     )

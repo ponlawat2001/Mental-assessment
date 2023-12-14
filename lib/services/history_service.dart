@@ -24,7 +24,7 @@ class HistoryService {
       await AuthService.fetchToken();
       return await fetchHistory();
     });
-    historyController.setcontactlist(res.data['result']
+    historyController.sethistorylist(res.data['result']
         .map<HistoryResult>((e) => HistoryResult.fromJson(e))
         .toList());
   }

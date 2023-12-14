@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/controllers/task_controller.dart';
 import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
@@ -144,100 +146,111 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                             color: ColorTheme.white.withOpacity(0.8),
                           ),
                         ]),
-                    child: (false)
-                        ? const Text('เริ่มทำแบบประเมินเลยสิ!')
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: ListView.separated(
-                              itemCount: 2,
-                              separatorBuilder: (context, _) =>
-                                  SizedBox(height: gap),
-                              itemBuilder: (context, index) => Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                    color: ColorTheme.white,
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                    child: GetX<TaskController>(
+                      init: TaskController(),
+                      builder: (TaskController controller) {
+                        return (controller.task.first.id == null)
+                            ? const Text('เริ่มทำแบบประเมินเลยสิ!')
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: ListView.separated(
+                                  itemCount: 2,
+                                  separatorBuilder: (context, _) =>
+                                      SizedBox(height: gap),
+                                  itemBuilder: (context, index) => Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                        color: ColorTheme.white,
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'แบบประเมินรวม',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  color: ColorTheme.main5),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'แบบประเมินรวม',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      color: ColorTheme.main5),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                await AlertDialogselect.customDialog(
+                                                    context,
+                                                    'ยืนยันที่จะยกเลิกทำแบบประเมิน',
+                                                    'คูณจะต้องเริ่มต้นประเมินใหม่ยืนยันหรือไม่?',
+                                                    SvgPicture.asset(
+                                                        Assets.iconInfo),
+                                                    true,
+                                                    () {});
+                                              },
+                                              child: Icon(
+                                                Icons.close_outlined,
+                                                color: ColorTheme.validation,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        InkWell(
-                                          onTap: () async {
-                                            await AlertDialogselect.customDialog(
-                                                context,
-                                                'ยืนยันที่จะยกเลิกทำแบบประเมิน',
-                                                'คูณจะต้องเริ่มต้นประเมินใหม่ยืนยันหรือไม่?',
-                                                SvgPicture.asset(
-                                                    Assets.iconInfo),
-                                                true,
-                                                () {});
-                                          },
-                                          child: Icon(
-                                            Icons.close_outlined,
-                                            color: ColorTheme.validation,
+                                        const SizedBox(height: 16),
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const ClampingScrollPhysics(),
+                                          itemCount: 5,
+                                          separatorBuilder: (context, index) =>
+                                              SizedBox(height: gap),
+                                          itemBuilder: (context, index) =>
+                                              ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              alignment: Alignment.center,
+                                              backgroundColor:
+                                                  ColorTheme.lightPurple,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16)),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'ประเมินความสำเร็จ',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(
+                                                          color:
+                                                              ColorTheme.main5),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'สำเร็จ',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall!
+                                                      .copyWith(
+                                                          color: ColorTheme
+                                                              .main10),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],
                                     ),
-                                    const SizedBox(height: 16),
-                                    ListView.separated(
-                                      shrinkWrap: true,
-                                      physics: const ClampingScrollPhysics(),
-                                      itemCount: 5,
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(height: gap),
-                                      itemBuilder: (context, index) =>
-                                          ElevatedButton(
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          alignment: Alignment.center,
-                                          backgroundColor:
-                                              ColorTheme.lightPurple,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'ประเมินความสำเร็จ',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall!
-                                                  .copyWith(
-                                                      color: ColorTheme.main5),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              'สำเร็จ',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall!
-                                                  .copyWith(
-                                                      color: ColorTheme.main10),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
+                              );
+                      },
+                    ),
                   ),
                 )
               ],
