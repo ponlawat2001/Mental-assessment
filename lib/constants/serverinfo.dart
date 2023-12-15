@@ -53,9 +53,15 @@ class Serverinfo {
 
   //assessment
   static String assessmentAndroid = '$serverAndroid/assessment';
-  static String assessmentfindAll = '$assessmentAndroid/findAll';
+  static String assessmentfindMain = '$assessmentAndroid/findMain';
 
   //history
   static String historyAndroid = '$serverAndroid/history';
   static String historyfindOwner = '$historyAndroid/findOwner';
+
+  //task
+  static String taskAndroid = '$serverAndroid/task';
+  static String taskfindOwner = '$taskAndroid/findOwner';
+  static String taskcreate = '$taskAndroid/create';
+  static String taskdelete = '$taskAndroid/delete';
 }
