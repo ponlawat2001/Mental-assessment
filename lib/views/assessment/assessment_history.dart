@@ -100,7 +100,7 @@ class _AssessmentHistoryScreenState extends State<AssessmentHistoryScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                child: controller.history.isEmpty
+                                child: controller.history.first.id == null
                                     ? const Text('ไม่มีข้อมูล')
                                     : ListView.separated(
                                         itemCount: controller.history.length,

@@ -36,6 +36,7 @@ class AssessmentResult {
   String? id;
   String? name;
   String? description;
+  String? type;
   Questionnaire? questionnaire;
   List<Answer>? answer;
   List<Scorerate>? scorerate;
@@ -48,6 +49,7 @@ class AssessmentResult {
     this.id,
     this.name,
     this.description,
+    this.type,
     this.questionnaire,
     this.answer,
     this.scorerate,
@@ -62,6 +64,7 @@ class AssessmentResult {
         id: json["id"],
         name: json["name"],
         description: json["description"],
+        type: json["type"],
         questionnaire: Questionnaire.fromJson(json["questionnaire"]),
         answer:
             List<Answer>.from(json["answer"].map((x) => Answer.fromJson(x))),
@@ -78,6 +81,7 @@ class AssessmentResult {
         "id": id,
         "name": name,
         "description": description,
+        "type": type,
         "questionnaire": questionnaire!.toJson(),
         "answer": List<dynamic>.from(answer!.map((x) => x.toJson())),
         "scorerate": List<dynamic>.from(scorerate!.map((x) => x.toJson())),

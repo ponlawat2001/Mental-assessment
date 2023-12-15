@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/task_controller.dart';
+import 'package:mentalassessment/services/task_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
@@ -17,6 +18,14 @@ class AssessmentScreen extends StatefulWidget {
 
 class _AssessmentScreenState extends State<AssessmentScreen> {
   double gap = 16;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      TaskService.fetchTask();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,12 +158,12 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                     child: GetX<TaskController>(
                       init: TaskController(),
                       builder: (TaskController controller) {
-                        return (controller.task.first.id == null)
+                        return (controller.task.isEmpty)
                             ? const Text('เริ่มทำแบบประเมินเลยสิ!')
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
                                 child: ListView.separated(
-                                  itemCount: 2,
+                                  itemCount: controller.task.length,
                                   separatorBuilder: (context, _) =>
                                       SizedBox(height: gap),
                                   itemBuilder: (context, index) => Container(
@@ -187,8 +196,13 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                     'คูณจะต้องเริ่มต้นประเมินใหม่ยืนยันหรือไม่?',
                                                     SvgPicture.asset(
                                                         Assets.iconInfo),
-                                                    true,
-                                                    () {});
+                                                    true, () async {
+                                                  await TaskService.deleteTask(
+                                                      controller
+                                                              .task[index].id ??
+                                                          '',
+                                                      context);
+                                                });
                                               },
                                               child: Icon(
                                                 Icons.close_outlined,
@@ -202,10 +216,12 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                           shrinkWrap: true,
                                           physics:
                                               const ClampingScrollPhysics(),
-                                          itemCount: 5,
+                                          itemCount: controller.task[index]
+                                                  .summary?.length ??
+                                              0,
                                           separatorBuilder: (context, index) =>
                                               SizedBox(height: gap),
-                                          itemBuilder: (context, index) =>
+                                          itemBuilder: (context, indexinner) =>
                                               ElevatedButton(
                                             onPressed: () {},
                                             style: ElevatedButton.styleFrom(
@@ -222,7 +238,11 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'ประเมินความสำเร็จ',
+                                                  controller
+                                                          .task[index]
+                                                          .summary?[indexinner]
+                                                          .name ??
+                                                      '',
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodySmall!
@@ -231,15 +251,21 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                               ColorTheme.main5),
                                                 ),
                                                 const SizedBox(width: 8),
-                                                Text(
-                                                  'สำเร็จ',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall!
-                                                      .copyWith(
-                                                          color: ColorTheme
-                                                              .main10),
-                                                ),
+                                                (controller
+                                                        .task[index]
+                                                        .summary?[indexinner]
+                                                        .useranswer
+                                                        ?.isEmpty as bool)
+                                                    ? const SizedBox()
+                                                    : Text(
+                                                        'สำเร็จ',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: ColorTheme
+                                                                    .main10),
+                                                      ),
                                               ],
                                             ),
                                           ),
