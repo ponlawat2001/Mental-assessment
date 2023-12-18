@@ -78,7 +78,7 @@ class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
                                   .copyWith(color: ColorTheme.main5),
                             ),
                             const SizedBox(height: 16),
-                            (controller.assessment.first.id == null)
+                            (controller.assessment.isEmpty)
                                 ? Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -135,7 +135,7 @@ class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
                                           ),
                                           const SizedBox(width: 8),
                                           Text(
-                                            '${(controller.assessment[index].questionnaire?.question?.length ?? 0)} ข้อ',
+                                            '${(controller.assessment[index].questionnaire?.length ?? 0)} ข้อ',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall!
@@ -149,7 +149,7 @@ class _AssessmentMainScreenState extends State<AssessmentMainScreen> {
                           ],
                         )),
                     const SizedBox(height: 16),
-                    (controller.assessment.first.id == null)
+                    (controller.assessment.isEmpty)
                         ? const SizedBox()
                         : ElevatedButton(
                             style: ElevatedButton.styleFrom(

@@ -148,7 +148,7 @@ class Scorerate {
 class Useranswer {
   int? score;
   String? question;
-  Answer? answer;
+  String? answer;
 
   Useranswer({
     this.score,
@@ -159,28 +159,12 @@ class Useranswer {
   factory Useranswer.fromJson(Map<String, dynamic> json) => Useranswer(
         score: json["score"],
         question: json["question"],
-        answer: answerValues.map[json["answer"]],
+        answer: json["answer"],
       );
 
   Map<String, dynamic> toJson() => {
         "score": score,
         "question": question,
-        "answer": answerValues.reverse[answer],
+        "answer": answer,
       };
-}
-
-enum Answer { EMPTY }
-
-final answerValues = EnumValues({"ทุกวัน": Answer.EMPTY});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

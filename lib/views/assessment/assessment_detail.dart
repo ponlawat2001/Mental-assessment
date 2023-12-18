@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
+import 'package:mentalassessment/controllers/task_controller.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
@@ -19,6 +20,7 @@ class AssessmentDetailScreen extends StatefulWidget {
 
 class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
   final assessmentController = Get.put(AssessmentController());
+  final taskController = Get.put(TaskController());
 
   double gap = 16;
   List<String> list = ['1sdfs', 'sdfdsdsfdsfsf', 'sdsdfsfsdf', 'sdfsdfsddfs'];
@@ -36,7 +38,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
     final int args = (ModalRoute.of(context)?.settings.arguments ?? 0) as int;
     if (!isRandom) {
       assessmentController.randomquestionlist(args);
-      print(assessmentController.assessment[args].questionnaire!.question);
+      print(assessmentController.assessment[args].questionnaire);
     }
     isRandom = true;
     return Layout(
@@ -60,6 +62,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                             'หากย้อนกลับรายการประเมินจะไม่ถูกบันทึก',
                             const Icon(Icons.info),
                             true, () {
+                          taskController.clearAnswer();
                           Navigator.pop(context);
                         });
                       } else {
@@ -91,7 +94,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                             .copyWith(fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        '$counter/${controller.assessment[args].questionnaire?.question?.length ?? 0 - 1}',
+                        '$counter/${controller.assessment[args].questionnaire?.length ?? 0 - 1}',
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
@@ -109,7 +112,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                               color: ColorTheme.white,
                               borderRadius: BorderRadius.circular(8)),
                           child: Text(
-                            '$counter. ${controller.assessment[args].questionnaire?.question?[counter - 1] ?? ''}',
+                            '$counter. ${controller.assessment[args].questionnaire?[counter - 1].title ?? ''}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -128,27 +131,33 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                     children: controller.assessment[args].answer!.map((e) {
                       return InkWell(
                         onTap: () {
-                          setState(() {
-                            if (counter !=
-                                controller.assessment[args].questionnaire!
-                                    .question!.length) {
-                              counter++;
-                            } else {
-                              //outofQ
-                              if (assessmentController.assessment.length <=
-                                  args + 1) {
-                                print('Out of Question');
-                                Navigator.pop(context);
-                                Navigator.pushReplacementNamed(
-                                    context, '/assessmenthistorydetail');
+                          setState(
+                            () {
+                              if (counter !=
+                                  controller
+                                      .assessment[args].questionnaire!.length) {
+                                counter++;
+                                taskController.pushAnswer(
+                                    controller.assessment[args]
+                                        .questionnaire![counter - 1],
+                                    e);
                               } else {
-                                Navigator.pop(context);
-                                Navigator.pushReplacementNamed(
-                                    context, '/assessmentdescription',
-                                    arguments: args + 1);
+                                //outofQ
+                                if (assessmentController.assessment.length <=
+                                    args + 1) {
+                                  print('Out of Question');
+                                  Navigator.pop(context);
+                                  Navigator.pushReplacementNamed(
+                                      context, '/assessmenthistorydetail');
+                                } else {
+                                  Navigator.pop(context);
+                                  Navigator.pushReplacementNamed(
+                                      context, '/assessmentdescription',
+                                      arguments: args + 1);
+                                }
                               }
-                            }
-                          });
+                            },
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -162,7 +171,10 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     color: ColorTheme.lightGray2),
                               ]),
                           padding: const EdgeInsets.all(16),
-                          child: Text(e.name ?? 'Unknown'),
+                          child: Text(
+                            e.name ?? 'Unknown',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
                         ),
                       );
                     }).toList(),

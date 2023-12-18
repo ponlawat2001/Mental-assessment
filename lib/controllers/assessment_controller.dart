@@ -10,6 +10,6 @@ class AssessmentController extends GetxController {
   }
 
   randomquestionlist(int index) {
-    assessment[index].questionnaire!.question!.shuffle();
+    assessment[index].questionnaire!.shuffle();
   }
 }
