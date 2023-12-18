@@ -128,7 +128,10 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                   Wrap(
                     runSpacing: 16,
                     spacing: 16,
-                    children: controller.assessment[args].answer!.map((e) {
+                    children: controller.assessment[args].answer!
+                        .asMap()
+                        .entries
+                        .map((e) {
                       return InkWell(
                         onTap: () {
                           setState(
@@ -140,7 +143,8 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                 taskController.pushAnswer(
                                     controller.assessment[args]
                                         .questionnaire![counter - 1],
-                                    e);
+                                    e,
+                                    controller.assessment[args].answer);
                               } else {
                                 //outofQ
                                 if (assessmentController.assessment.length <=
@@ -172,7 +176,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                               ]),
                           padding: const EdgeInsets.all(16),
                           child: Text(
-                            e.name ?? 'Unknown',
+                            e.value.name ?? 'Unknown',
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ),
