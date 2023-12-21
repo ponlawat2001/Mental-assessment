@@ -58,10 +58,13 @@ class Serverinfo {
   //history
   static String historyAndroid = '$serverAndroid/history';
   static String historyfindOwner = '$historyAndroid/findOwner';
+  static String historycreate = '$historyAndroid/create';
 
   //task
   static String taskAndroid = '$serverAndroid/task';
   static String taskfindOwner = '$taskAndroid/findOwner';
+  static String taskupdate = '$taskAndroid/update';
+  static String taskfindOne = '$taskAndroid/findOne';
   static String taskcreate = '$taskAndroid/create';
   static String taskdelete = '$taskAndroid/delete';
 }
