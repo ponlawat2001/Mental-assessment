@@ -160,27 +160,6 @@ class _AssessmentHistoryScreenState extends State<AssessmentHistoryScreen> {
                                                                   .main5),
                                                     ),
                                                     const SizedBox(width: 8),
-                                                    Text(
-                                                      'ภาพรวม:',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                              color: ColorTheme
-                                                                  .main5),
-                                                    ),
-                                                    const SizedBox(width: 8),
-                                                    Text(
-                                                      controller.history[index]
-                                                              .summaryrate ??
-                                                          '',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium!
-                                                          .copyWith(
-                                                              color: ColorTheme
-                                                                  .validation),
-                                                    ),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 8),

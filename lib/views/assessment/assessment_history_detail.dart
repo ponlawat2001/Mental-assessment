@@ -95,30 +95,6 @@ class _AssessmentHistoryDetailScreenState
                                     fontWeight: FontWeight.w400,
                                   ),
                             ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ภาพรวม: ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                                Text(
-                                  args.summary?[index].totalrate ?? 'Unknown',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                          fontWeight: FontWeight.w300,
-                                          color: ColorTheme.validation),
-                                ),
-                              ],
-                            ),
                             Component.dividerhorizotal(),
                             ListView.separated(
                               shrinkWrap: true,
@@ -131,7 +107,7 @@ class _AssessmentHistoryDetailScreenState
                                 );
                               },
                               itemBuilder: (BuildContext context, int index) {
-                                return Column(
+                                return Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -144,7 +120,7 @@ class _AssessmentHistoryDetailScreenState
                                             fontWeight: FontWeight.w300,
                                           ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(width: 8),
                                     Text(
                                       args.summary?[index].scorerate?[0].rate ??
                                           'Unknown',
@@ -152,8 +128,12 @@ class _AssessmentHistoryDetailScreenState
                                           .textTheme
                                           .titleLarge!
                                           .copyWith(
-                                            fontWeight: FontWeight.w300,
-                                          ),
+                                              fontWeight: FontWeight.w300,
+                                              color: Helper.scorerateColor(args
+                                                      .summary?[index]
+                                                      .scorerate?[0]
+                                                      .rate ??
+                                                  'Unknown')),
                                     ),
                                   ],
                                 );

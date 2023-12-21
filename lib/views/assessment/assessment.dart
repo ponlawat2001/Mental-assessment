@@ -162,115 +162,134 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                             ? const Text('เริ่มทำแบบประเมินเลยสิ!')
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: ListView.separated(
-                                  itemCount: controller.task.length,
-                                  separatorBuilder: (context, _) =>
-                                      SizedBox(height: gap),
-                                  itemBuilder: (context, index) => Container(
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                        color: ColorTheme.white,
-                                        borderRadius:
-                                            BorderRadius.circular(16)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'แบบประเมินรวม',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      color: ColorTheme.main5),
-                                            ),
-                                            InkWell(
-                                              onTap: () async {
-                                                await AlertDialogselect.customDialog(
-                                                    context,
-                                                    'ยืนยันที่จะยกเลิกทำแบบประเมิน',
-                                                    'คูณจะต้องเริ่มต้นประเมินใหม่ยืนยันหรือไม่?',
-                                                    SvgPicture.asset(
-                                                        Assets.iconInfo),
-                                                    true, () async {
-                                                  await TaskService.deleteTask(
-                                                      controller
-                                                              .task[index].id ??
-                                                          '',
-                                                      context);
-                                                });
-                                              },
-                                              child: Icon(
-                                                Icons.close_outlined,
-                                                color: ColorTheme.validation,
+                                child: RefreshIndicator(
+                                  onRefresh: () => TaskService.fetchTask(),
+                                  color: ColorTheme.main10,
+                                  child: ListView.separated(
+                                    itemCount: controller.task.length,
+                                    separatorBuilder: (context, _) =>
+                                        SizedBox(height: gap),
+                                    itemBuilder: (context, index) => Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                          color: ColorTheme.white,
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'แบบประเมินรวม',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        color:
+                                                            ColorTheme.main5),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(height: 16),
-                                        ListView.separated(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const ClampingScrollPhysics(),
-                                          itemCount: controller.task[index]
-                                                  .summary?.length ??
-                                              0,
-                                          separatorBuilder: (context, index) =>
-                                              SizedBox(height: gap),
-                                          itemBuilder: (context, indexinner) =>
-                                              ElevatedButton(
-                                            onPressed: () {},
-                                            style: ElevatedButton.styleFrom(
-                                              alignment: Alignment.center,
-                                              backgroundColor:
-                                                  ColorTheme.lightPurple,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16)),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  controller
-                                                          .task[index]
-                                                          .summary?[indexinner]
-                                                          .name ??
-                                                      '',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall!
-                                                      .copyWith(
-                                                          color:
-                                                              ColorTheme.main5),
+                                              InkWell(
+                                                onTap: () async {
+                                                  await AlertDialogselect.customDialog(
+                                                      context,
+                                                      'ยืนยันที่จะยกเลิกทำแบบประเมิน',
+                                                      'คูณจะต้องเริ่มต้นประเมินใหม่ยืนยันหรือไม่?',
+                                                      SvgPicture.asset(
+                                                          Assets.iconInfo),
+                                                      true, () async {
+                                                    await TaskService
+                                                        .deleteTask(
+                                                            controller
+                                                                    .task[index]
+                                                                    .id ??
+                                                                '',
+                                                            context);
+                                                  });
+                                                },
+                                                child: Icon(
+                                                  Icons.close_outlined,
+                                                  color: ColorTheme.validation,
                                                 ),
-                                                const SizedBox(width: 8),
-                                                (controller
-                                                        .task[index]
-                                                        .summary?[indexinner]
-                                                        .useranswer
-                                                        ?.isEmpty as bool)
-                                                    ? const SizedBox()
-                                                    : Text(
-                                                        'สำเร็จ',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall!
-                                                            .copyWith(
-                                                                color: ColorTheme
-                                                                    .main10),
-                                                      ),
-                                              ],
-                                            ),
+                                              )
+                                            ],
                                           ),
-                                        )
-                                      ],
+                                          const SizedBox(height: 16),
+                                          ListView.separated(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const ClampingScrollPhysics(),
+                                            itemCount: controller.task[index]
+                                                    .summary?.length ??
+                                                0,
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    SizedBox(height: gap),
+                                            itemBuilder:
+                                                (context, indexinner) =>
+                                                    ElevatedButton(
+                                              onPressed: () {
+                                                if (controller
+                                                    .task[index]
+                                                    .summary![indexinner]
+                                                    .useranswer!
+                                                    .isEmpty) {
+                                                  print("sdfd");
+                                                }
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                alignment: Alignment.center,
+                                                backgroundColor:
+                                                    ColorTheme.lightPurple,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16)),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    controller
+                                                            .task[index]
+                                                            .summary?[
+                                                                indexinner]
+                                                            .name ??
+                                                        '',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                            color: ColorTheme
+                                                                .main5),
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  (controller
+                                                          .task[index]
+                                                          .summary![indexinner]
+                                                          .useranswer!
+                                                          .isEmpty)
+                                                      ? const SizedBox()
+                                                      : Text(
+                                                          'สำเร็จ',
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: ColorTheme
+                                                                      .main10),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

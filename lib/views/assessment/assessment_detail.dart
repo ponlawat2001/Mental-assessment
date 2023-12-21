@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
 import 'package:mentalassessment/controllers/task_controller.dart';
+import 'package:mentalassessment/services/task_service.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/theme.dart';
 import '../components/component.dart';
@@ -28,6 +30,12 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
   bool isRandom = false;
 
   @override
+  void initState() {
+    super.initState();
+    taskController.clearAnswer();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: body(context),
@@ -38,7 +46,6 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
     final int args = (ModalRoute.of(context)?.settings.arguments ?? 0) as int;
     if (!isRandom) {
       assessmentController.randomquestionlist(args);
-      print(assessmentController.assessment[args].questionnaire);
     }
     isRandom = true;
     return Layout(
@@ -133,7 +140,9 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                         .entries
                         .map((e) {
                       return InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           setState(
                             () {
                               if (counter !=
@@ -144,16 +153,35 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     controller.assessment[args]
                                         .questionnaire![counter - 1],
                                     e,
-                                    controller.assessment[args].answer);
+                                    controller.assessment[args].answer,
+                                    controller.assessment[args]);
+                                print('pushin');
                               } else {
                                 //outofQ
-                                if (assessmentController.assessment.length <=
+                                if (assessmentController.assessment.length ==
                                     args + 1) {
                                   print('Out of Question');
+                                  TaskService.updateTask(
+                                      taskController.summary.value,
+                                      prefs.getString('createTaskId') ?? '',
+                                      context);
+
                                   Navigator.pop(context);
                                   Navigator.pushReplacementNamed(
                                       context, '/assessmenthistorydetail');
                                 } else {
+                                  taskController.pushAnswer(
+                                      controller.assessment[args]
+                                          .questionnaire![counter - 1],
+                                      e,
+                                      controller.assessment[args].answer,
+                                      controller.assessment[args]);
+                                  print('pushin again');
+                                  if (!context.mounted) return;
+                                  TaskService.updateTask(
+                                      taskController.summary.value,
+                                      prefs.getString('createTaskId') ?? '',
+                                      context);
                                   Navigator.pop(context);
                                   Navigator.pushReplacementNamed(
                                       context, '/assessmentdescription',
