@@ -149,22 +149,21 @@ class Useranswer {
   int? score;
   String? question;
   String? answer;
+  int? questionId;
 
-  Useranswer({
-    this.score,
-    this.question,
-    this.answer,
-  });
+  Useranswer({this.score, this.question, this.answer, this.questionId});
 
   factory Useranswer.fromJson(Map<String, dynamic> json) => Useranswer(
         score: json["score"],
         question: json["question"],
         answer: json["answer"],
+        questionId: json["questionId"],
       );
 
   Map<String, dynamic> toJson() => {
         "score": score,
         "question": question,
         "answer": answer,
+        "questionId": questionId
       };
 }

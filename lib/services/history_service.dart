@@ -28,4 +28,17 @@ class HistoryService {
         .map<HistoryResult>((e) => HistoryResult.fromJson(e))
         .toList());
   }
+
+  static createHistory(HistoryResult data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    Response res = await dio.post(Serverinfo.historycreate,
+        options: Options(
+            contentType: 'application/json',
+            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+        data: <HistoryResult>{}).catchError((e) async {
+      await AuthService.fetchToken();
+      return await fetchHistory();
+    });
+  }
 }
