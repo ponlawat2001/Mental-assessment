@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:mentalassessment/model/assessment/assessment_model.dart'
     as assessmentModel;
@@ -56,12 +54,23 @@ class TaskController extends GetxController {
   pushSummary(assessmentModel.AssessmentResult assessmentData,
       List<Useranswer> userAnswer) {
     summary.value = Summary(
-      name: assessmentData.name,
-      useranswer: userAnswer,
-      totalscore: totalscore(userAnswer),
-      scorerate: scorerate(assessmentData, userAnswer),
-    );
+        name: assessmentData.name,
+        useranswer: userAnswer,
+        totalscore: totalscore(userAnswer),
+        scorerate: scorerate(assessmentData, userAnswer),
+        advise: advise(assessmentData, totalscore(userAnswer)));
     update();
+  }
+
+  String advise(
+      assessmentModel.AssessmentResult assessmentData, int totalscore) {
+    String temp = '';
+    for (var element in assessmentData.advise!.reversed) {
+      if (element.rate! <= totalscore) {
+        temp = element.advise ?? '';
+      }
+    }
+    return temp;
   }
 
   int totalscore(List<Useranswer> answer) {
@@ -77,12 +86,10 @@ class TaskController extends GetxController {
     List<Scorerate>? sumscorerate = <Scorerate>[];
     int score = 0;
     String rate = '';
-    // print(jsonEncode(userAnswer));
     for (var e in assessmentData.scorerate!) {
       for (var element in userAnswer) {
         if (e.questionnairenumber!.contains(element.questionId)) {
           score += element.score ?? 99;
-          print('score + ${element.score}');
         }
       }
       for (var einner in e.rate!.reversed) {
@@ -93,8 +100,6 @@ class TaskController extends GetxController {
       }
       sumscorerate.add(Scorerate(rate: rate, name: e.name));
     }
-    print(jsonEncode(sumscorerate));
-    print(rate);
     return sumscorerate;
   }
 }

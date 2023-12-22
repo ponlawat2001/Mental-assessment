@@ -1,10 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
 import 'package:mentalassessment/controllers/task_controller.dart';
+import 'package:mentalassessment/services/history_service.dart';
 import 'package:mentalassessment/services/task_service.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
@@ -143,53 +142,67 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                         onTap: () async {
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          setState(
-                            () {
-                              if (counter !=
-                                  controller
-                                      .assessment[args].questionnaire!.length) {
-                                counter++;
-                                taskController.pushAnswer(
-                                    controller.assessment[args]
-                                        .questionnaire![counter - 1],
-                                    e,
-                                    controller.assessment[args].answer,
-                                    controller.assessment[args]);
-                                print('pushin');
-                              } else {
-                                //outofQ
-                                if (assessmentController.assessment.length ==
-                                    args + 1) {
-                                  print('Out of Question');
-                                  TaskService.updateTask(
-                                      taskController.summary.value,
-                                      prefs.getString('createTaskId') ?? '',
-                                      context);
-
-                                  Navigator.pop(context);
-                                  Navigator.pushReplacementNamed(
-                                      context, '/assessmenthistorydetail');
-                                } else {
-                                  taskController.pushAnswer(
-                                      controller.assessment[args]
-                                          .questionnaire![counter - 1],
-                                      e,
-                                      controller.assessment[args].answer,
-                                      controller.assessment[args]);
-                                  print('pushin again');
-                                  if (!context.mounted) return;
-                                  TaskService.updateTask(
-                                      taskController.summary.value,
-                                      prefs.getString('createTaskId') ?? '',
-                                      context);
-                                  Navigator.pop(context);
-                                  Navigator.pushReplacementNamed(
-                                      context, '/assessmentdescription',
-                                      arguments: args + 1);
-                                }
-                              }
-                            },
-                          );
+                          if (counter !=
+                              controller
+                                  .assessment[args].questionnaire!.length) {
+                            setState(() {
+                              counter++;
+                            });
+                            taskController.pushAnswer(
+                                controller.assessment[args]
+                                    .questionnaire![counter - 1],
+                                e,
+                                controller.assessment[args].answer,
+                                controller.assessment[args]);
+                          } else {
+                            //outofQ
+                            if (assessmentController.assessment.length ==
+                                args + 1) {
+                              print('Out of Question');
+                              taskController.pushAnswer(
+                                  controller.assessment[args]
+                                      .questionnaire![counter - 1],
+                                  e,
+                                  controller.assessment[args].answer,
+                                  controller.assessment[args]);
+                              if (!context.mounted) return;
+                              await TaskService.updateTask(
+                                  taskController.summary.value,
+                                  prefs.getString('createTaskId') ?? '',
+                                  context);
+                              if (!context.mounted) return;
+                              await HistoryService.createHistory(
+                                      await TaskService.findOne(
+                                          prefs.getString('createTaskId') ?? '',
+                                          context))
+                                  .then((value) {
+                                TaskService.deleteTask(
+                                    prefs.getString('createTaskId') ?? '',
+                                    context);
+                                if (!context.mounted) return;
+                                Navigator.pop(context);
+                                Navigator.pushReplacementNamed(
+                                    context, '/assessmenthistorydetail',
+                                    arguments: value);
+                              });
+                            } else {
+                              taskController.pushAnswer(
+                                  controller.assessment[args]
+                                      .questionnaire![counter - 1],
+                                  e,
+                                  controller.assessment[args].answer,
+                                  controller.assessment[args]);
+                              if (!context.mounted) return;
+                              TaskService.updateTask(
+                                  taskController.summary.value,
+                                  prefs.getString('createTaskId') ?? '',
+                                  context);
+                              Navigator.pop(context);
+                              Navigator.pushReplacementNamed(
+                                  context, '/assessmentdescription',
+                                  arguments: args + 1);
+                            }
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(

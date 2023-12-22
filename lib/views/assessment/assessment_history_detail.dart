@@ -34,7 +34,15 @@ class _AssessmentHistoryDetailScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Component.backButton(context),
+              IconButton(
+                visualDensity: VisualDensity.compact,
+                onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context, '/navigator', (route) => false),
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: ColorTheme.main5,
+                ),
+              ),
               SizedBox(height: gap),
               Text(
                 'ผลการประเมินของคุณ',

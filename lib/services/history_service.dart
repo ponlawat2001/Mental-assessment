@@ -29,16 +29,25 @@ class HistoryService {
         .toList());
   }
 
-  static createHistory(HistoryResult data) async {
+  static Future<HistoryResult> createHistory(HistoryResult data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
-    Response res = await dio.post(Serverinfo.historycreate,
-        options: Options(
-            contentType: 'application/json',
-            headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
-        data: <HistoryResult>{}).catchError((e) async {
+    return await dio.post(
+      Serverinfo.historycreate,
+      options: Options(
+          contentType: 'application/json',
+          headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+      data: {
+        "owner": data.owner,
+        "summary": data.summary,
+        "type": data.type,
+      },
+    ).then((value) {
+      print('createHistory!');
+      return HistoryResult.fromJson(value.data['result']);
+    }).catchError((e) async {
       await AuthService.fetchToken();
-      return await fetchHistory();
+      return await createHistory(data);
     });
   }
 }

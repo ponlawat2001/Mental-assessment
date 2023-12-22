@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
@@ -35,6 +32,25 @@ class TaskService {
         .toList());
   }
 
+  static Future<HistoryResult> findOne(String taskId, context) async {
+    AlertDialogselect.loadingDialog(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    Response res = await dio
+        .get(
+      '${Serverinfo.taskfindOne}/$taskId',
+      options: Options(
+          contentType: 'application/json',
+          headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+    )
+        .catchError((e) async {
+      await AuthService.fetchToken();
+      await findOne(taskId, context);
+      return e;
+    });
+    return HistoryResult.fromJson(res.data['result'].first);
+  }
+
   static updateTask(Summary data, String taskId, context) async {
     AlertDialogselect.loadingDialog(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -54,11 +70,12 @@ class TaskService {
     List<HistoryResult> temp = res.data['result']
         .map<HistoryResult>((e) => HistoryResult.fromJson(e))
         .toList();
-    List<Summary> finalsummary = temp.first.summary!
-        .where((element) => element.name != data.name)
-        .toList();
+
+    List<Summary> finalsummary = temp.first.summary!.where((element) {
+      return element.name != data.name;
+    }).toList();
+
     finalsummary.insert(0, data);
-    print(jsonEncode(finalsummary));
     await dio.put(
       '${Serverinfo.taskupdate}/$taskId',
       options: Options(
@@ -92,9 +109,6 @@ class TaskService {
               .toList()
         }).then((res) {
       prefs.setString('createTaskId', res.data['result']['id']);
-      print(
-        prefs.get('createTaskId'),
-      );
     }).catchError(
       (e) async {
         Navigator.pop(context);

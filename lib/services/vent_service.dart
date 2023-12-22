@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +67,6 @@ class VentService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     AlertDialogselect.loadingDialog(context);
-    print(filePath);
     String fileName = filePath.split('/').last;
 
     try {
@@ -84,8 +81,7 @@ class VentService {
             contentType: "multipart/form-data",
             headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
       );
-      print('File Upload Response: ${res.data['result'][0]}');
-      Response finalres = await dio.post(
+      await dio.post(
         Serverinfo.audiocreate,
         data: VentAudioResult(
             owner: FirebaseAuth.instance.currentUser!.email,
@@ -94,7 +90,6 @@ class VentService {
             contentType: 'application/json',
             headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
       );
-      print('Final Response: ${finalres.data}');
     } catch (error) {
       print('Error uploading file: $error');
     }
@@ -201,7 +196,6 @@ class VentService {
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
     )
         .catchError((e) async {
-      print(e);
       await AuthService.fetchToken();
       return await fetchVentChoice();
     });
