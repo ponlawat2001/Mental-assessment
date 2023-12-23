@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/helper.dart';
@@ -36,8 +39,10 @@ class _AssessmentHistoryDetailScreenState
             children: [
               IconButton(
                 visualDensity: VisualDensity.compact,
-                onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                    context, '/navigator', (route) => false),
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/navigator', (route) => false);
+                },
                 icon: Icon(
                   Icons.arrow_back_rounded,
                   color: ColorTheme.main5,
@@ -114,12 +119,14 @@ class _AssessmentHistoryDetailScreenState
                                   height: 16,
                                 );
                               },
-                              itemBuilder: (BuildContext context, int index) {
+                              itemBuilder:
+                                  (BuildContext context, int innerindex) {
                                 return Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      args.summary?[index].scorerate?[0].name ??
+                                      args.summary?[index]
+                                              .scorerate?[innerindex].name ??
                                           'Unknown',
                                       style: Theme.of(context)
                                           .textTheme
@@ -130,7 +137,8 @@ class _AssessmentHistoryDetailScreenState
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      args.summary?[index].scorerate?[0].rate ??
+                                      args.summary?[index]
+                                              .scorerate?[innerindex].rate ??
                                           'Unknown',
                                       style: Theme.of(context)
                                           .textTheme

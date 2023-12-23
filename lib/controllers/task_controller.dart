@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:mentalassessment/model/assessment/assessment_model.dart'
     as assessmentModel;
 import 'package:mentalassessment/model/assessment/history_model.dart';
 
 class TaskController extends GetxController {
-  RxList<HistoryResult> task = [HistoryResult()].obs;
+  RxList<HistoryResult> task = <HistoryResult>[].obs;
 
   settask(List<HistoryResult> data) {
     task.value = data;
@@ -68,6 +70,7 @@ class TaskController extends GetxController {
     for (var element in assessmentData.advise!.reversed) {
       if (element.rate! <= totalscore) {
         temp = element.advise ?? '';
+        log(temp);
       }
     }
     return temp;
@@ -96,6 +99,7 @@ class TaskController extends GetxController {
         if (einner.score! <= score) {
           print('score is $score');
           rate = einner.name!;
+          print(rate);
         }
       }
       sumscorerate.add(Scorerate(rate: rate, name: e.name));

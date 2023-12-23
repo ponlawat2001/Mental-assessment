@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
@@ -145,9 +147,6 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                           if (counter !=
                               controller
                                   .assessment[args].questionnaire!.length) {
-                            setState(() {
-                              counter++;
-                            });
                             taskController.pushAnswer(
                                 controller.assessment[args]
                                     .questionnaire![counter - 1],
@@ -202,6 +201,13 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                   context, '/assessmentdescription',
                                   arguments: args + 1);
                             }
+                          }
+                          if (counter !=
+                              controller
+                                  .assessment[args].questionnaire!.length) {
+                            setState(() {
+                              counter++;
+                            });
                           }
                         },
                         child: Container(
