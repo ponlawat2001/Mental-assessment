@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/task_controller.dart';
+import 'package:mentalassessment/services/assessment_service.dart';
 import 'package:mentalassessment/services/task_service.dart';
 import 'package:mentalassessment/views/components/component.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/theme.dart';
 
 class AssessmentScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       TaskService.fetchTask();
+      AssessmentService.fetchAssessment();
     });
   }
 
@@ -231,13 +234,27 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                             itemBuilder:
                                                 (context, indexinner) =>
                                                     ElevatedButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                setState(() {});
                                                 if (controller
                                                     .task[index]
                                                     .summary![indexinner]
                                                     .useranswer!
                                                     .isEmpty) {
-                                                  print("sdfd");
+                                                  // prefs.setInt(
+                                                  //     'taskIndex', index); //setindex incorrect
+                                                  prefs.setString(
+                                                      'createTaskId',
+                                                      controller
+                                                              .task[index].id ??
+                                                          '');
+                                                  if (!context.mounted) return;
+                                                  Navigator.pushNamed(context,
+                                                      '/assessmentdetail',
+                                                      arguments: indexinner);
                                                 }
                                               },
                                               style: ElevatedButton.styleFrom(

@@ -26,7 +26,6 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
   final taskController = Get.put(TaskController());
 
   double gap = 16;
-  List<String> list = ['1sdfs', 'sdfdsdsfdsfsf', 'sdsdfsfsdf', 'sdfsdfsddfs'];
   int counter = 1;
   bool isRandom = false;
 
@@ -165,11 +164,21 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                   controller.assessment[args].answer,
                                   controller.assessment[args]);
                               if (!context.mounted) return;
+                              // update task to firestore
                               await TaskService.updateTask(
                                   taskController.summary.value,
                                   prefs.getString('createTaskId') ?? '',
                                   context);
                               if (!context.mounted) return;
+                              // is task complete?
+                              for (var element in taskController
+                                  .task[prefs.getInt('taskIndex') ?? 0]
+                                  .summary!) {
+                                element.useranswer!.isEmpty;
+                                if (!context.mounted) return;
+                                Navigator.pop(context);
+                                return Navigator.pop(context);
+                              }
                               await HistoryService.createHistory(
                                       await TaskService.findOne(
                                           prefs.getString('createTaskId') ?? '',
