@@ -174,10 +174,10 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                               for (var element in taskController
                                   .task[prefs.getInt('taskIndex') ?? 0]
                                   .summary!) {
-                                element.useranswer!.isEmpty;
-                                if (!context.mounted) return;
-                                Navigator.pop(context);
-                                return Navigator.pop(context);
+                                if (element.useranswer!.isEmpty) {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                }
                               }
                               await HistoryService.createHistory(
                                       await TaskService.findOne(

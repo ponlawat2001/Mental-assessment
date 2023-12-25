@@ -74,39 +74,52 @@ class AlertDialogselect {
                   ),
                   Text(
                     subtitle,
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
             ),
-            actions: [
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
+            actions: !isConfirm
+                ? [
+                    ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(4),
                       ),
                       onPressed: () {
-                        function();
                         Navigator.pop(context);
                       },
-                      child: const Text('ยืนยัน'),
+                      child: const Text('ตกลง'),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(4),
-                          backgroundColor: ColorTheme.validation),
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('ยกเลิก'),
-                    ),
-                  ),
-                ],
-              )
-            ],
+                  ]
+                : [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(4),
+                            ),
+                            onPressed: () {
+                              function();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('ยืนยัน'),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.all(4),
+                                backgroundColor: ColorTheme.validation),
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('ยกเลิก'),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
           );
         });
   }

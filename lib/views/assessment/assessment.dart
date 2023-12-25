@@ -240,12 +240,24 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                         .getInstance();
                                                 setState(() {});
                                                 if (controller
-                                                    .task[index]
-                                                    .summary![indexinner]
-                                                    .useranswer!
-                                                    .isEmpty) {
-                                                  // prefs.setInt(
-                                                  //     'taskIndex', index); //setindex incorrect
+                                                            .task[index]
+                                                            .summary![
+                                                                indexinner]
+                                                            .useranswer!
+                                                            .isEmpty &&
+                                                        controller
+                                                            .task[index]
+                                                            .summary![
+                                                                (indexinner ==
+                                                                        0)
+                                                                    ? indexinner
+                                                                    : (indexinner -
+                                                                        1)]
+                                                            .useranswer!
+                                                            .isNotEmpty ||
+                                                    indexinner == 0) {
+                                                  prefs.setInt('taskIndex',
+                                                      index); //setindex incorrect
                                                   prefs.setString(
                                                       'createTaskId',
                                                       controller
@@ -255,17 +267,77 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                   Navigator.pushNamed(context,
                                                       '/assessmentdetail',
                                                       arguments: indexinner);
+                                                } else {
+                                                  if (!context.mounted) return;
+                                                  AlertDialogselect.customDialog(
+                                                      context,
+                                                      'ไม่สามารถประเมินแบบประเมินนี้ได้',
+                                                      'ทำการประเมินแบบประเมิน\nก่อนหน้านี้ให้สำเร็จ',
+                                                      const Icon(
+                                                          Icons.info_outline),
+                                                      false,
+                                                      () {});
                                                 }
                                               },
-                                              style: ElevatedButton.styleFrom(
-                                                alignment: Alignment.center,
-                                                backgroundColor:
-                                                    ColorTheme.lightPurple,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16)),
-                                              ),
+                                              style: (controller
+                                                      .task[index]
+                                                      .summary![indexinner]
+                                                      .useranswer!
+                                                      .isEmpty)
+                                                  ? (controller
+                                                                  .task[index]
+                                                                  .summary![
+                                                                      indexinner]
+                                                                  .useranswer!
+                                                                  .isEmpty &&
+                                                              controller
+                                                                  .task[index]
+                                                                  .summary![(indexinner ==
+                                                                          0)
+                                                                      ? indexinner
+                                                                      : (indexinner -
+                                                                          1)]
+                                                                  .useranswer!
+                                                                  .isNotEmpty ||
+                                                          indexinner == 0)
+                                                      ? ElevatedButton
+                                                          .styleFrom(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          backgroundColor:
+                                                              ColorTheme.main30,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16)),
+                                                        )
+                                                      : ElevatedButton
+                                                          .styleFrom(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          backgroundColor:
+                                                              ColorTheme
+                                                                  .disableField,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16)),
+                                                        )
+                                                  : ElevatedButton.styleFrom(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      backgroundColor:
+                                                          ColorTheme
+                                                              .lightPurple,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16)),
+                                                    ),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
