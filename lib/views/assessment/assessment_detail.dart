@@ -143,80 +143,105 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                         onTap: () async {
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          if (counter !=
-                              controller
-                                  .assessment[args].questionnaire!.length) {
-                            taskController.pushAnswer(
-                                controller.assessment[args]
-                                    .questionnaire![counter - 1],
-                                e,
-                                controller.assessment[args].answer,
-                                controller.assessment[args]);
-                          } else {
-                            //outofQ
-                            if (assessmentController.assessment.length ==
-                                args + 1) {
-                              print('Out of Question');
+                          //is mainAssessment
+                          if (prefs.getString('createTaskId') != null) {
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
                               taskController.pushAnswer(
                                   controller.assessment[args]
                                       .questionnaire![counter - 1],
                                   e,
                                   controller.assessment[args].answer,
                                   controller.assessment[args]);
-                              if (!context.mounted) return;
-                              // update task to firestore
-                              await TaskService.updateTask(
-                                  taskController.summary.value,
-                                  prefs.getString('createTaskId') ?? '',
-                                  context);
-                              if (!context.mounted) return;
-                              // is task complete?
-                              for (var element in taskController
-                                  .task[prefs.getInt('taskIndex') ?? 0]
-                                  .summary!) {
-                                if (element.useranswer!.isEmpty) {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                }
-                              }
-                              await HistoryService.createHistory(
-                                      await TaskService.findOne(
-                                          prefs.getString('createTaskId') ?? '',
-                                          context))
-                                  .then((value) {
-                                TaskService.deleteTask(
-                                    prefs.getString('createTaskId') ?? '',
+                            } else {
+                              //outofQ
+                              if (assessmentController.assessment.length ==
+                                  args + 1) {
+                                print('Out of Question');
+                                taskController.pushAnswer(
+                                    controller.assessment[args]
+                                        .questionnaire![counter - 1],
+                                    e,
+                                    controller.assessment[args].answer,
+                                    controller.assessment[args]);
+                                if (!context.mounted) return;
+                                // update task to firestore
+                                await TaskService.updateTask(
+                                    taskController.summary.value,
+                                    prefs.getString('createTaskId')!,
                                     context);
                                 if (!context.mounted) return;
+                                // is task complete?
+                                for (var element in taskController
+                                    .task[prefs.getInt('taskIndex') ?? 0]
+                                    .summary!) {
+                                  if (element.useranswer!.isEmpty) {
+                                    Navigator.pop(context);
+                                    // Navigator.pop(context);
+                                  }
+                                }
+                                await HistoryService.createHistory(
+                                        await TaskService.findOne(
+                                            prefs.getString('createTaskId') ??
+                                                '',
+                                            context))
+                                    .then((value) {
+                                  TaskService.deleteTask(
+                                      prefs.getString('createTaskId') ?? '',
+                                      context);
+                                  if (!context.mounted) return;
+                                  Navigator.pop(context);
+                                  Navigator.pushReplacementNamed(
+                                      context, '/assessmenthistorydetail',
+                                      arguments: value);
+                                });
+                              } else {
+                                taskController.pushAnswer(
+                                    controller.assessment[args]
+                                        .questionnaire![counter - 1],
+                                    e,
+                                    controller.assessment[args].answer,
+                                    controller.assessment[args]);
+                                if (!context.mounted) return;
+                                TaskService.updateTask(
+                                    taskController.summary.value,
+                                    prefs.getString('createTaskId') ?? '',
+                                    context);
                                 Navigator.pop(context);
                                 Navigator.pushReplacementNamed(
-                                    context, '/assessmenthistorydetail',
-                                    arguments: value);
+                                    context, '/assessmentdescription',
+                                    arguments: args + 1);
+                              }
+                            }
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
+                              setState(() {
+                                counter++;
                               });
-                            } else {
+                            }
+                          } else {
+                            //other assessement method
+                            print('notmain');
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
                               taskController.pushAnswer(
                                   controller.assessment[args]
                                       .questionnaire![counter - 1],
                                   e,
                                   controller.assessment[args].answer,
                                   controller.assessment[args]);
-                              if (!context.mounted) return;
-                              TaskService.updateTask(
-                                  taskController.summary.value,
-                                  prefs.getString('createTaskId') ?? '',
-                                  context);
-                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/assessmentdescription',
-                                  arguments: args + 1);
                             }
-                          }
-                          if (counter !=
-                              controller
-                                  .assessment[args].questionnaire!.length) {
-                            setState(() {
-                              counter++;
-                            });
+
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
+                              setState(() {
+                                counter++;
+                              });
+                            }
                           }
                         },
                         child: Container(

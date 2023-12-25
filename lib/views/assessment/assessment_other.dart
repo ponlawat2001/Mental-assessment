@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mentalassessment/controllers/assessment_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/assets.dart';
 import '../../constants/theme.dart';
@@ -33,55 +36,71 @@ class _AssessmentOtherScreenState extends State<AssessmentOtherScreen> {
               Component.backButton(context),
               const SizedBox(height: 16),
               SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'แบบประเมินอื่นๆ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall!
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'แบบประเมินอื่นๆที่นอกเหนือจากแบบประเมินรวม',
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.w300, color: ColorTheme.main5),
-                    ),
-                    Component.dividerhorizotal(),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: 2,
-                      separatorBuilder: (context, _) =>
-                          const SizedBox(height: 16),
-                      itemBuilder: (context, index) => ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          alignment: Alignment.center,
-                          backgroundColor: (index % 2 == 1)
-                              ? ColorTheme.main30
-                              : ColorTheme.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
+                child: GetX<AssessmentController>(
+                  builder: (AssessmentController controller) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'แบบประเมินอื่นๆ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(fontWeight: FontWeight.w500),
                         ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'แบบประเมินความเข็มแข็งทางใจ',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            const SizedBox(width: 16),
-                            Text(
-                              '20 ข้อ',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ],
+                        const SizedBox(height: 16),
+                        Text(
+                          'แบบประเมินอื่นๆที่นอกเหนือจากแบบประเมินรวม',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                  fontWeight: FontWeight.w300,
+                                  color: ColorTheme.main5),
                         ),
-                      ),
-                    )
-                  ],
+                        Component.dividerhorizotal(),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: controller.assessment.length,
+                          separatorBuilder: (context, _) =>
+                              const SizedBox(height: 16),
+                          itemBuilder: (context, index) => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              alignment: Alignment.center,
+                              backgroundColor: (index % 2 == 1)
+                                  ? ColorTheme.main30
+                                  : ColorTheme.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                            ),
+                            onPressed: () async {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.remove('createTaskId');
+                              if (!context.mounted) return;
+                              Navigator.pushNamed(
+                                  context, '/assessmentdescription',
+                                  arguments: index);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  controller.assessment[index].name ?? '',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  '${controller.assessment[index].questionnaire?.length.toString() ?? ''} ข้อ',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
             ],

@@ -163,26 +163,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Container(
-                                width: 100,
-                                height: 100,
-                                color: Colors.amber,
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'สภาพจิตใจในอาทิตย์นี้',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'ประเมินไปทั้งหมด: 7 ครั้ง',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(
-                                        color: ColorTheme.main5, fontSize: 16),
-                              ),
-                              const SizedBox(height: 32),
+                              // Container(
+                              //   width: 100,
+                              //   height: 100,
+                              //   color: Colors.amber,
+                              // ),
+                              // const SizedBox(height: 8),
+                              // Text(
+                              //   'ประเมินไปทั้งหมด: 7 ครั้ง',
+                              //   style: Theme.of(context)
+                              //       .textTheme
+                              //       .labelMedium!
+                              //       .copyWith(
+                              //           color: ColorTheme.main5, fontSize: 16),
+                              // ),
+                              // const SizedBox(height: 32),
                               SizedBox(
                                 width: 200,
                                 child: ElevatedButton(
