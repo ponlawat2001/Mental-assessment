@@ -1,10 +1,13 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
 import 'package:mentalassessment/controllers/task_controller.dart';
+import 'package:mentalassessment/model/assessment/history_model.dart';
 import 'package:mentalassessment/services/history_service.dart';
 import 'package:mentalassessment/services/task_service.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
@@ -178,7 +181,6 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     .summary!) {
                                   if (element.useranswer!.isEmpty) {
                                     Navigator.pop(context);
-                                    // Navigator.pop(context);
                                   }
                                 }
                                 await HistoryService.createHistory(
@@ -233,8 +235,26 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                   e,
                                   controller.assessment[args].answer,
                                   controller.assessment[args]);
+                            } else {
+                              taskController.pushAnswer(
+                                  controller.assessment[args]
+                                      .questionnaire![counter - 1],
+                                  e,
+                                  controller.assessment[args].answer,
+                                  controller.assessment[args]);
+                              if (!context.mounted) return;
+                              AlertDialogselect.loadingDialog(context);
+                              await HistoryService.createHistory(HistoryResult(
+                                      owner: FirebaseAuth
+                                          .instance.currentUser!.email,
+                                      summary: [taskController.summary.value],
+                                      type: 'other'))
+                                  .then((value) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/assessmenthistorydetail',
+                                    arguments: value);
+                              });
                             }
-
                             if (counter !=
                                 controller
                                     .assessment[args].questionnaire!.length) {

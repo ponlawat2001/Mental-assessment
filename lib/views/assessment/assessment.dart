@@ -240,12 +240,11 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                         .getInstance();
                                                 setState(() {});
                                                 if (controller
-                                                            .task[index]
-                                                            .summary![
-                                                                indexinner]
-                                                            .useranswer!
-                                                            .isEmpty &&
-                                                        controller
+                                                        .task[index]
+                                                        .summary![indexinner]
+                                                        .useranswer!
+                                                        .isEmpty &&
+                                                    (controller
                                                             .task[index]
                                                             .summary![
                                                                 (indexinner ==
@@ -255,7 +254,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                                         1)]
                                                             .useranswer!
                                                             .isNotEmpty ||
-                                                    indexinner == 0) {
+                                                        indexinner == 0)) {
                                                   prefs.setInt('taskIndex',
                                                       index); //setindex incorrect
                                                   prefs.setString(
@@ -267,7 +266,11 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                                                   Navigator.pushNamed(context,
                                                       '/assessmentdetail',
                                                       arguments: indexinner);
-                                                } else {
+                                                } else if (controller
+                                                    .task[index]
+                                                    .summary![indexinner]
+                                                    .useranswer!
+                                                    .isEmpty) {
                                                   if (!context.mounted) return;
                                                   AlertDialogselect.customDialog(
                                                       context,

@@ -40,8 +40,8 @@ class _AssessmentHistoryDetailScreenState
               IconButton(
                 visualDensity: VisualDensity.compact,
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/navigator', (route) => false);
+                  Navigator.popUntil(
+                      context, ModalRoute.withName('/navigator'));
                 },
                 icon: Icon(
                   Icons.arrow_back_rounded,
@@ -57,8 +57,8 @@ class _AssessmentHistoryDetailScreenState
                     .copyWith(fontWeight: FontWeight.w500),
               ),
               SizedBox(height: gap),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Wrap(
+                runSpacing: 8,
                 children: [
                   Text(
                     (args.summary!.length == 1)
@@ -74,10 +74,9 @@ class _AssessmentHistoryDetailScreenState
                   ),
                   Text(
                     Helper.dateconverter(args.createAt?.seconds ?? 0),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(fontWeight: FontWeight.w300),
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w300,
+                        color: ColorTheme.validation),
                   ),
                 ],
               ),
