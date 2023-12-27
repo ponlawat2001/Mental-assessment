@@ -79,7 +79,7 @@ class AuthService {
 
     Response response = await dio.post(
       //for dev
-      (Platform.isAndroid) ? Serverinfo.loginAndroid : Serverinfo.login,
+      Serverinfo.login,
       data: {
         'email': data.email,
         'password': data.password,
@@ -126,9 +126,7 @@ class AuthService {
     AlertDialogselect.loadingDialog(context);
     Response response = await dio.post(
       //for dev
-      (Platform.isAndroid)
-          ? Serverinfo.registeAndroid
-          : Serverinfo.registeAndroid,
+      Serverinfo.register,
       data: {
         'email': data.email,
         'password': data.password,

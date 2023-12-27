@@ -24,7 +24,7 @@ class UserService {
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
       (Platform.isAndroid)
           ? '${Serverinfo.userupdate}/${FirebaseAuth.instance.currentUser!.uid}'
-          : Serverinfo.registeAndroid,
+          : Serverinfo.register,
       data: {
         'phone': data.phone,
         'displayname': data.displayname,
@@ -50,7 +50,7 @@ class UserService {
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
       (Platform.isAndroid)
           ? '${Serverinfo.userdelete}/${FirebaseAuth.instance.currentUser!.uid}'
-          : Serverinfo.registeAndroid,
+          : Serverinfo.register,
     )
         .catchError((e) async {
       await AuthService.fetchToken();
