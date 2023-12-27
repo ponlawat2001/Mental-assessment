@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mentalassessment/constants/assets.dart';
+import 'package:mentalassessment/constants/helper.dart';
+import 'package:mentalassessment/model/assessment/history_model.dart';
 import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
 
@@ -20,6 +25,9 @@ class _AssessmentHistoryDetailScreenState
 
   @override
   Widget build(BuildContext context) {
+    final HistoryResult args =
+        (ModalRoute.of(context)?.settings.arguments) as HistoryResult;
+
     return Scaffold(
       body: Layout(
         backgroundAsset: Assets.imageBackground2,
@@ -29,7 +37,17 @@ class _AssessmentHistoryDetailScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Component.backButton(context),
+              IconButton(
+                visualDensity: VisualDensity.compact,
+                onPressed: () {
+                  Navigator.popUntil(
+                      context, ModalRoute.withName('/navigator'));
+                },
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: ColorTheme.main5,
+                ),
+              ),
               SizedBox(height: gap),
               Text(
                 'ผลการประเมินของคุณ',
@@ -39,11 +57,13 @@ class _AssessmentHistoryDetailScreenState
                     .copyWith(fontWeight: FontWeight.w500),
               ),
               SizedBox(height: gap),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Wrap(
+                runSpacing: 8,
                 children: [
                   Text(
-                    'แบบประเมินรวม',
+                    (args.summary!.length == 1)
+                        ? args.summary?.first.name ?? 'Unknown'
+                        : 'แบบประเมินรวม',
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -53,11 +73,10 @@ class _AssessmentHistoryDetailScreenState
                     width: 8,
                   ),
                   Text(
-                    '23/04/2024 13:00',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(fontWeight: FontWeight.w300),
+                    Helper.dateconverter(args.createAt?.seconds ?? 0),
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w300,
+                        color: ColorTheme.validation),
                   ),
                 ],
               ),
@@ -66,7 +85,7 @@ class _AssessmentHistoryDetailScreenState
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: ListView.separated(
-                    itemCount: 5,
+                    itemCount: args.summary?.length ?? 0,
                     separatorBuilder: (context, index) {
                       return SizedBox(height: gap);
                     },
@@ -80,7 +99,7 @@ class _AssessmentHistoryDetailScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'แบบประเมินความเครียด',
+                              args.summary?[index].name ?? 'Unknown',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge!
@@ -88,49 +107,52 @@ class _AssessmentHistoryDetailScreenState
                                     fontWeight: FontWeight.w400,
                                   ),
                             ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ภาพรวม: ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                                Text(
-                                  'แย่',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                          fontWeight: FontWeight.w300,
-                                          color: ColorTheme.validation),
-                                ),
-                              ],
-                            ),
                             Component.dividerhorizotal(),
-                            Text(
-                              'ระดับความเครียด',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'เครียดมาก',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                            ListView.separated(
+                              shrinkWrap: true,
+                              itemCount:
+                                  args.summary?[index].scorerate?.length ?? 0,
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const SizedBox(
+                                  height: 16,
+                                );
+                              },
+                              itemBuilder:
+                                  (BuildContext context, int innerindex) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      args.summary?[index]
+                                              .scorerate?[innerindex].name ??
+                                          'Unknown',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      args.summary?[index]
+                                              .scorerate?[innerindex].rate ??
+                                          'Unknown',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w300,
+                                              color: Helper.scorerateColor(args
+                                                      .summary?[index]
+                                                      .scorerate?[0]
+                                                      .rate ??
+                                                  'Unknown')),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                             const SizedBox(height: 8),
                             Align(
@@ -138,7 +160,7 @@ class _AssessmentHistoryDetailScreenState
                               child: InkWell(
                                 onTap: () {
                                   AlertDialogselect.assessmentAdvice(context,
-                                      'ลองทำจิตใจให้สงบยิ่งขึ้นลองคิดให้น้อยลงความกังวลจะลดลงไปด้วย');
+                                      args.summary?[index].advise ?? 'Unknown');
                                 },
                                 child: Text(
                                   'คำแนะนำ',

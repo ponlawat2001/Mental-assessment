@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +50,6 @@ class AuthService {
       await FirebaseAuth.instance.signInWithCredential(credential);
       String? token = await FirebaseAuth.instance.currentUser!.getIdToken();
       prefs.setString('token', token ?? '');
-      log(prefs.getString('token') ?? '');
       if (!context.mounted) return;
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
@@ -81,7 +79,7 @@ class AuthService {
 
     Response response = await dio.post(
       //for dev
-      (Platform.isAndroid) ? Serverinfo.loginAndroid : Serverinfo.login,
+      Serverinfo.login,
       data: {
         'email': data.email,
         'password': data.password,
@@ -128,9 +126,7 @@ class AuthService {
     AlertDialogselect.loadingDialog(context);
     Response response = await dio.post(
       //for dev
-      (Platform.isAndroid)
-          ? Serverinfo.registeAndroid
-          : Serverinfo.registeAndroid,
+      Serverinfo.register,
       data: {
         'email': data.email,
         'password': data.password,

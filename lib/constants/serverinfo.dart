@@ -1,57 +1,66 @@
 class Serverinfo {
   //localhost for dev
-  static String server = 'http://127.0.0.1:3000';
+  static String server = 'https://mental-assessment.cyclic.app';
   static String auth = '$server/auth';
   static String login = '$auth/email/login';
 
-  static String serverAndroid = 'http://10.0.2.2:3000';
-  static String authAndroid = '$serverAndroid/auth';
-  static String loginAndroid = '$authAndroid/email/login';
-
   //register
-  static String avatarAndroid = '$serverAndroid/avatars';
-  static String registeAndroid = '$userAndroid/create';
+  static String avatar = '$server/avatars';
+  static String register = '$user/create';
 
   //user
-  static String userAndroid = '$serverAndroid/users';
-  static String userupdate = '$userAndroid/update';
-  static String userdelete = '$userAndroid/delete';
+  static String user = '$server/users';
+  static String userupdate = '$user/update';
+  static String userdelete = '$user/delete';
 
-  static String avatarfindOne = '$avatarAndroid/findOne';
-  static String avatarcreate = '$avatarAndroid/create';
-  static String avatarupdate = '$avatarAndroid/update';
+  static String avatarfindOne = '$avatar/findOne';
+  static String avatarcreate = '$avatar/create';
+  static String avatarupdate = '$avatar/update';
 
   //news
-  static String newsAndroid = '$serverAndroid/news';
-  static String newsfind = '$newsAndroid/findAll';
+  static String news = '$server/news';
+  static String newsfind = '$news/findAll';
 
   //vent
-  static String ventAndroid = '$serverAndroid/vent';
-  static String ventfindemail = '$ventAndroid/findOwner';
-  static String ventcreate = '$ventAndroid/create';
-  static String ventupdate = '$ventAndroid/update';
-  static String ventdelete = '$ventAndroid/delete';
+  static String vent = '$server/vent';
+  static String ventfindemail = '$vent/findOwner';
+  static String ventcreate = '$vent/create';
+  static String ventupdate = '$vent/update';
+  static String ventdelete = '$vent/delete';
 
   //audio
-  static String audioAndroid = '$serverAndroid/audio';
-  static String audiofindOwner = '$audioAndroid/findOwner';
-  static String audiocreate = '$audioAndroid/create';
-  static String audiodelete = '$audioAndroid/delete';
+  static String audio = '$server/audio';
+  static String audiofindOwner = '$audio/findOwner';
+  static String audiocreate = '$audio/create';
+  static String audiodelete = '$audio/delete';
 
   //storage
-  static String storageAndroid = '$serverAndroid/storage';
-  static String storageaudio = '$storageAndroid/uploadAudio';
+  static String storage = '$server/storage';
+  static String storageaudio = '$storage/uploadAudio';
 
   //vent_chocie
-  static String ventchoiceAndroid = '$serverAndroid/ventchoice';
-  static String ventchiocefind = '$ventchoiceAndroid/findAll';
+  static String ventchoice = '$server/ventchoice';
+  static String ventchiocefind = '$ventchoice/findAll';
 
   //contact
-  static String contactAndroid = '$serverAndroid/contact';
+  static String contactAndroid = '$server/contact';
   static String contactfindAll = '$contactAndroid/findAll';
   static String contactupdate = '$contactAndroid/update';
 
   //assessment
-  static String assessmentAndroid = '$serverAndroid/assessment';
-  static String assessmentfindAll = '$assessmentAndroid/findAll';
+  static String assessmentAndroid = '$server/assessment';
+  static String assessmentfindMain = '$assessmentAndroid/findMain';
+
+  //history
+  static String historyAndroid = '$server/history';
+  static String historyfindOwner = '$historyAndroid/findOwner';
+  static String historycreate = '$historyAndroid/create';
+
+  //task
+  static String taskAndroid = '$server/task';
+  static String taskfindOwner = '$taskAndroid/findOwner';
+  static String taskupdate = '$taskAndroid/update';
+  static String taskfindOne = '$taskAndroid/findOne';
+  static String taskcreate = '$taskAndroid/create';
+  static String taskdelete = '$taskAndroid/delete';
 }

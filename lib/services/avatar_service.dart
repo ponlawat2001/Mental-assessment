@@ -46,9 +46,7 @@ class AvatarService {
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
-      (Platform.isAndroid)
-          ? '${Serverinfo.avatarupdate}/${data.id}'
-          : Serverinfo.registeAndroid,
+      Serverinfo.register,
       data: {
         'avatar': data.avatar,
       },

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final assessmentModel = assessmentModelFromJson(jsonString);
-
 import 'dart:convert';
 
 AssessmentModel assessmentModelFromJson(String str) =>
@@ -36,7 +32,7 @@ class AssessmentResult {
   String? id;
   String? name;
   String? description;
-  Questionnaire? questionnaire;
+  List<Questionnaire>? questionnaire;
   List<Answer>? answer;
   List<Scorerate>? scorerate;
   List<Advise>? advise;
@@ -62,7 +58,8 @@ class AssessmentResult {
         id: json["id"],
         name: json["name"],
         description: json["description"],
-        questionnaire: Questionnaire.fromJson(json["questionnaire"]),
+        questionnaire: List<Questionnaire>.from(
+            json["questionnaire"].map((x) => Questionnaire.fromJson(x))),
         answer:
             List<Answer>.from(json["answer"].map((x) => Answer.fromJson(x))),
         scorerate: List<Scorerate>.from(
@@ -78,7 +75,8 @@ class AssessmentResult {
         "id": id,
         "name": name,
         "description": description,
-        "questionnaire": questionnaire!.toJson(),
+        "questionnaire":
+            List<dynamic>.from(questionnaire!.map((x) => x.toJson())),
         "answer": List<dynamic>.from(answer!.map((x) => x.toJson())),
         "scorerate": List<dynamic>.from(scorerate!.map((x) => x.toJson())),
         "advise": List<dynamic>.from(advise!.map((x) => x.toJson())),
@@ -153,22 +151,26 @@ class AteAt {
 }
 
 class Questionnaire {
-  List<String>? question;
-  List<bool>? reversescore;
+  int? id;
+  String? title;
+  bool? reversescore;
 
   Questionnaire({
-    this.question,
+    this.id,
+    this.title,
     this.reversescore,
   });
 
   factory Questionnaire.fromJson(Map<String, dynamic> json) => Questionnaire(
-        question: List<String>.from(json["question"].map((x) => x)),
-        reversescore: List<bool>.from(json["reversescore"].map((x) => x)),
+        id: json["id"],
+        title: json["title"],
+        reversescore: json["reversescore"],
       );
 
   Map<String, dynamic> toJson() => {
-        "question": List<dynamic>.from(question!.map((x) => x)),
-        "reversescore": List<dynamic>.from(reversescore!.map((x) => x)),
+        "id": id,
+        "title": title,
+        "reversescore": reversescore,
       };
 }
 

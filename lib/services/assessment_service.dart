@@ -13,7 +13,7 @@ class AssessmentService {
     Dio dio = Dio();
     Response res = await dio
         .get(
-      Serverinfo.assessmentfindAll,
+      Serverinfo.assessmentfindMain,
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),

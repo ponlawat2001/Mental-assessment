@@ -1,8 +1,18 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
+import 'package:mentalassessment/controllers/task_controller.dart';
+import 'package:mentalassessment/model/assessment/history_model.dart';
+import 'package:mentalassessment/services/history_service.dart';
+import 'package:mentalassessment/services/task_service.dart';
+import 'package:mentalassessment/views/widgets/alert_dialog.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/theme.dart';
 import '../components/component.dart';
@@ -15,9 +25,18 @@ class AssessmentDetailScreen extends StatefulWidget {
 }
 
 class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
+  final assessmentController = Get.put(AssessmentController());
+  final taskController = Get.put(TaskController());
+
   double gap = 16;
-  List<String> list = ['1sdfs', 'sdfdsdsfdsfsf', 'sdsdfsfsdf', 'sdfsdfsddfs'];
   int counter = 1;
+  bool isRandom = false;
+
+  @override
+  void initState() {
+    super.initState();
+    taskController.clearAnswer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +47,10 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
 
   Layout body(BuildContext context) {
     final int args = (ModalRoute.of(context)?.settings.arguments ?? 0) as int;
-
+    if (!isRandom) {
+      assessmentController.randomquestionlist(args);
+    }
+    isRandom = true;
     return Layout(
       backgroundAsset: Assets.imageBackground2,
       child: SafeArea(
@@ -40,7 +62,28 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Component.backButton(context),
+                  IconButton(
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () {
+                      if (counter > 1) {
+                        AlertDialogselect.customDialog(
+                            context,
+                            'แน่ใจที่จะย้อนกลับ',
+                            'หากย้อนกลับรายการประเมินจะไม่ถูกบันทึก',
+                            const Icon(Icons.info),
+                            true, () {
+                          taskController.clearAnswer();
+                          Navigator.pop(context);
+                        });
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: ColorTheme.main5,
+                    ),
+                  ),
                   SizedBox(height: gap),
                   Text(
                     controller.assessment[args].name ?? 'Unknown',
@@ -61,7 +104,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                             .copyWith(fontWeight: FontWeight.w300),
                       ),
                       Text(
-                        '$counter/${controller.assessment[args].questionnaire?.question?.length ?? 0 - 1}',
+                        '$counter/${controller.assessment[args].questionnaire?.length ?? 0 - 1}',
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
@@ -79,7 +122,7 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                               color: ColorTheme.white,
                               borderRadius: BorderRadius.circular(8)),
                           child: Text(
-                            '$counter. ${controller.assessment[args].questionnaire?.question?[counter - 1] ?? ''}',
+                            '$counter. ${controller.assessment[args].questionnaire?[counter - 1].title ?? ''}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -95,21 +138,131 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                   Wrap(
                     runSpacing: 16,
                     spacing: 16,
-                    children: controller.assessment[args].answer!.map((e) {
+                    children: controller.assessment[args].answer!
+                        .asMap()
+                        .entries
+                        .map((e) {
                       return InkWell(
-                        onTap: () {
-                          setState(() {
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          //is mainAssessment
+                          if (prefs.getString('createTaskId') != null) {
                             if (counter !=
-                                controller.assessment[args].questionnaire!
-                                    .question!.length) {
-                              counter++;
+                                controller
+                                    .assessment[args].questionnaire!.length) {
+                              taskController.pushAnswer(
+                                  controller.assessment[args]
+                                      .questionnaire![counter - 1],
+                                  e,
+                                  controller.assessment[args].answer,
+                                  controller.assessment[args]);
                             } else {
-                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/assessmentdescription',
-                                  arguments: args + 1);
+                              //outofQ
+                              if (assessmentController.assessment.length ==
+                                  args + 1) {
+                                print('Out of Question');
+                                taskController.pushAnswer(
+                                    controller.assessment[args]
+                                        .questionnaire![counter - 1],
+                                    e,
+                                    controller.assessment[args].answer,
+                                    controller.assessment[args]);
+                                if (!context.mounted) return;
+                                // update task to firestore
+                                await TaskService.updateTask(
+                                    taskController.summary.value,
+                                    prefs.getString('createTaskId')!,
+                                    context);
+                                if (!context.mounted) return;
+                                // is task complete?
+                                for (var element in taskController
+                                    .task[prefs.getInt('taskIndex') ?? 0]
+                                    .summary!) {
+                                  if (element.useranswer!.isEmpty) {
+                                    Navigator.pop(context);
+                                  }
+                                }
+                                await HistoryService.createHistory(
+                                        await TaskService.findOne(
+                                            prefs.getString('createTaskId') ??
+                                                '',
+                                            context))
+                                    .then((value) {
+                                  TaskService.deleteTask(
+                                      prefs.getString('createTaskId') ?? '',
+                                      context);
+                                  if (!context.mounted) return;
+                                  Navigator.pop(context);
+                                  Navigator.pushReplacementNamed(
+                                      context, '/assessmenthistorydetail',
+                                      arguments: value);
+                                });
+                              } else {
+                                taskController.pushAnswer(
+                                    controller.assessment[args]
+                                        .questionnaire![counter - 1],
+                                    e,
+                                    controller.assessment[args].answer,
+                                    controller.assessment[args]);
+                                if (!context.mounted) return;
+                                TaskService.updateTask(
+                                    taskController.summary.value,
+                                    prefs.getString('createTaskId') ?? '',
+                                    context);
+                                Navigator.pop(context);
+                                Navigator.pushReplacementNamed(
+                                    context, '/assessmentdescription',
+                                    arguments: args + 1);
+                              }
                             }
-                          });
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
+                              setState(() {
+                                counter++;
+                              });
+                            }
+                          } else {
+                            //other assessement method
+                            print('notmain');
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
+                              taskController.pushAnswer(
+                                  controller.assessment[args]
+                                      .questionnaire![counter - 1],
+                                  e,
+                                  controller.assessment[args].answer,
+                                  controller.assessment[args]);
+                            } else {
+                              taskController.pushAnswer(
+                                  controller.assessment[args]
+                                      .questionnaire![counter - 1],
+                                  e,
+                                  controller.assessment[args].answer,
+                                  controller.assessment[args]);
+                              if (!context.mounted) return;
+                              AlertDialogselect.loadingDialog(context);
+                              await HistoryService.createHistory(HistoryResult(
+                                      owner: FirebaseAuth
+                                          .instance.currentUser!.email,
+                                      summary: [taskController.summary.value],
+                                      type: 'other'))
+                                  .then((value) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/assessmenthistorydetail',
+                                    arguments: value);
+                              });
+                            }
+                            if (counter !=
+                                controller
+                                    .assessment[args].questionnaire!.length) {
+                              setState(() {
+                                counter++;
+                              });
+                            }
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -123,7 +276,10 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     color: ColorTheme.lightGray2),
                               ]),
                           padding: const EdgeInsets.all(16),
-                          child: Text(e.name ?? 'Unknown'),
+                          child: Text(
+                            e.value.name ?? 'Unknown',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
                         ),
                       );
                     }).toList(),
