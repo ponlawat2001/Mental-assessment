@@ -48,14 +48,14 @@ class AvatarService {
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
-      Serverinfo.register,
+      '${Serverinfo.avatarupdate}/${data.id}',
       data: {
         'avatar': data.avatar,
       },
     ).catchError((e) async {
       Navigator.pop(context);
       await AuthService.fetchToken();
-      return await updateAvatar(context, data);
+      return updateAvatar(context, data);
     });
     fetchAvatar();
     Navigator.pop(context);

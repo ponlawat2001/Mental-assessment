@@ -5,7 +5,6 @@ class Serverinfo {
   static String login = '$auth/email/login';
 
   //register
-  static String avatar = '$server/avatars';
   static String register = '$user/create';
 
   //user
@@ -13,6 +12,7 @@ class Serverinfo {
   static String userupdate = '$user/update';
   static String userdelete = '$user/delete';
 
+  static String avatar = '$server/avatars';
   static String avatarfindOne = '$avatar/findOne';
   static String avatarcreate = '$avatar/create';
   static String avatarupdate = '$avatar/update';
