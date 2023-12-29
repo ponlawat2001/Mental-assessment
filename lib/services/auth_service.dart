@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +49,7 @@ class AuthService {
       await FirebaseAuth.instance.signInWithCredential(credential);
       String? token = await FirebaseAuth.instance.currentUser!.getIdToken();
       prefs.setString('token', token ?? '');
+
       if (!context.mounted) return;
       Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/navigator');
