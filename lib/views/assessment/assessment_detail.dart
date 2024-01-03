@@ -175,25 +175,13 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     prefs.getString('createTaskId')!,
                                     context);
                                 if (!context.mounted) return;
-                                // is task complete?
-                                for (var element in taskController
-                                    .task[prefs.getInt('taskIndex') ?? 0]
-                                    .summary!) {
-                                  if (element.useranswer!.isEmpty) {
-                                    Navigator.pop(context);
-                                  }
-                                }
-                                await HistoryService.createHistory(
-                                        await TaskService.findOne(
-                                            prefs.getString('createTaskId') ??
-                                                '',
-                                            context))
-                                    .then((value) {
+                                AlertDialogselect.loadingDialog(context);
+                                HistoryResult? res = await TaskService.findOne(
+                                    prefs.getString('createTaskId') ?? '');
+                                HistoryService.createHistory(res).then((value) {
                                   TaskService.deleteTask(
                                       prefs.getString('createTaskId') ?? '',
                                       context);
-                                  if (!context.mounted) return;
-                                  Navigator.pop(context);
                                   Navigator.pushReplacementNamed(
                                       context, '/assessmenthistorydetail',
                                       arguments: value);
