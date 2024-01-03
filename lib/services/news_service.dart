@@ -20,7 +20,7 @@ class NewsService {
     )
         .catchError((e) async {
       await AuthService.fetchToken();
-      return await fetchNews();
+      return fetchNews();
     });
     newsController.setNewslist(
       NewsModel(

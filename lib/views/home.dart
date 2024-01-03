@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : ClipRRect(
                                     borderRadius: BorderRadius.circular(32),
                                     child: Image.asset(
-                                      Assets.imageAvatarfemale01,
+                                      controller.renderAvatar(),
                                       width: 52,
                                       height: 52,
                                     ),
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'สวัสดี พลวัต',
+                    'สวัสดี ${FirebaseAuth.instance.currentUser?.displayName?.split(' ').first ?? ''}',
                     style: Theme.of(context)
                         .textTheme
                         .displayMedium!
@@ -128,17 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 16)),
                     onPressed: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString('token', '');
-                      print(prefs.get('token'));
+                      Navigator.pushNamed(context, '/assessmentmain');
                     },
                     child: Row(
                       children: [
                         SvgPicture.asset(Assets.iconHeart),
                         const SizedBox(width: 8),
                         Text(
-                          'เริ่มทำแบบประเมินหลัก',
+                          'เริ่มทำแบบประเมินรวม',
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!
