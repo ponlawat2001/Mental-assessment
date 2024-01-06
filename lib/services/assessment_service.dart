@@ -26,4 +26,24 @@ class AssessmentService {
         .map<AssessmentResult>((e) => AssessmentResult.fromJson(e))
         .toList());
   }
+
+  static fetchAssessmentAll() async {
+    final assessmentController = Get.put(AssessmentController());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    Response res = await dio
+        .get(
+      Serverinfo.assessmentfindAll,
+      options: Options(
+          contentType: 'application/json',
+          headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
+    )
+        .catchError((e) async {
+      await AuthService.fetchToken();
+      return await fetchAssessment();
+    });
+    assessmentController.setcontactlist(res.data['result']
+        .map<AssessmentResult>((e) => AssessmentResult.fromJson(e))
+        .toList());
+  }
 }

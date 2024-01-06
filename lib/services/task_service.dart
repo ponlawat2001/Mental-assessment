@@ -32,8 +32,7 @@ class TaskService {
         .toList());
   }
 
-  static Future<HistoryResult> findOne(String taskId, context) async {
-    AlertDialogselect.loadingDialog(context);
+  static Future<HistoryResult> findOne(String taskId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     Response res = await dio
@@ -45,7 +44,7 @@ class TaskService {
     )
         .catchError((e) async {
       await AuthService.fetchToken();
-      await findOne(taskId, context);
+      await findOne(taskId);
       return e;
     });
     return HistoryResult.fromJson(res.data['result'].first);
@@ -124,19 +123,19 @@ class TaskService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     AlertDialogselect.loadingDialog(context);
-
-    await dio
+    dio
         .delete(
       '${Serverinfo.taskdelete}/$id',
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
     )
-        .catchError((e) async {
+        .then((value) {
+      fetchTask();
+      Navigator.pop(context);
+    }).catchError((e) async {
       await AuthService.fetchToken();
       return await fetchTask();
     });
-    fetchTask();
-    Navigator.pop(context);
   }
 }

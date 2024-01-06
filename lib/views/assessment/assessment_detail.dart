@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
@@ -161,7 +158,6 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                               //outofQ
                               if (assessmentController.assessment.length ==
                                   args + 1) {
-                                print('Out of Question');
                                 taskController.pushAnswer(
                                     controller.assessment[args]
                                         .questionnaire![counter - 1],
@@ -175,25 +171,13 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                                     prefs.getString('createTaskId')!,
                                     context);
                                 if (!context.mounted) return;
-                                // is task complete?
-                                for (var element in taskController
-                                    .task[prefs.getInt('taskIndex') ?? 0]
-                                    .summary!) {
-                                  if (element.useranswer!.isEmpty) {
-                                    Navigator.pop(context);
-                                  }
-                                }
-                                await HistoryService.createHistory(
-                                        await TaskService.findOne(
-                                            prefs.getString('createTaskId') ??
-                                                '',
-                                            context))
-                                    .then((value) {
+                                AlertDialogselect.loadingDialog(context);
+                                HistoryResult? res = await TaskService.findOne(
+                                    prefs.getString('createTaskId') ?? '');
+                                HistoryService.createHistory(res).then((value) {
                                   TaskService.deleteTask(
                                       prefs.getString('createTaskId') ?? '',
                                       context);
-                                  if (!context.mounted) return;
-                                  Navigator.pop(context);
                                   Navigator.pushReplacementNamed(
                                       context, '/assessmenthistorydetail',
                                       arguments: value);
@@ -225,7 +209,6 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                             }
                           } else {
                             //other assessement method
-                            print('notmain');
                             if (counter !=
                                 controller
                                     .assessment[args].questionnaire!.length) {

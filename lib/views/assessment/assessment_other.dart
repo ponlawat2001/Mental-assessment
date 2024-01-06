@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/controllers/assessment_controller.dart';
+import 'package:mentalassessment/services/assessment_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/assets.dart';
@@ -16,6 +17,14 @@ class AssessmentOtherScreen extends StatefulWidget {
 }
 
 class _AssessmentOtherScreenState extends State<AssessmentOtherScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AssessmentService.fetchAssessmentAll();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

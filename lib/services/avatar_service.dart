@@ -19,9 +19,7 @@ class AvatarService {
     Response response = await dio
         .get(
       //for dev
-      (Platform.isAndroid)
-          ? "${Serverinfo.avatarfindOne}/$email"
-          : Serverinfo.login,
+      "${Serverinfo.avatarfindOne}/$email",
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
@@ -30,11 +28,15 @@ class AvatarService {
       await AuthService.fetchToken();
       return fetchAvatar();
     });
-    avatarController.setAvatars(AvatarResult(
-      id: response.data['result'].first['id'] ?? '',
-      email: response.data['result'].first['email'] ?? '',
-      avatar: response.data['result'].first['avatar'] ?? '',
-    ));
+    if ((response.data['result']).isNotEmpty) {
+      avatarController.setAvatars(AvatarResult(
+        id: response.data['result'].first['id'] ?? '',
+        email: response.data['result'].first['email'] ?? '',
+        avatar: response.data['result'].first['avatar'] ?? '',
+      ));
+    } else {
+      await createAvatar();
+    }
   }
 
   static updateAvatar(context, AvatarResult data) async {
@@ -46,14 +48,14 @@ class AvatarService {
       options: Options(
           contentType: 'application/json',
           headers: {"Authorization": "Bearer ${prefs.get('token')}"}),
-      Serverinfo.register,
+      '${Serverinfo.avatarupdate}/${data.id}',
       data: {
         'avatar': data.avatar,
       },
     ).catchError((e) async {
       Navigator.pop(context);
       await AuthService.fetchToken();
-      return await updateAvatar(context, data);
+      return updateAvatar(context, data);
     });
     fetchAvatar();
     Navigator.pop(context);

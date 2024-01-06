@@ -1,11 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mentalassessment/constants/assets.dart';
 import 'package:mentalassessment/constants/theme.dart';
+import 'package:mentalassessment/services/avatar_service.dart';
 import 'package:mentalassessment/views/widgets/newslist_widget.dart';
 import 'package:mentalassessment/views/widgets/widgetLayout/layout.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/avatar_controller.dart';
 import '../services/news_service.dart';
 
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       NewsService.fetchNews();
+      AvatarService.fetchAvatar();
     });
   }
 
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       GetX<AvatarController>(
                           init: AvatarController(),
                           builder: (controller) {
-                            return controller.avatar.value.avatar == ''
+                            return controller.renderAvatar() == ''
                                 ? Container(
                                     padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : ClipRRect(
                                     borderRadius: BorderRadius.circular(32),
                                     child: Image.asset(
-                                      Assets.imageAvatarfemale01,
+                                      controller.renderAvatar(),
                                       width: 52,
                                       height: 52,
                                     ),
@@ -104,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'สวัสดี พลวัต',
+                    'สวัสดี ${FirebaseAuth.instance.currentUser?.displayName?.split(' ').first ?? ''}',
                     style: Theme.of(context)
                         .textTheme
                         .displayMedium!
@@ -128,17 +130,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 16)),
                     onPressed: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString('token', '');
-                      print(prefs.get('token'));
+                      Navigator.pushNamed(context, '/assessmentmain');
                     },
                     child: Row(
                       children: [
                         SvgPicture.asset(Assets.iconHeart),
                         const SizedBox(width: 8),
                         Text(
-                          'เริ่มทำแบบประเมินหลัก',
+                          'เริ่มทำแบบประเมินรวม',
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!

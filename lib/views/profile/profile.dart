@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               controller.profile.value.phone == null
                                   ? const SizedBox()
                                   : const SizedBox(height: 8),
-                              controller.profile.value.phone == null
+                              controller.profile.value.phone == ''
                                   ? const SizedBox()
                                   : Text(
                                       'เบอร์โทร: ${controller.profile.value.phone}',
