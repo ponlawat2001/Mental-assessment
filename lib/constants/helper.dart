@@ -6,8 +6,9 @@ import 'package:mentalassessment/constants/theme.dart';
 class Helper {
   static dynamic phoneconverter() {
     if (FirebaseAuth.instance.currentUser!.phoneNumber == null) return null;
-    String phoneNumber =
-        '0${FirebaseAuth.instance.currentUser!.phoneNumber?.substring(3, 12)}';
+    String phoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber!.isEmpty
+        ? ''
+        : '0${FirebaseAuth.instance.currentUser!.phoneNumber?.substring(3, 12)}';
     return phoneNumber;
   }
 
