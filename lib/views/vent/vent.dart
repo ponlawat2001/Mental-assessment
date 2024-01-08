@@ -120,9 +120,6 @@ class _VentScreenState extends State<VentScreen> {
                                                         .result?[index]
                                                         .choice ??
                                                     '');
-                                        if (!context.mounted) return;
-                                        AlertDialogselect.ventThankDialog(
-                                            context);
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.only(
