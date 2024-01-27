@@ -28,6 +28,7 @@ class AvatarService {
       await AuthService.fetchToken();
       return fetchAvatar();
     });
+
     if ((response.data['result']).isNotEmpty) {
       avatarController.setAvatars(AvatarResult(
         id: response.data['result'].first['id'] ?? '',
@@ -36,6 +37,7 @@ class AvatarService {
       ));
     } else {
       await createAvatar();
+      print('Avatar Created');
     }
   }
 

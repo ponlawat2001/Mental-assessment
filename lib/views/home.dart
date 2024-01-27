@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       NewsService.fetchNews();
-      AvatarService.fetchAvatar();
     });
   }
 

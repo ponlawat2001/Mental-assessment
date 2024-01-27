@@ -145,7 +145,6 @@ class AuthService {
           PostEmailLogin(email: data.email, password: data.password), context);
       if (!context.mounted) return;
       await FirebaseAuth.instance.currentUser!.updateDisplayName('Noname');
-      await AvatarService.createAvatar();
     }
   }
 }
