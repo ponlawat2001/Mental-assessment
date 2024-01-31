@@ -111,22 +111,26 @@ class Advise {
 }
 
 class Answer {
+  int? id;
   int? score;
   String? name;
+  List<Answer>? choices;
 
-  Answer({
-    this.score,
-    this.name,
-  });
+  Answer({this.id, this.score, this.name, this.choices});
 
   factory Answer.fromJson(Map<String, dynamic> json) => Answer(
-        score: json["score"],
-        name: json["name"],
-      );
+      id: json["id"],
+      score: json["score"],
+      name: json["name"],
+      choices: json["choices"] == null
+          ? null
+          : List<Answer>.from(json["choices"].map((x) => Answer.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "score": score,
         "name": name,
+        "choices": List<dynamic>.from(choices!.map((x) => x.toJson()))
       };
 }
 

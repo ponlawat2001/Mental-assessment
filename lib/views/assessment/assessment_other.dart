@@ -68,42 +68,47 @@ class _AssessmentOtherScreenState extends State<AssessmentOtherScreen> {
                                   color: ColorTheme.main5),
                         ),
                         Component.dividerhorizotal(),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: controller.assessment.length,
-                          separatorBuilder: (context, _) =>
-                              const SizedBox(height: 16),
-                          itemBuilder: (context, index) => ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              alignment: Alignment.center,
-                              backgroundColor: (index % 2 == 1)
-                                  ? ColorTheme.main30
-                                  : ColorTheme.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16)),
-                            ),
-                            onPressed: () async {
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.remove('createTaskId');
-                              if (!context.mounted) return;
-                              Navigator.pushNamed(
-                                  context, '/assessmentdescription',
-                                  arguments: index);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  controller.assessment[index].name ?? '',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  '${controller.assessment[index].questionnaire?.length.toString() ?? ''} ข้อ',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                              ],
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.7,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: controller.assessment.length,
+                            separatorBuilder: (context, _) =>
+                                const SizedBox(height: 16),
+                            itemBuilder: (context, index) => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                alignment: Alignment.center,
+                                backgroundColor: (index % 2 == 1)
+                                    ? ColorTheme.main30
+                                    : ColorTheme.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                              ),
+                              onPressed: () async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.remove('createTaskId');
+                                if (!context.mounted) return;
+                                Navigator.pushNamed(
+                                    context, '/assessmentdescription',
+                                    arguments: index);
+                              },
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  Text(
+                                    controller.assessment[index].name ?? '',
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                    '${controller.assessment[index].questionnaire?.length.toString() ?? ''} ข้อ',
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         )

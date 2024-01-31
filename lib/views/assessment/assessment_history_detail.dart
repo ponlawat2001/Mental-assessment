@@ -117,8 +117,8 @@ class _AssessmentHistoryDetailScreenState
                               },
                               itemBuilder:
                                   (BuildContext context, int innerindex) {
-                                return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                return Wrap(
+                                  runSpacing: 8,
                                   children: [
                                     Text(
                                       args.summary?[index]

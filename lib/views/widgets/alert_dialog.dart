@@ -274,6 +274,7 @@ class AlertDialogselect {
                                     if (!context.mounted) return;
                                     Navigator.pop(context);
                                     Navigator.pop(context);
+                                    AlertDialogselect.ventThankDialog(context);
                                   },
                                   child: const Text('ยืนยัน'))),
                           const SizedBox(width: 16),

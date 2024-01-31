@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                controller.profile.value.email ?? '',
+                                FirebaseAuth.instance.currentUser!.email ?? '',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
@@ -144,7 +144,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               controller.profile.value.phone == null
                                   ? const SizedBox()
                                   : const SizedBox(height: 8),
-                              controller.profile.value.phone == ''
+                              controller.profile.value.phone == '' ||
+                                      controller.profile.value.phone == null
                                   ? const SizedBox()
                                   : Text(
                                       'เบอร์โทร: ${controller.profile.value.phone}',
@@ -163,21 +164,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              // Container(
-                              //   width: 100,
-                              //   height: 100,
-                              //   color: Colors.amber,
-                              // ),
-                              // const SizedBox(height: 8),
-                              // Text(
-                              //   'ประเมินไปทั้งหมด: 7 ครั้ง',
-                              //   style: Theme.of(context)
-                              //       .textTheme
-                              //       .labelMedium!
-                              //       .copyWith(
-                              //           color: ColorTheme.main5, fontSize: 16),
-                              // ),
-                              // const SizedBox(height: 32),
                               SizedBox(
                                 width: 200,
                                 child: ElevatedButton(
