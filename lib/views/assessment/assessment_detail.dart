@@ -134,7 +134,9 @@ class _AssessmentDetailScreenState extends State<AssessmentDetailScreen> {
                   ),
                   SizedBox(height: gap),
                   controller.assessment[args].answer?.length ==
-                          controller.assessment[args].questionnaire?.length
+                              controller
+                                  .assessment[args].questionnaire?.length &&
+                          controller.assessment[args].answer![0].choices != null
                       ? choiceWhenqusetionown(
                           controller,
                           args,
