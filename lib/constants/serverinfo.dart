@@ -1,6 +1,6 @@
 class Serverinfo {
   //localhost for dev
-  static String server = 'https://mental-assessment-server.cyclic.app';
+  static String server = 'https://sleepy-duck-bedclothes.cyclic.app';
   static String auth = '$server/auth';
   static String login = '$auth/email/login';
 
